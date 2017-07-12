@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import WeatherAggregator from "./weather/WeatherAggregator";
+import WeatherCardAggregator from "./weather/WeatherCardAggregator";
 
 export class Home extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ export class Home extends Component {
   }
 
   render() {
-    return <WeatherAggregator cityIds={this.state.cityIds} />;
+    return <WeatherCardAggregator cityIds={this.state.cityIds} />;
   }
 }
 

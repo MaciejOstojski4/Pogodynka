@@ -3,9 +3,9 @@
  */
 import React from "react";
 import apiClient from "../lib/api-client";
-import CityWeather from "./city/CityWeather";
+import WeatherCard from "./card/WeatherCard";
 
-class WeatherAggregator extends React.Component {
+class WeatherCardAggregator extends React.Component {
   constructor(props) {
     super(props);
 
@@ -14,7 +14,7 @@ class WeatherAggregator extends React.Component {
     };
   }
 
-  fetchWeather = () => {
+  fetchWeatherForCities = () => {
     const urlWithCitiesIds =
       WEATHER_FOR_SEVERAL_CITIES_URL + "&id=" + this.props.cityIds.join(",");
     apiClient
@@ -32,18 +32,25 @@ class WeatherAggregator extends React.Component {
   };
 
   componentDidMount() {
-    this.fetchWeather();
+    this.fetchWeatherForCities();
   }
 
   render() {
     return (
       <div className="row">
         <div className="table-responsive">
-          <table className="table table-bordered">
+          <table className="table">
+            <caption className="text-center">
+              <h2>Current weather in european capitals</h2>
+            </caption>
             <tbody>
-              <tr>
+              <tr
+                style={{
+                  display: "flex",
+                }}
+              >
                 {this.state.cities.map(city => {
-                  return <CityWeather city={city} />;
+                  return <WeatherCard city={city} />;
                 })}
               </tr>
             </tbody>
@@ -56,4 +63,4 @@ class WeatherAggregator extends React.Component {
 
 const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric";
 
-export default WeatherAggregator;
+export default WeatherCardAggregator;
