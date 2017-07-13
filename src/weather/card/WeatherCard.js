@@ -19,7 +19,8 @@ class WeatherCard extends React.Component {
     e.preventDefault();
     this.setState({
       isCollapse: !this.state.isCollapse,
-      columnSize: this.state.columnSize === "col-md-12" ? "col-md-6" : "col-md-12",
+      columnSize:
+        this.state.columnSize === "col-md-12" ? "col-md-5" : "col-md-12",
     });
   };
 
@@ -34,7 +35,9 @@ class WeatherCard extends React.Component {
           <div className={this.state.columnSize}>
             <CardField>
               <h4>
-                {this.props.city.name}
+                <b>
+                  {this.props.city.name}
+                </b>
               </h4>
             </CardField>
             <CardField>
@@ -47,16 +50,32 @@ class WeatherCard extends React.Component {
               {this.props.city.main.temp} &deg;C
             </CardField>
           </div>
-          <Collapse className="col-md-6" isOpened={this.state.isCollapse}>
-            <div>Pressure {this.props.city.main.pressure}</div>
-            <div>Humidity {this.props.city.main.humidity} %</div>
-            <div>Wind {this.props.city.wind.speed} km/h</div>
+          <Collapse className="col-md-7" isOpened={this.state.isCollapse}>
+            <ExtendedCard>
+              <ExtendedCardField>
+                Pressure {this.props.city.main.pressure}hPa
+              </ExtendedCardField>
+              <ExtendedCardField>
+                Humidity {this.props.city.main.humidity}%
+              </ExtendedCardField>
+              <ExtendedCardField>
+                Wind {this.props.city.wind.speed} km/h
+              </ExtendedCardField>
+            </ExtendedCard>
           </Collapse>
         </div>
       </Card>
     );
   }
 }
+
+const ExtendedCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+`;
+
+const ExtendedCardField = styled.div`margin-top: 20px;`;
 
 const CardField = styled.div`
   flex: 1;
