@@ -52,6 +52,8 @@ export class WeatherDetails extends Component {
     console.log(this.state.data);
     return (
       <Div className="container-fluid">
+
+
         <h1>
           {this.state.data.name}
           <p>
