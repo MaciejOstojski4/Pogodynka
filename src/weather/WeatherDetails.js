@@ -1,7 +1,5 @@
-import React, { Component, PropTypes } from "react";
-import OpenWeatherMap from "react-open-weather-map";
+import React, {Component} from "react";
 import axios from "axios";
-import apiClient from "../lib/api-client";
 export class WeatherDetails extends Component {
 
   constructor(props) {
