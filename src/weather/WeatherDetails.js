@@ -63,25 +63,76 @@ export class WeatherDetails extends Component {
   render() {
       console.log(this.state.temp.temp);
     return (
-      <div>
-        <ul>
-          <li>
-            City: {this.state.d.name}
-          </li>
-        <li>
-          Temp: {this.state.temp.temp}
-        </li>
-        <li>
-          Max temperature: {this.state.temp.temp_max}
-        </li>
-        <li>
-          Min temperature: {this.state.temp.temp_min}
-        </li>
-        <li>
-          Pressure: {this.state.temp.pressure}
-        </li>
-        </ul>
-      </div>
+
+      <Div className="container-fluid">
+
+
+        <h1>
+          {this.state.data.name}
+          <p>
+            <small> Weather details</small>
+          </p>
+        </h1>
+        <p style={pStyle}>
+          <div style={boxStyle} className="card">
+            <div className="card-header">
+              <h3 style={hss}>Temperature:</h3>
+            </div>
+            <div class="card-block">
+              <blockquote class="card-blockquote">
+
+                  {this.state.temp.temp}
+
+              </blockquote>
+            </div>
+          </div>
+
+          <div style={boxStyle} className="card">
+            <div className="card-header">
+              <h3 style={hss}>Max temperature:</h3>
+            </div>
+            <div class="card-block">
+              <blockquote class="card-blockquote">
+                {this.state.temp.temp_max}
+              </blockquote>
+            </div>
+          </div>
+
+          <div style={boxStyle} className="card">
+            <div className="card-header">
+              <h3 style={hss}>Min temperature:</h3>
+            </div>
+            <div class="card-block">
+              <blockquote class="card-blockquote">
+                {this.state.temp.temp_min}
+              </blockquote>
+            </div>
+          </div>
+
+          <div style={boxStyle} className="card">
+            <div className="card-header">
+              <h3 style={hss}>Pressure: </h3>
+            </div>
+            <div class="card-block">
+              <blockquote class="card-blockquote">
+                {this.state.temp.pressure}
+              </blockquote>
+            </div>
+          </div>
+
+          <div style={boxStyle} className="card">
+            <div className="card-header">
+              <h3 style={hss}>Humidity:</h3>
+            </div>
+            <div class="card-block">
+              <blockquote class="card-blockquote">
+                {this.state.temp.humidity}
+              </blockquote>
+            </div>
+          </div>
+        </p>
+      </Div>
+
     );
   }
 }

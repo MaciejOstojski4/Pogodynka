@@ -3,6 +3,7 @@ import ReactHover from "react-hover";
 import InfoPopup from "./user-interface/InfoPopup";
 import apiClient from "./lib/api-client";
 
+
 export class Search extends Component {
   constructor(props) {
     super(props);
@@ -56,6 +57,7 @@ export class Search extends Component {
 
   render() {
     return (
+
       <div className="row">
         <div className="col-md-4 col-md-offset-4 text-center">
           <form className="form-inline">
@@ -84,6 +86,7 @@ export class Search extends Component {
               </button>
             </div>
           </form>
+
         </div>
       </div>
     );
