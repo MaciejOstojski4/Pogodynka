@@ -1,5 +1,10 @@
 # Wymagane biblioteki
     yarn add react-router@3.0.5
+    yarn add react-hover
+    yarn add react-redux
+    yarn add react-localstorage
+    yarn add react-router
+    yarn add react-open-weather-map
 
 ## Product Backlog (11.07.2017)
     1. Strona domowa wyświetlająca na stałe pogodę z kilku stolic europejskich,
