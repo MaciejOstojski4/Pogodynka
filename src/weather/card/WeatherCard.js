@@ -18,7 +18,7 @@ class WeatherCard extends React.Component {
           </h4>
         </CardField>
         <CardField>
-          <img src={iconSrc} />
+          <img src={iconSrc} alt="Cannot render image"/>
         </CardField>
         <CardField>
           {this.props.city.weather[0].description}

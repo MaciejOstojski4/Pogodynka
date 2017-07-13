@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import ReactHover from "react-hover";
 import InfoPopup from "./user-interface/InfoPopup";
 import apiClient from "./lib/api-client";
+import { connect } from "react-redux";
+import { changeFoundedCityAction } from "./weather/reducer/weather";
 
 export class Search extends Component {
   constructor(props) {
@@ -13,10 +15,7 @@ export class Search extends Component {
   }
 
   isSearchingByCityName = () => {
-    if (this.state.inputText.match(LAT_LONG_REGEX)) {
-      return false;
-    }
-    return true;
+    return !this.state.inputText.match(LAT_LONG_REGEX)
   };
 
   refreshState = e => {
@@ -33,7 +32,7 @@ export class Search extends Component {
       apiClient
         .get(urlForCityName)
         .then(response => {
-          console.log(response);
+          this.props.dispatch(changeFoundedCityAction(response.data));
         })
         .catch(error => {
           console.log("Error while searching by city name: " + error);
@@ -44,7 +43,7 @@ export class Search extends Component {
       apiClient
         .get(urlForLatAndLong)
         .then(response => {
-          console.log(response);
+          this.props.dispatch(changeFoundedCityAction(response.data));
         })
         .catch(error => {
           console.log(
@@ -96,11 +95,10 @@ const REACT_HOVER_OPTS = {
   shiftY: 0,
 };
 
-const SEARCH_INPUT_POPUP_TEXT =
-  "Type city name or lat:lon values";
+const SEARCH_INPUT_POPUP_TEXT = "Type city name or lat:lon values";
 
 const SEARCH_URL = "/weather?units=metric&";
 
 const LAT_LONG_REGEX = /(-)?[0-9]+\.[0-9]+:(-)?[0-9]+\.[0-9]+/;
 
-export default Search;
+export default connect()(Search);
