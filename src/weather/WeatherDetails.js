@@ -1,69 +1,56 @@
-import React, { Component, PropTypes } from "react";
-import OpenWeatherMap from "react-open-weather-map";
+import React, {Component} from "react";
 import axios from "axios";
 import apiClient from "../lib/api-client";
-export class WeatherDetails extends Component {
+import styled from "styled-components";
 
+export class WeatherDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      city: "Warsaw",
-      apiKey: "057420ef754b30b2b45ecd0d40b6281d",
-      url: "api.openweathermap.org/data/2.5/weather?q=",
-      d: [],
-      temp: []
+      cityId: 3093133,
+      data: "",
+      temp: ""
     };
   }
 
   fetchWeather = () => {
-    /*
-    const urlWithCitiesIds =
-      WEATHER_FOR_SINGLE_CITY_URL + "&q=" + this.state.city;
-      */
-    axios
-      .get(
-        `http://api.openweathermap.org/data/2.5/weather?q={${this.state
-          .city}}&APPID=057420ef754b30b2b45ecd0d40b6281d`
-      )
+    const urlWithCityId = `${WEATHER_FOR_SINGLE_CITY_URL}id=${this.state
+      .cityId}`;
+
+    apiClient
+      .get(urlWithCityId)
       .then(response => {
         this.setState({
-          d: response.data,
+          data: response.data,
           temp: response.data.main
         });
-        console.log(response.data);
-
-        /*console.log(response);*/
       })
       .catch(error => {
-        console.log(
-          "Error occurred during fetching weather for cities: " + error
-        );
+        console.log(error);
       });
   };
-  /*
-  apiClient
-    .get(urlWithCitiesIds)
-    .then(response => {
-      this.setState={
-        d: response.data.list,
-      };
-    })
-    .catch(error => {
-      console.log(
-        "Error occurred during fetching weather for cities: " + error,
-      );
-    });
-    console.log(this.state.d);
-};
-*/
+
   componentDidMount() {
     this.fetchWeather();
-  };
+  }
 
   render() {
-      console.log(this.state.temp.temp);
-    return (
 
+    const pStyle = {
+      width: "500px",
+      paddingTop: "20px",
+      paddingLeft: "100px"
+    };
+    const boxStyle = {
+      backgroundColor: "#faebd7"
+    };
+    const hss = {
+      paddingTop: "20px",
+      paddingLeft: "20px"
+    };
+
+    console.log(this.state.data);
+    return (
       <Div className="container-fluid">
 
 
@@ -132,11 +119,12 @@ export class WeatherDetails extends Component {
           </div>
         </p>
       </Div>
-
     );
   }
 }
-
-const WEATHER_FOR_SINGLE_CITY_URL = "/weather?";
+const Div=styled.div`
+  display: flex
+`
+const WEATHER_FOR_SINGLE_CITY_URL = "/weather?units=metric&";
 
 export default WeatherDetails;
