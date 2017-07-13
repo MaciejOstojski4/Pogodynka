@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import ReactHover from "react-hover";
-import InfoPopup from "./user-interface/InfoPopup";
-import apiClient from "./lib/api-client";
+import InfoPopup from "../user-interface/InfoPopup";
+import apiClient from "../lib/api-client";
 import { connect } from "react-redux";
-import { changeFoundedCityAction } from "./weather/reducer/weather";
+import { changeFoundedCityAction } from "./reducer/weather";
 
-export class Search extends Component {
+export class SearchWeather extends Component {
   constructor(props) {
     super(props);
 
@@ -14,10 +14,6 @@ export class Search extends Component {
     };
   }
 
-  isSearchingByCityName = () => {
-    return !this.state.inputText.match(LAT_LONG_REGEX)
-  };
-
   refreshState = e => {
     e.preventDefault();
     this.setState({
@@ -25,32 +21,33 @@ export class Search extends Component {
     });
   };
 
+  isSearchingByCityName = () => {
+    return !this.state.inputText.match(LAT_LONG_REGEX);
+  };
+
+  prepareUrl = () => {
+    if (this.isSearchingByCityName()) {
+      return `${SEARCH_URL}q=${this.state.inputText}`;
+    }
+    const latAndLongValue = this.state.inputText.split(":");
+    return `${SEARCH_URL}lat=${latAndLongValue[0]}&lon=${latAndLongValue[1]}`;
+  };
+
+  fetchWeather = url => {
+    apiClient
+      .get(url)
+      .then(response => {
+        this.props.dispatch(changeFoundedCityAction(response.data));
+      })
+      .catch(error => {
+        console.log("Error while searching by city name: " + error);
+      });
+  };
+
   onSubmit = e => {
     e.preventDefault();
-    if (this.isSearchingByCityName()) {
-      const urlForCityName = `${SEARCH_URL}q=${this.state.inputText}`;
-      apiClient
-        .get(urlForCityName)
-        .then(response => {
-          this.props.dispatch(changeFoundedCityAction(response.data));
-        })
-        .catch(error => {
-          console.log("Error while searching by city name: " + error);
-        });
-    } else {
-      const latAndLongValue = this.state.inputText.split(":");
-      const urlForLatAndLong = `${SEARCH_URL}lat=${latAndLongValue[0]}&lon=${latAndLongValue[1]}`;
-      apiClient
-        .get(urlForLatAndLong)
-        .then(response => {
-          this.props.dispatch(changeFoundedCityAction(response.data));
-        })
-        .catch(error => {
-          console.log(
-            "Error while searching by latitude and longitude: " + error,
-          );
-        });
-    }
+    const urlForWeather = this.prepareUrl();
+    this.fetchWeather(urlForWeather);
   };
 
   render() {
@@ -101,4 +98,4 @@ const SEARCH_URL = "/weather?units=metric&";
 
 const LAT_LONG_REGEX = /(-)?[0-9]+\.[0-9]+:(-)?[0-9]+\.[0-9]+/;
 
-export default connect()(Search);
+export default connect()(SearchWeather);
