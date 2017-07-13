@@ -4,6 +4,7 @@
 import React from "react";
 import apiClient from "../lib/api-client";
 import WeatherCard from "./card/WeatherCard";
+import styled from "styled-components";
 
 class WeatherCardAggregator extends React.Component {
   constructor(props) {
@@ -38,28 +39,25 @@ class WeatherCardAggregator extends React.Component {
   render() {
     return (
       <div className="row">
-        <div className="table-responsive">
-          <table className="table">
-            <caption className="text-center">
-              <h2>Current weather in european capitals</h2>
-            </caption>
-            <tbody>
-              <tr
-                style={{
-                  display: "flex",
-                }}
-              >
-                {this.state.cities.map(city => {
-                  return <WeatherCard city={city} />;
-                })}
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <AggregatorResponsive>
+          {this.state.cities.map(city => {
+            return <WeatherCard city={city} />;
+          })}
+        </AggregatorResponsive>
       </div>
     );
   }
 }
+
+const AggregatorResponsive = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+  border-radius: 10px;
+  // border: 1px solid;
+  // border-color: #deb887;
+  background-color: #faebd7;
+`;
 
 const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric";
 

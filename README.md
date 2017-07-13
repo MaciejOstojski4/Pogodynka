@@ -5,6 +5,8 @@
     yarn add react-localstorage
     yarn add react-router
     yarn add react-open-weather-map
+    yarn add react-collapse
+    yarn add react-motion
 
 ## Product Backlog (11.07.2017)
     1. Strona domowa wyświetlająca na stałe pogodę z kilku stolic europejskich,
