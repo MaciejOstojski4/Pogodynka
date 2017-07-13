@@ -4999,6 +4999,12 @@ react-error-overlay@^1.0.9:
     settle-promise "1.0.0"
     source-map "0.5.6"
 
+react-hover@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-hover/-/react-hover-1.1.0.tgz#d1b28b352c5759febe0a7e3fc9ff25e5dc49b14b"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-open-weather-map@^2.1.3:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/react-open-weather-map/-/react-open-weather-map-2.1.3.tgz#bc16e8c4beae14ea48ea6875e7708f773dbd68a5"
