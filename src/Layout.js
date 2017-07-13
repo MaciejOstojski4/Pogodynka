@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
-import Search from "./Search";
+import SearchWeather from "./weather/SearchWeather";
 
 class Layout extends React.Component {
   render() {
@@ -24,13 +24,11 @@ class Layout extends React.Component {
                   </li>
                 </ul>
                 <ul className="nav navbar-nav navbar-right">
-                  <li>qwe</li>
+                  <li><SearchWeather /></li>
                 </ul>
               </div>
-
           </nav>
         </div>
-
         {this.props.children}
       </div>
     );
