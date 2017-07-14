@@ -3,20 +3,35 @@
  */
 const initialState = {
   cities: [],
-  cityDetailsById: -1,
-  cityFromSearch: {},
+  cityDetails: undefined,
+  cityFromSearch: undefined,
 };
 
 const weather = (currentState = initialState, action) => {
   switch (action.type) {
     case CHANGE_FOUNDED_CITY:
       return { ...currentState, cityFromSearch: action.data.city };
+    case CHANGE_DISPLAYED_DETAILS:
+      console.log("testtest");
+      console.log(action.data.city);
+      return { ...currentState, cityDetails: action.data.city };
     default:
       return currentState;
   }
 };
 
 const CHANGE_FOUNDED_CITY = "changeFoundedCity";
+
+const CHANGE_DISPLAYED_DETAILS = "changeDisplayedDetails";
+
+export const changeDispalyedDetailsAction = city => {
+  return {
+    type: CHANGE_DISPLAYED_DETAILS,
+    data: {
+      city: city,
+    },
+  };
+};
 
 export const changeFoundedCityAction = city => {
   return {

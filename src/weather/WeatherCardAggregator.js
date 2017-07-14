@@ -26,9 +26,8 @@ class WeatherCardAggregator extends React.Component {
 const AggregatorResponsive = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   align-content: space-between;
-  border-radius: 10px;
-  background-color: #faebd7;
 `;
 
 export default WeatherCardAggregator;
