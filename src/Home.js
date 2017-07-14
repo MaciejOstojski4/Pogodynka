@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import WeatherCardAggregator from "./weather/WeatherCardAggregator";
-import WeatherBox from "./weather/WeatherBox";
+import WeatherCardAggregator from "./weather/WeatherTilesAggregator";
 import apiClient from "./lib/api-client";
 import SearchWeather from "./weather/SearchWeather";
 
@@ -9,16 +8,17 @@ export class Home extends Component {
     super(props);
 
     this.state = {
-      cityIds: initialCities,
       cities: [],
     };
   }
 
+  prepareUrl = () => {
+    return WEATHER_FOR_SEVERAL_CITIES_URL + "id=" + initialCities.join(",");
+  };
+
   fetchWeatherForCities = () => {
-    const urlWithCitiesIds =
-      WEATHER_FOR_SEVERAL_CITIES_URL + "&id=" + this.state.cityIds.join(",");
     apiClient
-      .get(urlWithCitiesIds)
+      .get(this.prepareUrl())
       .then(response => {
         this.setState({
           cities: response.data.list,
@@ -44,9 +44,6 @@ export class Home extends Component {
         <div className="row">
           <WeatherCardAggregator weatherItems={this.state.cities} />
         </div>
-        <div className="row">
-          <WeatherBox />
-        </div>
       </div>
     );
   }
@@ -65,6 +62,6 @@ const initialCities = [
   6458923, // Lisbon
 ];
 
-const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric";
+const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric&";
 
 export default Home;

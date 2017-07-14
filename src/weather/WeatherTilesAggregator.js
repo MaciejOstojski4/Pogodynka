@@ -2,7 +2,7 @@
  * Created by react on 12.07.17.
  */
 import React from "react";
-import WeatherCard from "./card/WeatherCard";
+import WeatherCard from "./card/WeatherTile";
 import styled from "styled-components";
 
 class WeatherCardAggregator extends React.Component {

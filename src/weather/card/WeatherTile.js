@@ -3,12 +3,11 @@
  */
 import React from "react";
 import styled from "styled-components";
-import Collapse from "react-collapse";
 import { withRouter } from "react-router";
 import { changeDispalyedDetailsAction } from "../reducer/weather";
 import { connect } from "react-redux";
 
-class WeatherCard extends React.Component {
+class WeatherTile extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -18,11 +17,15 @@ class WeatherCard extends React.Component {
     this.props.router.push("weatherdetails");
   };
 
-  render() {
-    const iconSrc =
+  getWeatherIcon = () => {
+    return (
       "http://openweathermap.org/img/w/" +
       this.props.city.weather[0].icon +
-      ".png";
+      ".png"
+    );
+  };
+
+  render() {
     return (
       <Card className="text-center" onClick={this.showDetails}>
         <div className="row">
@@ -33,7 +36,10 @@ class WeatherCard extends React.Component {
               </Title>
             </CardField>
             <CardField>
-              <img src={iconSrc} alt="Cannot render image" />
+              <img
+                src={this.getWeatherIcon()}
+                alt="Cannot render weather image"
+              />
             </CardField>
             <CardField>
               {this.props.city.weather[0].description}
@@ -66,4 +72,4 @@ const Card = styled.div`
   box-shadow: 2px 2px 4px;
 `;
 
-export default connect()(withRouter(WeatherCard));
+export default connect()(withRouter(WeatherTile));
