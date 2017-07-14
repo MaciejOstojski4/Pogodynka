@@ -3,7 +3,7 @@
  */
 import React from "react";
 import styled from "styled-components";
-import {withRouter } from "react-router";
+import { withRouter } from "react-router";
 import { changeDispalyedDetailsAction } from "../reducer/weather";
 import { connect } from "react-redux";
 
@@ -23,16 +23,13 @@ class WeatherCard extends React.Component {
       this.props.city.weather[0].icon +
       ".png";
     return (
-      <Card
-        className="text-center"
-        onClick={this.showDetails}
-      >
+      <Card className="text-center" onClick={this.showDetails}>
         <div className="row">
           <div>
             <CardField>
-                <Title>
-                  {this.props.city.name}
-                </Title>
+              <Title>
+                {this.props.city.name}
+              </Title>
             </CardField>
             <CardField>
               <img src={iconSrc} alt="Cannot render image" />
@@ -49,9 +46,7 @@ class WeatherCard extends React.Component {
     );
   }
 }
-const Title = styled.b`
-    font-size: 160%;
-`;
+const Title = styled.b`font-size: 160%;`;
 const CardField = styled.div`
   flex: 1;
   min-height: 40px;
@@ -68,7 +63,6 @@ const Card = styled.div`
   flex-direction: column;
   display: flex;
   box-shadow: 2px 2px 4px;
-  font-family: 'Poppins', sans-serif;
 `;
 
 export default connect()(withRouter(WeatherCard));

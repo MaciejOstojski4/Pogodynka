@@ -4,7 +4,7 @@ import InfoPopup from "../user-interface/InfoPopup";
 import apiClient from "../lib/api-client";
 import { connect } from "react-redux";
 import { changeFoundedCityAction } from "./reducer/weather";
-
+import styled from "styled-components";
 
 export class SearchWeather extends Component {
   constructor(props) {
@@ -53,41 +53,45 @@ export class SearchWeather extends Component {
 
   render() {
     return (
-
-      <div className="row">
-        <div className="col-md-4 col-md-offset-4 text-center">
-          <form className="form-inline">
-            <div className="form-group">
-              <ReactHover options={REACT_HOVER_OPTS}>
-                <ReactHover.Trigger>
-                  <input
-                    className="form-control"
-                    placeholder="Search"
-                    type="text"
-                    onChange={this.refreshState}
-                  />
-                </ReactHover.Trigger>
-                <ReactHover.Hover>
-                  <InfoPopup text={SEARCH_INPUT_POPUP_TEXT} />
-                </ReactHover.Hover>
-              </ReactHover>
-            </div>
-            <div className="form-group">
-              <button
-                className="btn btn-md"
-                type="submit"
-                onClick={this.onSubmit}
-              >
-                Search
-              </button>
-            </div>
-          </form>
-
+      <FormStyled>
+        <div className="col-lg-10">
+          <InputStyled
+            className="form-control input-lg"
+            placeholder="Search"
+            type="text"
+            onChange={this.refreshState}
+          />
         </div>
-      </div>
+        <div className="col-lg-2">
+          <SubmitButtonSubmit
+            className="btn btn-lg"
+            type="submit"
+            onClick={this.onSubmit}
+          >
+            Search
+          </SubmitButtonSubmit>
+        </div>
+      </FormStyled>
     );
   }
 }
+
+const InputStyled = styled.input`
+  border: none;
+  border-radius: 0px;
+  box-shadow: 2px 2px 4px;
+`;
+
+const SubmitButtonSubmit = styled.button`
+  border: none;
+  border-radius: 0px;
+  box-shadow: 2px 2px 4px;
+`;
+
+const FormStyled = styled.form`
+  margin-bottom: 20px;
+  display: flex;
+`;
 
 const REACT_HOVER_OPTS = {
   followCursor: true,

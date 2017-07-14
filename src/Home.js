@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import WeatherCardAggregator from "./weather/WeatherCardAggregator";
 import WeatherBox from "./weather/WeatherBox";
 import apiClient from "./lib/api-client";
+import SearchWeather from "./weather/SearchWeather";
 
 export class Home extends Component {
   constructor(props) {
@@ -47,9 +48,16 @@ export class Home extends Component {
 
   render() {
     return (
-      <div>
-        <WeatherCardAggregator weatherItems={this.state.cities} />
-        <WeatherBox />
+      <div className="container">
+        <div className="row">
+          <SearchWeather />
+        </div>
+        <div className="row">
+          <WeatherCardAggregator weatherItems={this.state.cities} />
+        </div>
+        <div className="row">
+          <WeatherBox />
+        </div>
       </div>
     );
   }
