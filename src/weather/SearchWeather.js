@@ -11,6 +11,7 @@ export class SearchWeather extends Component {
 
     this.state = {
       inputText: "",
+      errorInfo: "",
     };
   }
 
@@ -42,6 +43,9 @@ export class SearchWeather extends Component {
       })
       .catch(error => {
         console.log("Error while searching by city name: " + error);
+        this.setState({
+          errorInfo: "Cannot find this city",
+        });
       });
   };
 
@@ -53,25 +57,32 @@ export class SearchWeather extends Component {
 
   render() {
     return (
-      <FormStyled>
-        <div className="col-lg-10">
-          <InputStyled
-            className="form-control input-lg"
-            placeholder="Search"
-            type="text"
-            onChange={this.refreshState}
-          />
+      <div>
+        <FormStyled>
+          <div className="col-lg-10">
+            <InputStyled
+              className="form-control input-lg"
+              placeholder="Search"
+              type="text"
+              onChange={this.refreshState}
+            />
+          </div>
+          <div className="col-lg-2">
+            <SubmitButtonSubmit
+              className="btn btn-lg"
+              type="submit"
+              onClick={this.onSubmit}
+            >
+              Search
+            </SubmitButtonSubmit>
+          </div>
+        </FormStyled>
+        <div className="col-md-4">
+          <h4>
+            {this.state.errorInfo}
+          </h4>
         </div>
-        <div className="col-lg-2">
-          <SubmitButtonSubmit
-            className="btn btn-lg"
-            type="submit"
-            onClick={this.onSubmit}
-          >
-            Search
-          </SubmitButtonSubmit>
-        </div>
-      </FormStyled>
+      </div>
     );
   }
 }
