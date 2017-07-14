@@ -30,11 +30,9 @@ class WeatherCard extends React.Component {
         <div className="row">
           <div>
             <CardField>
-              <h4>
-                <b>
+                <Title>
                   {this.props.city.name}
-                </b>
-              </h4>
+                </Title>
             </CardField>
             <CardField>
               <img src={iconSrc} alt="Cannot render image" />
@@ -51,11 +49,12 @@ class WeatherCard extends React.Component {
     );
   }
 }
-
+const Title = styled.b`
+    font-size: 160%;
+`;
 const CardField = styled.div`
   flex: 1;
   min-height: 40px;
-  font-family: 'Poppins', sans-serif;
   font-size: 150%;
   color: white;
 `;
@@ -69,6 +68,7 @@ const Card = styled.div`
   flex-direction: column;
   display: flex;
   box-shadow: 2px 2px 4px;
+  font-family: 'Poppins', sans-serif;
 `;
 
 export default connect()(withRouter(WeatherCard));
