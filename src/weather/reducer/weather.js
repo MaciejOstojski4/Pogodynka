@@ -4,7 +4,7 @@
 const initialState = {
   cities: [],
   cityDetails: undefined,
-  cityFromSearch: undefined,
+  cityFromSearch: undefined
 };
 
 const weather = (currentState = initialState, action) => {
@@ -12,8 +12,6 @@ const weather = (currentState = initialState, action) => {
     case CHANGE_FOUNDED_CITY:
       return { ...currentState, cityFromSearch: action.data.city };
     case CHANGE_DISPLAYED_DETAILS:
-      console.log("testtest");
-      console.log(currentState.cityDetails);
       return { ...currentState, cityDetails: action.data.city };
 
     default:
@@ -29,8 +27,8 @@ export const changeDispalyedDetailsAction = city => {
   return {
     type: CHANGE_DISPLAYED_DETAILS,
     data: {
-      city: city,
-    },
+      city: city
+    }
   };
 };
 
@@ -38,8 +36,8 @@ export const changeFoundedCityAction = city => {
   return {
     type: CHANGE_FOUNDED_CITY,
     data: {
-      city: city,
-    },
+      city: city
+    }
   };
 };
 

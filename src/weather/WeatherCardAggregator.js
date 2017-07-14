@@ -12,13 +12,11 @@ class WeatherCardAggregator extends React.Component {
 
   render() {
     return (
-      <div className="row">
-        <AggregatorResponsive>
-          {this.props.weatherItems.map(city => {
-            return <WeatherCard onClick={this.extend} city={city} />;
-          })}
-        </AggregatorResponsive>
-      </div>
+      <AggregatorResponsive>
+        {this.props.weatherItems.map(city => {
+          return <WeatherCard onClick={this.extend} city={city} />;
+        })}
+      </AggregatorResponsive>
     );
   }
 }
@@ -27,7 +25,6 @@ const AggregatorResponsive = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-content: space-between;
 `;
 
 export default WeatherCardAggregator;

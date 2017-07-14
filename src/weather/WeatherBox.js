@@ -21,15 +21,11 @@ class WeatherBox extends React.Component {
         ".png";
       return (
         <div>
-          <div className="row">
             <h2>{this.props.city.name} <img src={iconSrc} alt="Cannot render image" /></h2>
-          </div>
           <div className="row">
             <p>Temperature: {this.props.city.main.temp} &deg;C</p>
             <p>Humidity: {this.props.city.main.humidity} %</p>
             <p>Wind: {this.props.city.wind.speed} km/h</p>
-          </div>
-          <div className="row">
           </div>
         </div>
       )
