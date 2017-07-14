@@ -13,8 +13,9 @@ const weather = (currentState = initialState, action) => {
       return { ...currentState, cityFromSearch: action.data.city };
     case CHANGE_DISPLAYED_DETAILS:
       console.log("testtest");
-      console.log(action.data.city);
+      console.log(currentState.cityDetails);
       return { ...currentState, cityDetails: action.data.city };
+
     default:
       return currentState;
   }

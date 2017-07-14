@@ -3,7 +3,7 @@
  */
 import React from "react";
 import styled from "styled-components";
-import { Collapse } from "react-collapse";
+import Collapse  from "react-collapse";
 import {withRouter } from "react-router";
 import { changeDispalyedDetailsAction } from "../reducer/weather";
 import { connect } from "react-redux";

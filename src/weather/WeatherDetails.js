@@ -1,41 +1,17 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import axios from "axios";
 import apiClient from "../lib/api-client";
 import styled from "styled-components";
-
-export class WeatherDetails extends Component {
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+class WeatherDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      cityId: 3093133,
-      data: "",
-      temp: ""
-    };
-  }
-
-  fetchWeather = () => {
-    const urlWithCityId = `${WEATHER_FOR_SINGLE_CITY_URL}id=${this.state
-      .cityId}`;
-
-    apiClient
-      .get(urlWithCityId)
-      .then(response => {
-        this.setState({
-          data: response.data,
-          temp: response.data.main
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-  componentDidMount() {
-    this.fetchWeather();
+    data: {
+    }
   }
 
   render() {
-
     const pStyle = {
       width: "500px",
       paddingTop: "20px",
@@ -49,13 +25,10 @@ export class WeatherDetails extends Component {
       paddingLeft: "20px"
     };
 
-    console.log(this.state.data);
     return (
       <Div className="container-fluid">
-
-
         <h1>
-          {this.state.data.name}
+          {this.props.data.name}
           <p>
             <small> Weather details</small>
           </p>
@@ -67,9 +40,7 @@ export class WeatherDetails extends Component {
             </div>
             <div class="card-block">
               <blockquote class="card-blockquote">
-
-                  {this.state.temp.temp}
-
+                {this.props.data.main.temp}
               </blockquote>
             </div>
           </div>
@@ -79,9 +50,7 @@ export class WeatherDetails extends Component {
               <h3 style={hss}>Max temperature:</h3>
             </div>
             <div class="card-block">
-              <blockquote class="card-blockquote">
-                {this.state.temp.temp_max}
-              </blockquote>
+              <blockquote class="card-blockquote" />
             </div>
           </div>
 
@@ -90,9 +59,7 @@ export class WeatherDetails extends Component {
               <h3 style={hss}>Min temperature:</h3>
             </div>
             <div class="card-block">
-              <blockquote class="card-blockquote">
-                {this.state.temp.temp_min}
-              </blockquote>
+              <blockquote class="card-blockquote" />
             </div>
           </div>
 
@@ -101,9 +68,7 @@ export class WeatherDetails extends Component {
               <h3 style={hss}>Pressure: </h3>
             </div>
             <div class="card-block">
-              <blockquote class="card-blockquote">
-                {this.state.temp.pressure}
-              </blockquote>
+              <blockquote class="card-blockquote" />
             </div>
           </div>
 
@@ -112,9 +77,7 @@ export class WeatherDetails extends Component {
               <h3 style={hss}>Humidity:</h3>
             </div>
             <div class="card-block">
-              <blockquote class="card-blockquote">
-                {this.state.temp.humidity}
-              </blockquote>
+              <blockquote class="card-blockquote" />
             </div>
           </div>
         </p>
@@ -122,9 +85,15 @@ export class WeatherDetails extends Component {
     );
   }
 }
-const Div=styled.div`
-  display: flex
-`
+
+const Div = styled.div`display: flex;`;
+
 const WEATHER_FOR_SINGLE_CITY_URL = "/weather?units=metric&";
 
-export default WeatherDetails;
+const mapStateToProps = currentState => {
+  return {
+    data: currentState.weather.cityFromSearch
+  };
+};
+
+export default connect(mapStateToProps)(WeatherDetails);

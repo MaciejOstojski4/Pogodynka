@@ -3,7 +3,7 @@ import "./App.css";
 import { Router, Route, IndexRoute, Link, hashHistory } from "react-router";
 import { Home } from "./Home";
 import Layout from "./Layout";
-import { WeatherDetails } from "./weather/WeatherDetails";
+import WeatherDetails from "./weather/WeatherDetails";
 
 class App extends Component {
   render() {
