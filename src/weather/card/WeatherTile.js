@@ -4,7 +4,7 @@
 import React from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router";
-import { changeDispalyedDetailsAction } from "../reducer/weather";
+import { changeDisplayedDetailsAction } from "../reducer/actions/weather-actions";
 import { connect } from "react-redux";
 
 class WeatherTile extends React.Component {
@@ -13,7 +13,7 @@ class WeatherTile extends React.Component {
   }
 
   showDetails = e => {
-    this.props.dispatch(changeDispalyedDetailsAction(this.props.city));
+    this.props.dispatch(changeDisplayedDetailsAction(this.props.city));
     this.props.router.push("weatherdetails");
   };
 

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import apiClient from "../lib/api-client";
 import { connect } from "react-redux";
-import { changeFoundedCityAction } from "./reducer/weather";
+import { changeDisplayedDetailsAction } from "./reducer/actions/weather-actions";
 import styled from "styled-components";
+import { withRouter } from "react-router";
 
 export class SearchWeather extends Component {
   constructor(props) {
@@ -36,7 +37,8 @@ export class SearchWeather extends Component {
     apiClient
       .get(url)
       .then(response => {
-        this.props.dispatch(changeFoundedCityAction(response.data));
+        this.props.dispatch(changeDisplayedDetailsAction(response.data));
+        this.props.router.push("weatherdetails");
       })
       .catch(error => {
         console.log("Error while searching by city name: " + error);
@@ -95,4 +97,4 @@ const SEARCH_URL = "/weather?units=metric&";
 
 const LAT_LONG_REGEX = /(-)?[0-9]+\.[0-9]+:(-)?[0-9]+\.[0-9]+/;
 
-export default connect()(SearchWeather);
+export default connect()(withRouter(SearchWeather));

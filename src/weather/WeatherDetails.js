@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import axios from "axios";
-import apiClient from "../lib/api-client";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { withRouter } from "react-router";
+
 class WeatherDetails extends Component {
   constructor(props) {
     super(props);
@@ -15,14 +13,14 @@ class WeatherDetails extends Component {
     const pStyle = {
       width: "500px",
       paddingTop: "20px",
-      paddingLeft: "100px"
+      paddingLeft: "100px",
     };
     const boxStyle = {
-      backgroundColor: "#faebd7"
+      backgroundColor: "#faebd7",
     };
     const hss = {
       paddingTop: "20px",
-      paddingLeft: "20px"
+      paddingLeft: "20px",
     };
 
     return (
@@ -92,7 +90,7 @@ const WEATHER_FOR_SINGLE_CITY_URL = "/weather?units=metric&";
 
 const mapStateToProps = currentState => {
   return {
-    data: currentState.weather.cityFromSearch
+    data: currentState.weather.cityDetails,
   };
 };
 
