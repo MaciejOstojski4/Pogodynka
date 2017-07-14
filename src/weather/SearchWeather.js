@@ -57,14 +57,7 @@ export class SearchWeather extends Component {
 
   render() {
     return (
-      <div style={{
-        "background-color": "#cddc39",
-        "padding": "20px",
-        "margin-bottom": "20px",
-        "margin-left": "5px",
-        "margin-right": "5px",
-        "box-shadow": "2px 2px 4px",
-      }}>
+      <SearchBox>
         <SearchForm>
           <div className="col-md-10">
             <SearchInput
@@ -84,10 +77,19 @@ export class SearchWeather extends Component {
             </SubmitButtonSubmit>
           </div>
         </SearchForm>
-      </div>
+      </SearchBox>
     );
   }
 }
+
+const SearchBox = styled.div`
+  background-color: #cddc39;
+  padding: 20px;
+  margin-bottom: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+  box-shadow: 2px 2px 4px;
+`;
 
 const SearchInput = styled.input`
   border: none;
@@ -101,14 +103,12 @@ const SubmitButtonSubmit = styled.button`
   box-shadow: 2px 2px 4px #888888;
   background-color: #827717;
   color: white;
-  &:hover{
+  &:hover {
     color: white;
   }
 `;
 
-const SearchForm = styled.form`
-  display: flex;
-`;
+const SearchForm = styled.form`display: flex;`;
 
 const SEARCH_URL = "/weather?units=metric&";
 
