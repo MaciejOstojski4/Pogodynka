@@ -57,17 +57,24 @@ export class SearchWeather extends Component {
 
   render() {
     return (
-      <div>
-        <FormStyled>
-          <div className="col-lg-10">
-            <InputStyled
+      <div style={{
+        "background-color": "#cddc39",
+        "padding": "20px",
+        "margin-bottom": "20px",
+        "margin-left": "5px",
+        "margin-right": "5px",
+        "box-shadow": "2px 2px 4px",
+      }}>
+        <SearchForm>
+          <div className="col-md-10">
+            <SearchInput
               className="form-control input-lg"
-              placeholder="Search"
+              placeholder="type city name or latitude:longitude..."
               type="text"
               onChange={this.refreshState}
             />
           </div>
-          <div className="col-lg-2">
+          <div className="col-md-2">
             <SubmitButtonSubmit
               className="btn btn-lg"
               type="submit"
@@ -76,18 +83,13 @@ export class SearchWeather extends Component {
               Search
             </SubmitButtonSubmit>
           </div>
-        </FormStyled>
-        <div className="col-md-4">
-          <h4>
-            {this.state.errorInfo}
-          </h4>
-        </div>
+        </SearchForm>
       </div>
     );
   }
 }
 
-const InputStyled = styled.input`
+const SearchInput = styled.input`
   border: none;
   border-radius: 0px;
   box-shadow: 2px 2px 4px;
@@ -96,11 +98,15 @@ const InputStyled = styled.input`
 const SubmitButtonSubmit = styled.button`
   border: none;
   border-radius: 0px;
-  box-shadow: 2px 2px 4px;
+  box-shadow: 2px 2px 4px #888888;
+  background-color: #827717;
+  color: white;
+  &:hover{
+    color: white;
+  }
 `;
 
-const FormStyled = styled.form`
-  margin-bottom: 20px;
+const SearchForm = styled.form`
   display: flex;
 `;
 

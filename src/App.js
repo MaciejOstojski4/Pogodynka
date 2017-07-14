@@ -23,6 +23,9 @@ class App extends Component {
 
 const Container = styled.div`
   background-image: url(http://i.stack.imgur.com/oslRB.png);
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-bottom: 25px;
 `;
 
 export default App;

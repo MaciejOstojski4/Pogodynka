@@ -65,11 +65,17 @@ const Card = styled.div`
   float: left;
   margin: 5px;
   min-width: 200px;
-  background-color: #2196f3;
+  background-color:  #cddc39;
   flex: 1;
   flex-direction: column;
   display: flex;
   box-shadow: 2px 2px 4px;
+  &:hover {
+    opacity: 0.7;
+  }
+  &:active{
+    box-shadow: 0px 0px 0px;
+  }
 `;
 
 export default connect()(withRouter(WeatherTile));

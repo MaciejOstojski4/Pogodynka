@@ -4,7 +4,7 @@ import Header from "./user-interface/Header";
 class Layout extends React.Component {
   render() {
     return (
-      <div className="container">
+      <div>
         <Header />
         {this.props.children}
       </div>
