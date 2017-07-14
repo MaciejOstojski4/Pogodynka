@@ -4,7 +4,7 @@
 const initialState = {
   cities: [],
   cityDetailsById: -1,
-  cityFromSearch: {},
+  cityFromSearch: undefined,
 };
 
 const weather = (currentState = initialState, action) => {

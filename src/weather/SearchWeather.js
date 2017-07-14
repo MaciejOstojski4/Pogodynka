@@ -54,8 +54,7 @@ export class SearchWeather extends Component {
   render() {
     return (
 
-      <div className="row">
-        <div className="col-md-4 col-md-offset-4 text-center">
+
           <form className="form-inline">
             <div className="form-group">
               <ReactHover options={REACT_HOVER_OPTS}>
@@ -83,8 +82,7 @@ export class SearchWeather extends Component {
             </div>
           </form>
 
-        </div>
-      </div>
+    
     );
   }
 }

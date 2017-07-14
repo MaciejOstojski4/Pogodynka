@@ -4,15 +4,17 @@ import SearchWeather from "./weather/SearchWeather";
 
 class Layout extends React.Component {
   render() {
-    const qwe = {
+    const navStyle = {
       backgroundColor: "#faebd7",
 
     };
-
+const searchStyle={
+  padding:"10px"
+}
     return (
       <div className="container">
         <div>
-          <nav style={qwe} className="navbar navbar-inverse ">
+          <nav style={navStyle} className="navbar navbar-inverse ">
             <div className="container-fluid">
               <div className="navbar-header"> <a className="navbar-brand">Pogodynka</a></div>
                 <ul className="nav navbar-nav">
@@ -24,7 +26,7 @@ class Layout extends React.Component {
                   </li>
                 </ul>
                 <ul className="nav navbar-nav navbar-right">
-                  <li><SearchWeather /></li>
+                  <li style={searchStyle}><SearchWeather /></li>
                 </ul>
               </div>
           </nav>
