@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend
+} from "recharts";
 
 class WeatherDetails extends Component {
   constructor(props) {
@@ -10,76 +19,35 @@ class WeatherDetails extends Component {
   }
 
   render() {
-    const pStyle = {
-      width: "500px",
-      paddingTop: "20px",
-      paddingLeft: "100px",
-    };
-    const boxStyle = {
-      backgroundColor: "#faebd7",
-    };
-    const hss = {
-      paddingTop: "20px",
-      paddingLeft: "20px",
-    };
+    console.log(this.props.data.list);
 
+    const dat = [
+      { uv: 4000 },
+      { uv: 3000 },
+      { uv: 2000 },
+      { uv: 2780 },
+      { uv: 1890 },
+      { uv: 2390 },
+      { uv: 3490 }
+    ];
+    console.log(dat);
     return (
-      <Div className="container-fluid">
-        <h1>
-          {this.props.data.name}
-          <p>
-            <small> Weather details</small>
-          </p>
-        </h1>
-        <p style={pStyle}>
-          <div style={boxStyle} className="card">
-            <div className="card-header">
-              <h3 style={hss}>Temperature:</h3>
-            </div>
-            <div class="card-block">
-              <blockquote class="card-blockquote">
-                {this.props.data.main.temp}
-              </blockquote>
-            </div>
-          </div>
+      <div>
+        <LineChart
+          width={730}
+          height={250}
+          data={dat}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        >
+          <XAxis dataKey="name" />
+          <YAxis />
 
-          <div style={boxStyle} className="card">
-            <div className="card-header">
-              <h3 style={hss}>Max temperature:</h3>
-            </div>
-            <div class="card-block">
-              <blockquote class="card-blockquote" />
-            </div>
-          </div>
-
-          <div style={boxStyle} className="card">
-            <div className="card-header">
-              <h3 style={hss}>Min temperature:</h3>
-            </div>
-            <div class="card-block">
-              <blockquote class="card-blockquote" />
-            </div>
-          </div>
-
-          <div style={boxStyle} className="card">
-            <div className="card-header">
-              <h3 style={hss}>Pressure: </h3>
-            </div>
-            <div class="card-block">
-              <blockquote class="card-blockquote" />
-            </div>
-          </div>
-
-          <div style={boxStyle} className="card">
-            <div className="card-header">
-              <h3 style={hss}>Humidity:</h3>
-            </div>
-            <div class="card-block">
-              <blockquote class="card-blockquote" />
-            </div>
-          </div>
-        </p>
-      </Div>
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="asd" stroke="#8884d8" />
+          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+        </LineChart>
+      </div>
     );
   }
 }
@@ -90,7 +58,7 @@ const WEATHER_FOR_SINGLE_CITY_URL = "/weather?units=metric&";
 
 const mapStateToProps = currentState => {
   return {
-    data: currentState.weather.cityDetails,
+    data: currentState.weather.cityDetails
   };
 };
 

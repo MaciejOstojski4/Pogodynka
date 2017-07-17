@@ -11,14 +11,14 @@ export class SearchWeather extends Component {
 
     this.state = {
       inputText: "",
-      errorInfo: "",
+      errorInfo: ""
     };
   }
 
   refreshState = e => {
     e.preventDefault();
     this.setState({
-      inputText: e.target.value,
+      inputText: e.target.value
     });
   };
 
@@ -44,7 +44,7 @@ export class SearchWeather extends Component {
       .catch(error => {
         console.log("Error while searching by city name: " + error);
         this.setState({
-          errorInfo: "Cannot find this city",
+          errorInfo: "Cannot find this city"
         });
       });
   };
@@ -110,7 +110,7 @@ const SubmitButtonSubmit = styled.button`
 
 const SearchForm = styled.form`display: flex;`;
 
-const SEARCH_URL = "/weather?units=metric&";
+const SEARCH_URL = "forecast?units=metric&";
 
 const LAT_LONG_REGEX = /(-)?[0-9]+\.[0-9]+:(-)?[0-9]+\.[0-9]+/;
 
