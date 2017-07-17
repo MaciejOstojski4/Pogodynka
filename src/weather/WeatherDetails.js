@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ForecastPlaceHolder from "./forecast/ForecastPlaceHolder";
-import styled from "styled-components";
 import {
   LineChart,
   Line,
@@ -10,8 +9,6 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer,
-  ReferenceLine
 } from "recharts";
 
 class WeatherDetails extends Component {
@@ -20,7 +17,7 @@ class WeatherDetails extends Component {
 
     this.state = {
       dayForecast: [],
-      nightForecast: []
+      nightForecast: [],
     };
   }
 
@@ -40,7 +37,7 @@ class WeatherDetails extends Component {
   prepareDataForForecast = () => {
     this.setState({
       dayForecast: this.getDailyForecastAtHour("12:00:00"),
-      nightForecast: this.getDailyForecastAtHour("00:00:00")
+      nightForecast: this.getDailyForecastAtHour("00:00:00"),
     });
   };
 
@@ -53,8 +50,8 @@ class WeatherDetails extends Component {
           day: `${a.dt_txt.slice(8, 10)}.${a.dt_txt.slice(5, 7)}`,
           td: `${a.dt_txt.slice(11, 16)} ${a.dt_txt.slice(
             8,
-            10
-          )}.${a.dt_txt.slice(5, 7)}`
+            10,
+          )}.${a.dt_txt.slice(5, 7)}`,
         };
       })
       .slice(0, 9);
@@ -70,39 +67,24 @@ class WeatherDetails extends Component {
     return (
       <div>
         <div className="row">
-          <div className="col-md-4" />
-          <div className="col-md-8">
-            <ChartContainer>
-              <h3>
-                Temperatures in next 24 hours in {this.props.data.city.name}
-              </h3>
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                  data={forecastData}
-                  margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
-                >
-                  <XAxis dataKey="time" />
-                  <YAxis />
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <Tooltip>
-                    <Line
-                      type="monotone"
-                      dataKey="temperature"
-                      stroke="#8884d8"
-                      fillOpacity={1}
-                      fill="url(#colorUv)"
-                    />
-                  </Tooltip>
+          <div className="col-md-4" >
 
-                  <Line
-                    type="monotone"
-                    dataKey="temperature"
-                    stroke="#e91b1b"
-                    fill="#8884d8"
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </ChartContainer>
+          </div>
+          <div className="col-md-8">
+            <LineChart
+              width={730}
+              height={250}
+              data={forecastData}
+              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid stroke="#000" strokeDasharray="2 2" />
+              <XAxis dataKey="time" />
+              <YAxis />
+
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="temperature" stroke="#e91b1b" />
+            </LineChart>
           </div>
         </div>
 
@@ -118,26 +100,9 @@ class WeatherDetails extends Component {
   }
 }
 
-const DateTile = styled.div`
-  background-color: #827717;
-  margin: 10px;
-  margin-bottom: 10px;
-  color: white;
-  padding: 2px;
-  box-shadow: 2px 2px 4px black;
-`;
-
-const ChartContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50vw;
-  height: 30vh;
-  text-align: center;
-`;
-
 const mapStateToProps = currentState => {
   return {
-    data: currentState.weather.cityDetails
+    data: currentState.weather.cityDetails,
   };
 };
 
