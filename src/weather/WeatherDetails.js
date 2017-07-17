@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import ForecastTile from "./ForecastTile";
 import {
   LineChart,
   Line,
@@ -8,19 +9,47 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend
+  Legend,
 } from "recharts";
 
 class WeatherDetails extends Component {
   constructor(props) {
     super(props);
-    data: {
-    }
+
+    this.state = {
+      dayArray: [],
+      nightArray: [],
+    };
+  }
+
+  prepareData = () => {
+    const dayArray = this.props.data.list.filter(val => {
+      let weatherDate = val.dt_txt.split(" ")[1].toString();
+      if (weatherDate === "12:00:00") {
+        return val;
+      }
+    });
+
+    const nightArray = this.props.data.list.filter(val => {
+      let weatherDate = val.dt_txt.split(" ")[1].toString();
+      if (weatherDate === "00:00:00") {
+        return val;
+      }
+    });
+    console.log(dayArray);
+    console.log(nightArray);
+
+    this.setState({
+      dayArray: dayArray.slice(1,dayArray.length),
+      nightArray: nightArray,
+    });
+  };
+
+  componentDidMount() {
+    this.prepareData();
   }
 
   render() {
-    console.log(this.props.data.list);
-
     const dat = [
       { uv: 4000 },
       { uv: 3000 },
@@ -28,9 +57,8 @@ class WeatherDetails extends Component {
       { uv: 2780 },
       { uv: 1890 },
       { uv: 2390 },
-      { uv: 3490 }
+      { uv: 3490 },
     ];
-    console.log(dat);
     return (
       <div>
         <LineChart
@@ -47,10 +75,26 @@ class WeatherDetails extends Component {
           <Line type="monotone" dataKey="asd" stroke="#8884d8" />
           <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
         </LineChart>
+
+        <ForecastPlaceHolder>
+          {this.state.dayArray.map((city, index) => {
+            return (
+              <ForecastTile
+                dayWeather={city}
+                nightWeather={this.state.nightArray[index]}
+              />
+            );
+          })}
+        </ForecastPlaceHolder>
       </div>
     );
   }
 }
+
+const ForecastPlaceHolder = styled.div`
+  display: flex;
+  flex-direction: wrap;
+`;
 
 const Div = styled.div`display: flex;`;
 
@@ -58,7 +102,7 @@ const WEATHER_FOR_SINGLE_CITY_URL = "/weather?units=metric&";
 
 const mapStateToProps = currentState => {
   return {
-    data: currentState.weather.cityDetails
+    data: currentState.weather.cityDetails,
   };
 };
 
