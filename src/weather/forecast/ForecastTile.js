@@ -46,7 +46,7 @@ const Tile = styled.div`
 
 const TileField = styled.div`
   flex: 1;
-  font-size: 150%;
+  font-size: 120%;
   margin: 5px;
   margin-top: 10px;
 `;
