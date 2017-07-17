@@ -10,6 +10,11 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+<<<<<<< HEAD
+=======
+  ResponsiveContainer,
+  ReferenceLine
+>>>>>>> wykres_fix
 } from "recharts";
 
 class WeatherDetails extends Component {
@@ -22,6 +27,7 @@ class WeatherDetails extends Component {
     };
   }
 
+<<<<<<< HEAD
   getHoursFromDate = date => {
     return date.split(" ")[1];
   };
@@ -53,6 +59,16 @@ class WeatherDetails extends Component {
             8,
             10,
           )}.${a.dt_txt.slice(5, 7)}`,
+=======
+  render() {
+    console.log(this.props.data.city.name);
+    const forecastData = this.props.data.list
+      .map(a => {
+        return {
+          temperature: a.main.temp,
+          time: a.dt_txt.slice(11, 16),
+          day: `${a.dt_txt.slice(8, 10)}.${a.dt_txt.slice(5, 7)}`
+>>>>>>> wykres_fix
         };
       })
       .slice(0, 9);
@@ -66,10 +82,9 @@ class WeatherDetails extends Component {
     const forecastData = this.prepareDataForChart();
 
     return (
-      <div>
+      /*
+      <ResponsiveContainer width="60%" aspec={2}>
         <LineChart
-          width={730}
-          height={250}
           data={forecastData}
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
         >
@@ -81,6 +96,7 @@ class WeatherDetails extends Component {
           <Legend />
           <Line type="monotone" dataKey="temperature" stroke="#e91b1b" />
         </LineChart>
+<<<<<<< HEAD
 
         <div className="text-center">
           <h2>Forecast for 4 days</h2>
@@ -106,10 +122,46 @@ class WeatherDetails extends Component {
           })}
         </ForecastPlaceHolder>
       </div>
+=======
+      </ResponsiveContainer>
+      */
+      <ChartContainer>
+        <h3>
+          Temperatures in next 24 hours in {this.props.data.city.name}
+        </h3>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart
+            data={forecastData}
+            margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
+          >
+            <XAxis dataKey="time" />
+            <YAxis />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Tooltip>
+              <Line
+                type="monotone"
+                dataKey="temperature"
+                stroke="#8884d8"
+                fillOpacity={1}
+                fill="url(#colorUv)"
+              />
+            </Tooltip>
+
+            <Line
+              type="monotone"
+              dataKey="temperature"
+              stroke="#e91b1b"
+              fill="#8884d8"
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </ChartContainer>
+>>>>>>> wykres_fix
     );
   }
 }
 
+<<<<<<< HEAD
 const DateTile = styled.div`
   background-color: #827717;
   margin: 10px;
@@ -130,6 +182,16 @@ const ForecastPlaceHolder = styled.div`
   display: flex;
   flex-direction: wrap;
 `;
+=======
+const ChartContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  height: 30vh;
+  text-align: center;
+`;
+const WEATHER_FOR_SINGLE_CITY_URL = "/weather?units=metric&";
+>>>>>>> wykres_fix
 
 const mapStateToProps = currentState => {
   return {

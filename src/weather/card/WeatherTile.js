@@ -30,7 +30,6 @@ class WeatherTile extends React.Component {
     apiClient
       .get(url)
       .then(response => {
-        console.log(response.data);
         this.props.dispatch(changeDisplayedDetailsAction(response.data));
       })
       .catch(error => {
