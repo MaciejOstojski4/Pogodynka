@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import ForecastTile from "./ForecastTile";
 import {
   LineChart,
   Line,
@@ -9,30 +10,60 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
 } from "recharts";
 
 class WeatherDetails extends Component {
   constructor(props) {
     super(props);
-    data: {
-    }
+
+    this.state = {
+      dayForecast: [],
+      nightForecast: [],
+    };
   }
 
-  render() {
-    const forecastData = this.props.data.list
+  getHoursFromDate = date => {
+    return date.split(" ")[1];
+  };
+
+  getDailyForecastAtHour = hour => {
+    return this.props.data.list.filter(weather => {
+      const weatherHour = this.getHoursFromDate(weather.dt_txt);
+      if (weatherHour === hour) {
+        return weather;
+      }
+    });
+  };
+
+  prepareDataForForecast = () => {
+    this.setState({
+      dayForecast: this.getDailyForecastAtHour("12:00:00"),
+      nightForecast: this.getDailyForecastAtHour("00:00:00"),
+    });
+  };
+
+  prepareDataForChart = () => {
+    return this.props.data.list
       .map(a => {
         return {
           temperature: a.main.temp,
-          time: a.dt_txt.slice(11, 16),
+          time: this.getHoursFromDate(a.dt_txt),
           day: `${a.dt_txt.slice(8, 10)}.${a.dt_txt.slice(5, 7)}`,
           td: `${a.dt_txt.slice(11, 16)} ${a.dt_txt.slice(
             8,
-            10
-          )}.${a.dt_txt.slice(5, 7)}`
+            10,
+          )}.${a.dt_txt.slice(5, 7)}`,
         };
       })
       .slice(0, 9);
+  };
+
+  componentDidMount() {
+    this.prepareDataForForecast();
+  }
+
+  render() {
+    const forecastData = this.prepareDataForChart();
 
     return (
       <div>
@@ -50,18 +81,30 @@ class WeatherDetails extends Component {
           <Legend />
           <Line type="monotone" dataKey="temperature" stroke="#e91b1b" />
         </LineChart>
+
+        <ForecastPlaceHolder>
+          {this.state.dayForecast.map((forecast, index) => {
+            return (
+              <ForecastTile
+                dayForecast={forecast}
+                nightForecast={this.state.nightForecast[index]}
+              />
+            );
+          })}
+        </ForecastPlaceHolder>
       </div>
     );
   }
 }
 
-const Div = styled.div`display: flex;`;
-
-const WEATHER_FOR_SINGLE_CITY_URL = "/weather?units=metric&";
+const ForecastPlaceHolder = styled.div`
+  display: flex;
+  flex-direction: wrap;
+`;
 
 const mapStateToProps = currentState => {
   return {
-    data: currentState.weather.cityDetails
+    data: currentState.weather.cityDetails,
   };
 };
 
