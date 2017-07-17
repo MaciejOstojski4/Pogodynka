@@ -8,7 +8,8 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend
+  Legend,
+  ResponsiveContainer
 } from "recharts";
 
 class WeatherDetails extends Component {
@@ -19,33 +20,34 @@ class WeatherDetails extends Component {
   }
 
   render() {
-    console.log(this.props.data.list);
-
-    const dat = [
-      { uv: 4000 },
-      { uv: 3000 },
-      { uv: 2000 },
-      { uv: 2780 },
-      { uv: 1890 },
-      { uv: 2390 },
-      { uv: 3490 }
-    ];
-    console.log(dat);
+    console.log(this.props.data);
+    const forecastData = this.props.data.list.map(a => {
+      return {
+        temperature: a.main.temp,
+        time: a.dt_txt.slice(11, 16),
+        day: `${a.dt_txt.slice(8, 10)}.${a.dt_txt.slice(5, 7)}`,
+        td: `${a.dt_txt.slice(11, 16)} ${a.dt_txt.slice(
+          8,
+          10
+        )}.${a.dt_txt.slice(5, 7)}`
+      };
+    });
+    console.log(forecastData);
     return (
       <div>
         <LineChart
           width={730}
           height={250}
-          data={dat}
+          data={forecastData}
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
         >
-          <XAxis dataKey="name" />
+          <CartesianGrid stroke="#000" strokeDasharray="2 2" />
+          <XAxis dataKey="time" />
           <YAxis />
 
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="asd" stroke="#8884d8" />
-          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+          <Line type="monotone" dataKey="temperature" stroke="#e91b1b" />
         </LineChart>
       </div>
     );
