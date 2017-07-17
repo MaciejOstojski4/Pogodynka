@@ -68,22 +68,6 @@ class WeatherDetails extends Component {
     const forecastData = this.prepareDataForChart();
 
     return (
-      /*
-      <ResponsiveContainer width="60%" aspec={2}>
-        <LineChart
-          data={forecastData}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
-          <CartesianGrid stroke="#000" strokeDasharray="2 2" />
-          <XAxis dataKey="time" />
-          <YAxis />
-
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="temperature" stroke="#e91b1b" />
-        </LineChart>
-      </ResponsiveContainer>
-      */
       <ChartContainer>
         <h3>
           Temperatures in next 24 hours in {this.props.data.city.name}
@@ -134,7 +118,13 @@ const DailyForecastPlaceHolder = styled.div`
   margin: 5px;
   box-shadow: 2px 2px 4px black;
 `;
-
+const ChartContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  height: 30vh;
+  text-align: center;
+`;
 const ForecastPlaceHolder = styled.div`
   display: flex;
   flex-direction: wrap;
