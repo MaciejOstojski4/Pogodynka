@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 import { connect } from "react-redux";
-import ForecastTile from "./ForecastTile";
+import ForecastPlaceHolder from "./forecast/ForecastPlaceHolder";
+import styled from "styled-components";
 import {
   LineChart,
   Line,
@@ -68,37 +68,52 @@ class WeatherDetails extends Component {
     const forecastData = this.prepareDataForChart();
 
     return (
-      <ChartContainer>
-        <h3>
-          Temperatures in next 24 hours in {this.props.data.city.name}
-        </h3>
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart
-            data={forecastData}
-            margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
-          >
-            <XAxis dataKey="time" />
-            <YAxis />
-            <CartesianGrid strokeDasharray="3 3" />
-            <Tooltip>
-              <Line
-                type="monotone"
-                dataKey="temperature"
-                stroke="#8884d8"
-                fillOpacity={1}
-                fill="url(#colorUv)"
-              />
-            </Tooltip>
+      <div>
+        <div className="row">
+          <div className="col-md-4" />
+          <div className="col-md-8">
+            <ChartContainer>
+              <h3>
+                Temperatures in next 24 hours in {this.props.data.city.name}
+              </h3>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={forecastData}
+                  margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
+                >
+                  <XAxis dataKey="time" />
+                  <YAxis />
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <Tooltip>
+                    <Line
+                      type="monotone"
+                      dataKey="temperature"
+                      stroke="#8884d8"
+                      fillOpacity={1}
+                      fill="url(#colorUv)"
+                    />
+                  </Tooltip>
 
-            <Line
-              type="monotone"
-              dataKey="temperature"
-              stroke="#e91b1b"
-              fill="#8884d8"
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </ChartContainer>
+                  <Line
+                    type="monotone"
+                    dataKey="temperature"
+                    stroke="#e91b1b"
+                    fill="#8884d8"
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </div>
+        </div>
+
+        <div className="text-center">
+          <h2>Forecast for 4 days</h2>
+        </div>
+        <ForecastPlaceHolder
+          dayForecast={this.state.dayForecast}
+          nightForecast={this.state.nightForecast}
+        />
+      </div>
     );
   }
 }
@@ -112,22 +127,12 @@ const DateTile = styled.div`
   box-shadow: 2px 2px 4px black;
 `;
 
-const DailyForecastPlaceHolder = styled.div`
-  flex: 1;
-  background-color: #e6ee9c;
-  margin: 5px;
-  box-shadow: 2px 2px 4px black;
-`;
 const ChartContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 50vw;
   height: 30vh;
   text-align: center;
-`;
-const ForecastPlaceHolder = styled.div`
-  display: flex;
-  flex-direction: wrap;
 `;
 
 const mapStateToProps = currentState => {
