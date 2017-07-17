@@ -32,7 +32,7 @@ class WeatherDetails extends Component {
         )}.${a.dt_txt.slice(5, 7)}`
       };
     });
-    console.log(forecastData);
+
     return (
       <div>
         <LineChart

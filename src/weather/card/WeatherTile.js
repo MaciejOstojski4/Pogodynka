@@ -3,22 +3,42 @@
  */
 import React from "react";
 import styled from "styled-components";
-import {withRouter} from "react-router";
-import {changeDisplayedDetailsAction} from "../reducer/actions/weather-actions";
-import {connect} from "react-redux";
-
+import { withRouter } from "react-router";
+import { changeDisplayedDetailsAction } from "../reducer/actions/weather-actions";
+import { connect } from "react-redux";
+import apiClient from "../../lib/api-client";
 class WeatherTile extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      tileColor: { "background-color": GOOD_WEATHER_COLOR },
+      tileColor: { "background-color": GOOD_WEATHER_COLOR }
     };
   }
 
   showDetails = e => {
-    this.props.dispatch(changeDisplayedDetailsAction(this.props.city));
+    const url = this.prepareUrl();
+    this.fetchWeather(url);
     this.props.router.push("weatherdetails");
+  };
+
+  prepareUrl = () => {
+    return `${SEARCH_URL}q=${this.props.city.name}`;
+  };
+
+  fetchWeather = url => {
+    apiClient
+      .get(url)
+      .then(response => {
+        console.log(response.data);
+        this.props.dispatch(changeDisplayedDetailsAction(response.data));
+      })
+      .catch(error => {
+        console.log("Error while searching by city name: " + error);
+        this.setState({
+          errorInfo: "Cannot find this city"
+        });
+      });
   };
 
   getWeatherIcon = () => {
@@ -27,7 +47,7 @@ class WeatherTile extends React.Component {
 
   refreshTileColorInState = tileColor => {
     this.setState({
-      tileColor: { "background-color": tileColor },
+      tileColor: { "background-color": tileColor }
     });
   };
 
@@ -140,4 +160,6 @@ const Card = styled.div`
   }
 `;
 
+const LAT_LONG_REGEX = /(-)?[0-9]+\.[0-9]+:(-)?[0-9]+\.[0-9]+/;
+const SEARCH_URL = "forecast?units=metric&";
 export default connect()(withRouter(WeatherTile));
