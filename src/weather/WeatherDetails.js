@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import CurrentWeatherDetails from "./CurrentWeatherDetails";
 
 class WeatherDetails extends Component {
   constructor(props) {
@@ -68,7 +69,7 @@ class WeatherDetails extends Component {
       <div>
         <div className="row">
           <div className="col-md-4" >
-
+            <CurrentWeatherDetails city={this.props.data.list[0]} cityName={this.props.data.city.name}/>
           </div>
           <div className="col-md-8">
             <LineChart
@@ -88,13 +89,15 @@ class WeatherDetails extends Component {
           </div>
         </div>
 
-        <div className="text-center">
-          <h2>Forecast for 4 days</h2>
+        <div className="row">
+          <div className="text-center">
+            <h2>Forecast for 4 days</h2>
+          </div>
+          <ForecastPlaceHolder
+            dayForecast={this.state.dayForecast}
+            nightForecast={this.state.nightForecast}
+          />
         </div>
-        <ForecastPlaceHolder
-          dayForecast={this.state.dayForecast}
-          nightForecast={this.state.nightForecast}
-        />
       </div>
     );
   }

@@ -127,11 +127,11 @@ class WeatherTile extends React.Component {
   }
 }
 
-const GOOD_WEATHER_COLOR = "#cddc39";
+const GOOD_WEATHER_COLOR = "#ffd600";
 
 const AVERAGE_WEATHER_COLOR = "#7cb342";
 
-const BAD_WEATHER_COLOR = "#2e7d32";
+const BAD_WEATHER_COLOR = "#0277bd";
 
 const ICON_URL = "http://openweathermap.org/img/w/";
 
@@ -151,7 +151,7 @@ const Card = styled.div`
   flex: 1;
   flex-direction: column;
   display: flex;
-  box-shadow: 2px 2px 4px;
+  box-shadow: 2px 2px 4px black;
   &:hover {
     opacity: 0.7;
   }
