@@ -20,18 +20,19 @@ class WeatherDetails extends Component {
   }
 
   render() {
-    console.log(this.props.data);
-    const forecastData = this.props.data.list.map(a => {
-      return {
-        temperature: a.main.temp,
-        time: a.dt_txt.slice(11, 16),
-        day: `${a.dt_txt.slice(8, 10)}.${a.dt_txt.slice(5, 7)}`,
-        td: `${a.dt_txt.slice(11, 16)} ${a.dt_txt.slice(
-          8,
-          10
-        )}.${a.dt_txt.slice(5, 7)}`
-      };
-    });
+    const forecastData = this.props.data.list
+      .map(a => {
+        return {
+          temperature: a.main.temp,
+          time: a.dt_txt.slice(11, 16),
+          day: `${a.dt_txt.slice(8, 10)}.${a.dt_txt.slice(5, 7)}`,
+          td: `${a.dt_txt.slice(11, 16)} ${a.dt_txt.slice(
+            8,
+            10
+          )}.${a.dt_txt.slice(5, 7)}`
+        };
+      })
+      .slice(0, 9);
 
     return (
       <div>
