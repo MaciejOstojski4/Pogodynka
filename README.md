@@ -5,8 +5,3 @@
     - react-localstorage
     - react-router
     - react-responsive
-
-## Product Backlog (11.07.2017)
-    1. Strona domowa wyświetlająca na stałe pogodę z kilku stolic europejskich,
-    2. Wyszukiwarka miast,
-    3. Widok szczegółowy.
