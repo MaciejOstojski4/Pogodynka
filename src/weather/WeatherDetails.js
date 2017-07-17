@@ -10,11 +10,8 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-<<<<<<< HEAD
-=======
   ResponsiveContainer,
   ReferenceLine
->>>>>>> wykres_fix
 } from "recharts";
 
 class WeatherDetails extends Component {
@@ -23,11 +20,10 @@ class WeatherDetails extends Component {
 
     this.state = {
       dayForecast: [],
-      nightForecast: [],
+      nightForecast: []
     };
   }
 
-<<<<<<< HEAD
   getHoursFromDate = date => {
     return date.split(" ")[1];
   };
@@ -44,7 +40,7 @@ class WeatherDetails extends Component {
   prepareDataForForecast = () => {
     this.setState({
       dayForecast: this.getDailyForecastAtHour("12:00:00"),
-      nightForecast: this.getDailyForecastAtHour("00:00:00"),
+      nightForecast: this.getDailyForecastAtHour("00:00:00")
     });
   };
 
@@ -57,18 +53,8 @@ class WeatherDetails extends Component {
           day: `${a.dt_txt.slice(8, 10)}.${a.dt_txt.slice(5, 7)}`,
           td: `${a.dt_txt.slice(11, 16)} ${a.dt_txt.slice(
             8,
-            10,
-          )}.${a.dt_txt.slice(5, 7)}`,
-=======
-  render() {
-    console.log(this.props.data.city.name);
-    const forecastData = this.props.data.list
-      .map(a => {
-        return {
-          temperature: a.main.temp,
-          time: a.dt_txt.slice(11, 16),
-          day: `${a.dt_txt.slice(8, 10)}.${a.dt_txt.slice(5, 7)}`
->>>>>>> wykres_fix
+            10
+          )}.${a.dt_txt.slice(5, 7)}`
         };
       })
       .slice(0, 9);
@@ -96,33 +82,6 @@ class WeatherDetails extends Component {
           <Legend />
           <Line type="monotone" dataKey="temperature" stroke="#e91b1b" />
         </LineChart>
-<<<<<<< HEAD
-
-        <div className="text-center">
-          <h2>Forecast for 4 days</h2>
-        </div>
-        <ForecastPlaceHolder>
-          {this.state.dayForecast.map((forecast, index) => {
-            return (
-              <DailyForecastPlaceHolder>
-                <DateTile className="text-center">
-                  <h3>
-                    {forecast.dt_txt.split(" ")[0]}
-                  </h3>
-                </DateTile>
-                <h4 className="text-center">Day</h4>
-                <ForecastTile forecast={forecast} backgroundColor="#8bc34a" />
-                <h4 className="text-center">Night</h4>
-                <ForecastTile
-                  forecast={this.state.nightForecast[index]}
-                  backgroundColor="#33691e"
-                />
-              </DailyForecastPlaceHolder>
-            );
-          })}
-        </ForecastPlaceHolder>
-      </div>
-=======
       </ResponsiveContainer>
       */
       <ChartContainer>
@@ -156,12 +115,10 @@ class WeatherDetails extends Component {
           </LineChart>
         </ResponsiveContainer>
       </ChartContainer>
->>>>>>> wykres_fix
     );
   }
 }
 
-<<<<<<< HEAD
 const DateTile = styled.div`
   background-color: #827717;
   margin: 10px;
@@ -182,20 +139,10 @@ const ForecastPlaceHolder = styled.div`
   display: flex;
   flex-direction: wrap;
 `;
-=======
-const ChartContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50vw;
-  height: 30vh;
-  text-align: center;
-`;
-const WEATHER_FOR_SINGLE_CITY_URL = "/weather?units=metric&";
->>>>>>> wykres_fix
 
 const mapStateToProps = currentState => {
   return {
-    data: currentState.weather.cityDetails,
+    data: currentState.weather.cityDetails
   };
 };
 
