@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 import { connect } from "react-redux";
-import ForecastTile from "./ForecastTile";
+import ForecastPlaceHolder from "./forecast/ForecastPlaceHolder";
 import {
   LineChart,
   Line,
@@ -67,69 +66,37 @@ class WeatherDetails extends Component {
 
     return (
       <div>
-        <LineChart
-          width={730}
-          height={250}
-          data={forecastData}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
-          <CartesianGrid stroke="#000" strokeDasharray="2 2" />
-          <XAxis dataKey="time" />
-          <YAxis />
+        <div className="row">
+          <div className="col-md-4" />
+          <div className="col-md-8">
+            <LineChart
+              width={730}
+              height={250}
+              data={forecastData}
+              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid stroke="#000" strokeDasharray="2 2" />
+              <XAxis dataKey="time" />
+              <YAxis />
 
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="temperature" stroke="#e91b1b" />
-        </LineChart>
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="temperature" stroke="#e91b1b" />
+            </LineChart>
+          </div>
+        </div>
 
         <div className="text-center">
           <h2>Forecast for 4 days</h2>
         </div>
-        <ForecastPlaceHolder>
-          {this.state.dayForecast.map((forecast, index) => {
-            return (
-              <DailyForecastPlaceHolder>
-                <DateTile className="text-center">
-                  <h3>
-                    {forecast.dt_txt.split(" ")[0]}
-                  </h3>
-                </DateTile>
-                <h4 className="text-center">Day</h4>
-                <ForecastTile forecast={forecast} backgroundColor="#8bc34a" />
-                <h4 className="text-center">Night</h4>
-                <ForecastTile
-                  forecast={this.state.nightForecast[index]}
-                  backgroundColor="#33691e"
-                />
-              </DailyForecastPlaceHolder>
-            );
-          })}
-        </ForecastPlaceHolder>
+        <ForecastPlaceHolder
+          dayForecast={this.state.dayForecast}
+          nightForecast={this.state.nightForecast}
+        />
       </div>
     );
   }
 }
-
-const DateTile = styled.div`
-  background-color: #827717;
-  margin: 10px;
-  margin-bottom: 10px;
-  color: white;
-  padding: 2px;
-  box-shadow: 2px 2px 4px black;
-`;
-
-const DailyForecastPlaceHolder = styled.div`
-  flex: 1;
-  background-color: #e6ee9c;
-  margin: 5px;
-  box-shadow: 2px 2px 4px black;
-`;
-
-const ForecastPlaceHolder = styled.div`
-  display: flex;
-  flex-direction: wrap;
-`;
 
 const mapStateToProps = currentState => {
   return {
