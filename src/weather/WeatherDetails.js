@@ -50,7 +50,7 @@ class WeatherDetails extends Component {
       .map(forecast => {
         return {
           temperature: forecast.main.temp,
-          time: this.getHoursFromDate(forecast.dt_txt)
+          time: this.getHoursFromDate(forecast.dt_txt).slice(0, 5)
         };
       })
       .slice(0, 9);
