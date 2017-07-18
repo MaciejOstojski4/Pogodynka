@@ -7,50 +7,42 @@ import ForecastTile from "./ForecastTile";
 import MediaQuery from "react-responsive";
 
 class ForecastPlaceHolder extends React.Component {
+  getDateWithoutHours = forecastDate => {
+    return forecastDate.dt_txt.split(" ")[0];
+  };
+
+  setDataToRender = () => {
+    return this.props.dayForecast.map((forecast, index) => {
+      return (
+        <DailyForecastPlaceHolder className="text-center">
+          <DateTile>
+            <h4>
+              {this.getDateWithoutHours(forecast)}
+            </h4>
+          </DateTile>
+          <i>Day</i>
+          <ForecastTile forecast={forecast} backgroundColor="#8bc34a" />
+          <i>Night</i>
+          <ForecastTile
+            forecast={this.props.nightForecast[index]}
+            backgroundColor="#33691e"
+          />
+        </DailyForecastPlaceHolder>
+      );
+    });
+  };
+
   render() {
     return (
       <div>
         <MediaQuery
           query="(max-device-width: 1080px)"
-          component={ScrollablePlaceHolder}>
-          {this.props.dayForecast.map((forecast, index) => {
-            return (
-              <DailyForecastPlaceHolder className="text-center">
-                <DateTile>
-                  <h4>
-                    {forecast.dt_txt.split(" ")[0]}
-                  </h4>
-                </DateTile>
-                <i>Day</i>
-                <ForecastTile forecast={forecast} backgroundColor="#8bc34a" />
-                <i>Night</i>
-                <ForecastTile
-                  forecast={this.props.nightForecast[index]}
-                  backgroundColor="#33691e"
-                />
-              </DailyForecastPlaceHolder>
-            );
-          })}
+          component={ScrollablePlaceHolder}
+        >
+          {this.setDataToRender()}
         </MediaQuery>
         <MediaQuery query="(min-device-width: 1081px)" component={PlaceHolder}>
-          {this.props.dayForecast.map((forecast, index) => {
-            return (
-              <DailyForecastPlaceHolder className="text-center">
-                <DateTile>
-                  <h4>
-                    {forecast.dt_txt.split(" ")[0]}
-                  </h4>
-                </DateTile>
-                <i>Day</i>
-                <ForecastTile forecast={forecast} backgroundColor="#8bc34a" />
-                <i>Night</i>
-                <ForecastTile
-                  forecast={this.props.nightForecast[index]}
-                  backgroundColor="#33691e"
-                />
-              </DailyForecastPlaceHolder>
-            );
-          })}
+          {this.setDataToRender()}
         </MediaQuery>
       </div>
     );
