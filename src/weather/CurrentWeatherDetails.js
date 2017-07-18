@@ -5,12 +5,15 @@ import React from "react";
 import styled from "styled-components";
 
 class CurrentWeatherDetails extends React.Component {
-
   render() {
     return (
       <CurrentWeatherTile className="text-center">
         <TileField>
-          <h2><b>{this.props.cityName}</b></h2>
+          <h2>
+            <b>
+              {this.props.cityName}
+            </b>
+          </h2>
         </TileField>
         <TileField>
           Temperature: {this.props.city.main.temp}&deg;C
