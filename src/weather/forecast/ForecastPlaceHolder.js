@@ -1,41 +1,72 @@
 /**
  * Created by react on 17.07.17.
  */
-
 import React from "react";
 import styled from "styled-components";
 import ForecastTile from "./ForecastTile";
+import MediaQuery from "react-responsive";
 
 class ForecastPlaceHolder extends React.Component {
   render() {
     return (
-      <PlaceHolder>
-        {this.props.dayForecast.map((forecast, index) => {
-          return (
-            <DailyForecastPlaceHolder>
-              <DateTile className="text-center">
-                <h4>
-                  {forecast.dt_txt.split(" ")[0]}
-                </h4>
-              </DateTile>
-              <h4 className="text-center"><i>Day</i></h4>
-              <ForecastTile forecast={forecast} backgroundColor="#8bc34a" />
-              <h4 className="text-center"><i>Night</i></h4>
-              <ForecastTile
-                forecast={this.props.nightForecast[index]}
-                backgroundColor="#33691e"
-              />
-            </DailyForecastPlaceHolder>
-          );
-        })}
-      </PlaceHolder>
+      <div>
+        <MediaQuery
+          query="(max-device-width: 1080px)"
+          component={ScrollablePlaceHolder}>
+          {this.props.dayForecast.map((forecast, index) => {
+            return (
+              <DailyForecastPlaceHolder className="text-center">
+                <DateTile>
+                  <h4>
+                    {forecast.dt_txt.split(" ")[0]}
+                  </h4>
+                </DateTile>
+                <i>Day</i>
+                <ForecastTile forecast={forecast} backgroundColor="#8bc34a" />
+                <i>Night</i>
+                <ForecastTile
+                  forecast={this.props.nightForecast[index]}
+                  backgroundColor="#33691e"
+                />
+              </DailyForecastPlaceHolder>
+            );
+          })}
+        </MediaQuery>
+        <MediaQuery query="(min-device-width: 1081px)" component={PlaceHolder}>
+          {this.props.dayForecast.map((forecast, index) => {
+            return (
+              <DailyForecastPlaceHolder className="text-center">
+                <DateTile>
+                  <h4>
+                    {forecast.dt_txt.split(" ")[0]}
+                  </h4>
+                </DateTile>
+                <i>Day</i>
+                <ForecastTile forecast={forecast} backgroundColor="#8bc34a" />
+                <i>Night</i>
+                <ForecastTile
+                  forecast={this.props.nightForecast[index]}
+                  backgroundColor="#33691e"
+                />
+              </DailyForecastPlaceHolder>
+            );
+          })}
+        </MediaQuery>
+      </div>
     );
   }
 }
 
 const PlaceHolder = styled.div`
   display: flex;
+  margin-bottom: 20px;
   flex-direction: wrap;
+`;
+
+const ScrollablePlaceHolder = styled.div`
+  display: flex;
+  margin-bottom: 20px;
+  overflow-x: scroll;
 `;
 
 const DateTile = styled.div`
