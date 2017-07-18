@@ -11,7 +11,7 @@ class ForecastPlaceHolder extends React.Component {
     return forecastDate.dt_txt.split(" ")[0];
   };
 
-  setDataToRender = () => {
+  getDataToRender = () => {
     return this.props.dayForecast.map((forecast, index) => {
       return (
         <DailyForecastPlaceHolder className="text-center">
@@ -39,10 +39,10 @@ class ForecastPlaceHolder extends React.Component {
           query="(max-device-width: 1080px)"
           component={ScrollablePlaceHolder}
         >
-          {this.setDataToRender()}
+          {this.getDataToRender()}
         </MediaQuery>
         <MediaQuery query="(min-device-width: 1081px)" component={PlaceHolder}>
-          {this.setDataToRender()}
+          {this.getDataToRender()}
         </MediaQuery>
       </div>
     );
