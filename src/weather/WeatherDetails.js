@@ -10,7 +10,8 @@ class WeatherDetails extends Component {
     this.state = {
       dayForecast: [],
       nightForecast: [],
-      forecastForChart: []
+      forecastForChart: [],
+      errorInfo: ERROR_MESSAGE
     };
   }
 
@@ -62,45 +63,69 @@ class WeatherDetails extends Component {
     });
   };
 
+  isForecastFetched = () => {
+    return this.props.data !== undefined;
+  };
+
   componentDidMount() {
-    this.prepareDataForForecast();
-    this.prepareDataForChart();
+    if (this.isForecastFetched()) {
+      this.prepareDataForForecast();
+      this.prepareDataForChart();
+    }
   }
 
-  render() {
-    return (
-      <div>
-        <div className="row">
-          <div className="col-md-4">
-            <CurrentWeatherDetails
-              city={this.props.data.list[0]}
-              cityName={this.props.data.city.name}
-            />
+  getDataToRender = () => {
+    if (this.isForecastFetched()) {
+      return (
+        <div>
+          <div className="row">
+            <div className="col-md-4">
+              <CurrentWeatherDetails
+                city={this.props.data.list[0]}
+                cityName={this.props.data.city.name}
+              />
+            </div>
+            <div className="col-md-8">
+              <Chart
+                chartData={this.state.forecastForChart}
+                title="temperature"
+                cityName={this.props.data.city.name}
+              />
+            </div>
           </div>
-          <div className="col-md-8">
-            <Chart
-              chartData={this.state.forecastForChart}
-              title="temperature"
-              cityName={this.props.data.city.name}
+          <div className="row">
+            <div className="text-center">
+              <h2>Forecast for 4 days</h2>
+            </div>
+            <ForecastPlaceHolder
+              dayForecast={this.state.dayForecast}
+              nightForecast={this.state.nightForecast}
             />
           </div>
         </div>
+      );
+    } else {
+      return (
+        <div className="col-md-12 text-center">
+          <h2>
+            {this.state.errorInfo}
+          </h2>
+        </div>
+      );
+    }
+  };
 
-        <div className="row">
-          <div className="text-center">
-            <h2>Forecast for 4 days</h2>
-          </div>
-          <ForecastPlaceHolder
-            dayForecast={this.state.dayForecast}
-            nightForecast={this.state.nightForecast}
-          />
-        </div>
-      </div>
-    );
+  render() {
+    return this.getDataToRender();
   }
 }
 
 const NUMBER_OF_DAYS_IN_FORECAST = 5;
+
+const ERROR_MESSAGE =
+  "Error occurred while application trying to fetch details information about weather. " +
+  "Probably the problem is with the OpenWeatherMap API. " +
+  "Please, try again later.";
 
 const mapStateToProps = currentState => {
   return {
