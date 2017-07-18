@@ -94,7 +94,7 @@ class WeatherDetails extends Component {
             <h2>Forecast for 4 days</h2>
           </div>
           <ForecastPlaceHolder
-            dayForecast={this.state.dayForecast}
+            dayForecast={this.state.dayForecast.slice(1, this.state.dayForecast.length)}
             nightForecast={this.state.nightForecast}
           />
         </div>
