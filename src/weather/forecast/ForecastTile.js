@@ -7,10 +7,6 @@ import styled from "styled-components";
 class ForecastTile extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      dataToRender: {}
-    };
   }
 
   render() {
@@ -18,13 +14,16 @@ class ForecastTile extends React.Component {
       <Tile style={{"background-color": this.props.backgroundColor}}>
 
         <TileField className="text-center">
-          Temperature: {this.props.forecast.main.temp}&deg;C
+          <DescriptionParagraph>Temperature:</DescriptionParagraph>
+          <ValueParagraph>{this.props.forecast.main.temp} &deg;C</ValueParagraph>
         </TileField>
         <TileField className="text-center">
-          Pressure: {this.props.forecast.main.pressure}hPa
+          <DescriptionParagraph>Pressure:</DescriptionParagraph>
+          <ValueParagraph>{this.props.forecast.main.pressure} hPa</ValueParagraph>
         </TileField>
         <TileField className="text-center">
-          Wind: {this.props.forecast.wind.speed}km/h
+          <DescriptionParagraph>Wind:</DescriptionParagraph>
+          <ValueParagraph>{this.props.forecast.wind.speed} km/h</ValueParagraph>
         </TileField>
       </Tile>
     );
@@ -46,9 +45,15 @@ const Tile = styled.div`
 
 const TileField = styled.div`
   flex: 1;
-  font-size: 120%;
-  margin: 5px;
-  margin-top: 10px;
+`;
+
+const DescriptionParagraph = styled.p`
+  font-style: italic;
+`;
+
+const ValueParagraph = styled.p`
+  font-size: 150%;
+  font-weight: bold;
 `;
 
 export default ForecastTile;

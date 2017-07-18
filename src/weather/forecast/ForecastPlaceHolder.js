@@ -14,13 +14,13 @@ class ForecastPlaceHolder extends React.Component {
           return (
             <DailyForecastPlaceHolder>
               <DateTile className="text-center">
-                <h3>
+                <h4>
                   {forecast.dt_txt.split(" ")[0]}
-                </h3>
+                </h4>
               </DateTile>
-              <h4 className="text-center">Day</h4>
+              <h4 className="text-center"><i>Day</i></h4>
               <ForecastTile forecast={forecast} backgroundColor="#8bc34a" />
-              <h4 className="text-center">Night</h4>
+              <h4 className="text-center"><i>Night</i></h4>
               <ForecastTile
                 forecast={this.props.nightForecast[index]}
                 backgroundColor="#33691e"
@@ -43,7 +43,7 @@ const DateTile = styled.div`
   margin: 10px;
   margin-bottom: 10px;
   color: white;
-  padding: 2px;
+  padding: 1px;
   box-shadow: 2px 2px 4px black;
 `;
 
