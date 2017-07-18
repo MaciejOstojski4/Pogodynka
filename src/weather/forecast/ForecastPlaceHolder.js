@@ -14,7 +14,7 @@ class ForecastPlaceHolder extends React.Component {
   getDataToRender = () => {
     return this.props.dayForecast.map((forecast, index) => {
       return (
-        <DailyForecastPlaceHolder className="text-center">
+        <DailyForecastPlaceHolder key={forecast.dt_txt} className="text-center">
           <DateTile>
             <h4>
               {this.getDateWithoutHours(forecast)}
