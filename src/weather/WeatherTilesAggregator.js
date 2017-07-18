@@ -11,10 +11,6 @@ import apiClient from "../lib/api-client";
 import { changeDisplayedDetailsAction } from "./reducer/actions/weather-actions";
 
 class WeatherCardAggregator extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   prepareUrl = cityName => {
     return `${SEARCH_URL}q=${cityName}`;
   };
@@ -42,7 +38,7 @@ class WeatherCardAggregator extends React.Component {
   getDataToRender = () => {
     return this.props.weatherItems.map(city => {
       return (
-        <WeatherTile city={city} onClickRedirect={this.toDetailsRedirect} />
+        <WeatherTile key={city.name} city={city} onClickRedirect={this.toDetailsRedirect} />
       );
     });
   };

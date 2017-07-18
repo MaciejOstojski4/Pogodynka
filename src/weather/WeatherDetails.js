@@ -20,12 +20,9 @@ class WeatherDetails extends Component {
   };
 
   getDailyForecastAtHour = hour => {
-    return this.props.data.list.filter(weather => {
-      const weatherHour = this.getHoursFromDate(weather.dt_txt);
-      if (weatherHour === hour) {
-        return weather;
-      }
-    });
+    return this.props.data.list.filter(weather =>
+      this.getHoursFromDate(weather.dt_txt) === hour
+    );
   };
 
   getForecastSinceTomorrow = forecast => {

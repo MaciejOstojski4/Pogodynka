@@ -8,7 +8,7 @@ class WeatherTile extends React.Component {
     super(props);
 
     this.state = {
-      tileColor: { "background-color": GOOD_WEATHER_COLOR }
+      tileColor: { "background-color": GOOD_WEATHER_COLOR },
     };
   }
 
@@ -22,7 +22,7 @@ class WeatherTile extends React.Component {
 
   refreshTileColorInState = tileColor => {
     this.setState({
-      tileColor: { "background-color": tileColor }
+      tileColor: { "background-color": tileColor },
     });
   };
 
@@ -84,10 +84,7 @@ class WeatherTile extends React.Component {
               </TitleField>
             </CardField>
             <CardField>
-              <img
-                src={this.getWeatherIcon()}
-                alt="Cannot render weather image"
-              />
+              <img src={this.getWeatherIcon()} alt="Cannot render weather" />
             </CardField>
             <CardField>
               {this.props.city.weather[0].description}
