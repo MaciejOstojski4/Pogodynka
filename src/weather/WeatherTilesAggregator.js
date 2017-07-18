@@ -11,6 +11,12 @@ class WeatherCardAggregator extends React.Component {
     super(props);
   }
 
+  getDataToRender = () => {
+    return this.props.weatherItems.map(city => {
+      return <WeatherCard city={city} />;
+    });
+  };
+
   render() {
     return (
       <div>
@@ -18,17 +24,13 @@ class WeatherCardAggregator extends React.Component {
           query="(max-device-width: 1080px)"
           component={AggregatorResponsiveColumn}
         >
-          {this.props.weatherItems.map(city => {
-            return <WeatherCard city={city} />;
-          })}
+          {this.getDataToRender()}
         </MediaQuery>
         <MediaQuery
           query="(min-device-width: 1080px)"
           component={AggregatorResponsiveRow}
         >
-          {this.props.weatherItems.map(city => {
-            return <WeatherCard city={city} />;
-          })}
+          {this.getDataToRender()}
         </MediaQuery>
       </div>
     );

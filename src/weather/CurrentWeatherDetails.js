@@ -7,7 +7,7 @@ import styled from "styled-components";
 class CurrentWeatherDetails extends React.Component {
   render() {
     return (
-      <CurrentWeatherTile className="text-center">
+      <div className="text-center">
         <TileField>
           <h2>
             <b>
@@ -16,27 +16,52 @@ class CurrentWeatherDetails extends React.Component {
           </h2>
         </TileField>
         <TileField>
-          Temperature: {this.props.city.main.temp}&deg;C
+          <div className="col-md-6 text-left" >
+            Temperature:
+          </div>
+          <div className="col-md-6 text-right" >
+            {this.props.city.main.temp} &deg;C
+          </div>
         </TileField>
         <TileField>
-          Pressure: {this.props.city.main.pressure}hPa
+          <div className="col-md-6 text-left" >
+            Pressure::
+          </div>
+          <div className="col-md-6 text-right" >
+            {this.props.city.main.pressure} hPa
+          </div>
         </TileField>
         <TileField>
-          Wind: {this.props.city.wind.speed}km/h
+          <div className="col-md-6 text-left" >
+            Wind:
+          </div>
+          <div className="col-md-6 text-right" >
+            {this.props.city.wind.speed} km/h
+          </div>
         </TileField>
-      </CurrentWeatherTile>
+        <TileField>
+          <div className="col-md-6 text-left" >
+            Humidity:
+          </div>
+          <div className="col-md-6 text-right" >
+            {this.props.city.main.humidity} %
+          </div>
+        </TileField>
+        <TileField>
+          <div className="col-md-6 text-left" >
+            Cloudiness:
+          </div>
+          <div className="col-md-6 text-right" >
+            {this.props.city.clouds.all} %
+          </div>
+        </TileField>
+      </div>
     );
   }
 }
 
-const CurrentWeatherTile = styled.div`
-  background-color: #cddc39;
-  padding: 5px;
-  box-shadow: 2px 2px 4px black;
-`;
-
 const TileField = styled.div`
-  color: white;
+  color: #1b5e20;
   font-size: 150%;
 `;
 

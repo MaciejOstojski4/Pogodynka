@@ -9,7 +9,8 @@ class WeatherDetails extends Component {
 
     this.state = {
       dayForecast: [],
-      nightForecast: []
+      nightForecast: [],
+      forecastForChart: []
     };
   }
 
@@ -26,36 +27,47 @@ class WeatherDetails extends Component {
     });
   };
 
+  getForecastSinceTomorrow = forecast => {
+    if (forecast.length === NUMBER_OF_DAYS_IN_FORECAST) {
+      return forecast.slice(1, forecast.length);
+    }
+    return forecast;
+  };
+
   prepareDataForForecast = () => {
     this.setState({
-      dayForecast: this.getDailyForecastAtHour("12:00:00"),
-      nightForecast: this.getDailyForecastAtHour("00:00:00")
+      dayForecast: this.getForecastSinceTomorrow(
+        this.getDailyForecastAtHour("12:00:00")
+      ),
+      nightForecast: this.getForecastSinceTomorrow(
+        this.getDailyForecastAtHour("00:00:00")
+      )
     });
   };
 
-  prepareDataForChart = () => {
+  parseDataForChart = () => {
     return this.props.data.list
-      .map(a => {
+      .map(forecast => {
         return {
-          temperature: a.main.temp,
-          time: this.getHoursFromDate(a.dt_txt),
-          day: `${a.dt_txt.slice(8, 10)}.${a.dt_txt.slice(5, 7)}`,
-          td: `${a.dt_txt.slice(11, 16)} ${a.dt_txt.slice(
-            8,
-            10
-          )}.${a.dt_txt.slice(5, 7)}`
+          temperature: forecast.main.temp,
+          time: this.getHoursFromDate(forecast.dt_txt)
         };
       })
       .slice(0, 9);
   };
 
+  prepareDataForChart = () => {
+    this.setState({
+      forecastForChart: this.parseDataForChart()
+    });
+  };
+
   componentDidMount() {
     this.prepareDataForForecast();
+    this.prepareDataForChart();
   }
 
   render() {
-    const forecastData = this.prepareDataForChart();
-
     return (
       <div>
         <div className="row">
@@ -67,7 +79,7 @@ class WeatherDetails extends Component {
           </div>
           <div className="col-md-8">
             <Chart
-              chartData={forecastData}
+              chartData={this.state.forecastForChart}
               title="temperature"
               cityName={this.props.data.city.name}
             />
@@ -79,10 +91,7 @@ class WeatherDetails extends Component {
             <h2>Forecast for 4 days</h2>
           </div>
           <ForecastPlaceHolder
-            dayForecast={this.state.dayForecast.slice(
-              1,
-              this.state.dayForecast.length
-            )}
+            dayForecast={this.state.dayForecast}
             nightForecast={this.state.nightForecast}
           />
         </div>
@@ -90,6 +99,8 @@ class WeatherDetails extends Component {
     );
   }
 }
+
+const NUMBER_OF_DAYS_IN_FORECAST = 5;
 
 const mapStateToProps = currentState => {
   return {
