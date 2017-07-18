@@ -27,6 +27,8 @@ const Container = styled.div`
   padding-right: 25px;
   padding-bottom: 25px;
   height: 100%;
+  color: #1b5e20;
+  min-height: 100vh;
 `;
 
 export default App;
