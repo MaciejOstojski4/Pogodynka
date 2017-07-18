@@ -3,10 +3,6 @@
  */
 import React from "react";
 import styled from "styled-components";
-import { withRouter } from "react-router";
-import { changeDisplayedDetailsAction } from "../reducer/actions/weather-actions";
-import { connect } from "react-redux";
-import apiClient from "../../lib/api-client";
 class WeatherTile extends React.Component {
   constructor(props) {
     super(props);
@@ -17,27 +13,7 @@ class WeatherTile extends React.Component {
   }
 
   showDetails = e => {
-    const url = this.prepareUrl();
-    this.fetchWeather(url);
-    this.props.router.push("weatherdetails");
-  };
-
-  prepareUrl = () => {
-    return `${SEARCH_URL}q=${this.props.city.name}`;
-  };
-
-  fetchWeather = url => {
-    apiClient
-      .get(url)
-      .then(response => {
-        this.props.dispatch(changeDisplayedDetailsAction(response.data));
-      })
-      .catch(error => {
-        console.log("Error while searching by city name: " + error);
-        this.setState({
-          errorInfo: "Cannot find this city"
-        });
-      });
+    this.props.onClickRedirect(this.props.city.name);
   };
 
   getWeatherIcon = () => {
@@ -159,6 +135,4 @@ const Card = styled.div`
   }
 `;
 
-const LAT_LONG_REGEX = /(-)?[0-9]+\.[0-9]+:(-)?[0-9]+\.[0-9]+/;
-const SEARCH_URL = "forecast?units=metric&";
-export default connect()(withRouter(WeatherTile));
+export default WeatherTile;

@@ -42,7 +42,8 @@ export class SearchWeather extends Component {
         this.props.router.push("weatherdetails");
       })
       .catch(error => {
-        console.log("Error while searching by city name: " + error);
+        console.log("Error while searching by city name: ");
+        console.log(error);
         this.setState({
           errorInfo: "Cannot find this city"
         });
@@ -58,7 +59,7 @@ export class SearchWeather extends Component {
   render() {
     return (
       <SearchBox>
-        <SearchForm>
+        <SearchForm className="row">
           <div className="col-md-10">
             <SearchInput
               className="form-control input-lg"
@@ -68,15 +69,20 @@ export class SearchWeather extends Component {
             />
           </div>
           <div className="col-md-2">
-            <SubmitButtonSubmit
+            <SubmitButton
               className="btn btn-lg"
               type="submit"
               onClick={this.onSubmit}
             >
               Search
-            </SubmitButtonSubmit>
+            </SubmitButton>
           </div>
         </SearchForm>
+        <div className="row">
+          <ErrorMessage className="col-md-12">
+            {this.state.errorInfo}
+          </ErrorMessage>
+        </div>
       </SearchBox>
     );
   }
@@ -97,7 +103,7 @@ const SearchInput = styled.input`
   box-shadow: 2px 2px 4px;
 `;
 
-const SubmitButtonSubmit = styled.button`
+const SubmitButton = styled.button`
   border: none;
   border-radius: 0px;
   box-shadow: 2px 2px 4px #888888;
@@ -106,6 +112,10 @@ const SubmitButtonSubmit = styled.button`
   &:hover {
     color: white;
   }
+`;
+
+const ErrorMessage = styled.div`
+  margin-top: 5px;
 `;
 
 const SearchForm = styled.form`display: flex;`;

@@ -2,18 +2,48 @@
  * Created by react on 12.07.17.
  */
 import React from "react";
-import WeatherCard from "./card/WeatherTile";
+import WeatherTile from "./card/WeatherTile";
 import styled from "styled-components";
 import MediaQuery from "react-responsive";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import apiClient from "../lib/api-client";
+import { changeDisplayedDetailsAction } from "./reducer/actions/weather-actions";
 
 class WeatherCardAggregator extends React.Component {
   constructor(props) {
     super(props);
   }
 
+  prepareUrl = cityName => {
+    return `${SEARCH_URL}q=${cityName}`;
+  };
+
+  fetchWeather = url => {
+    apiClient
+      .get(url)
+      .then(response => {
+        this.props.dispatch(changeDisplayedDetailsAction(response.data));
+      })
+      .catch(error => {
+        console.log("Error while searching by city name: " + error);
+        this.setState({
+          errorInfo: "Cannot find this city",
+        });
+      });
+  };
+
+  toDetailsRedirect = cityName => {
+    const url = this.prepareUrl(cityName);
+    this.fetchWeather(url);
+    this.props.router.push("weatherdetails");
+  };
+
   getDataToRender = () => {
     return this.props.weatherItems.map(city => {
-      return <WeatherCard city={city} />;
+      return (
+        <WeatherTile city={city} onClickRedirect={this.toDetailsRedirect} />
+      );
     });
   };
 
@@ -50,4 +80,6 @@ const AggregatorResponsiveColumn = styled.div`
   flex-direction: column;
 `;
 
-export default WeatherCardAggregator;
+const SEARCH_URL = "forecast?units=metric&";
+
+export default connect()(withRouter(WeatherCardAggregator));
