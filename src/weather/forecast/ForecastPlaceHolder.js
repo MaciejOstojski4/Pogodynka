@@ -36,12 +36,12 @@ class ForecastPlaceHolder extends React.Component {
     return (
       <div>
         <MediaQuery
-          query="(max-device-width: 1080px)"
+          query="(max-device-width: 700px)"
           component={ScrollablePlaceHolder}
         >
           {this.getDataToRender()}
         </MediaQuery>
-        <MediaQuery query="(min-device-width: 1081px)" component={PlaceHolder}>
+        <MediaQuery query="(min-device-width: 701px)" component={PlaceHolder}>
           {this.getDataToRender()}
         </MediaQuery>
       </div>

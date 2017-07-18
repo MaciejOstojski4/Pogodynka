@@ -47,13 +47,13 @@ class WeatherCardAggregator extends React.Component {
     return (
       <div>
         <MediaQuery
-          query="(max-device-width: 1080px)"
+          query="(max-device-width: 700px)"
           component={AggregatorResponsiveColumn}
         >
           {this.getDataToRender()}
         </MediaQuery>
         <MediaQuery
-          query="(min-device-width: 1080px)"
+          query="(min-device-width: 701px)"
           component={AggregatorResponsiveRow}
         >
           {this.getDataToRender()}
