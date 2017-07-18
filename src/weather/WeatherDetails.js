@@ -1,24 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ForecastPlaceHolder from "./forecast/ForecastPlaceHolder";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from "recharts";
 import CurrentWeatherDetails from "./CurrentWeatherDetails";
-
+import Chart from "./Chart";
 class WeatherDetails extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       dayForecast: [],
-      nightForecast: [],
+      nightForecast: []
     };
   }
 
@@ -38,7 +29,7 @@ class WeatherDetails extends Component {
   prepareDataForForecast = () => {
     this.setState({
       dayForecast: this.getDailyForecastAtHour("12:00:00"),
-      nightForecast: this.getDailyForecastAtHour("00:00:00"),
+      nightForecast: this.getDailyForecastAtHour("00:00:00")
     });
   };
 
@@ -51,8 +42,8 @@ class WeatherDetails extends Component {
           day: `${a.dt_txt.slice(8, 10)}.${a.dt_txt.slice(5, 7)}`,
           td: `${a.dt_txt.slice(11, 16)} ${a.dt_txt.slice(
             8,
-            10,
-          )}.${a.dt_txt.slice(5, 7)}`,
+            10
+          )}.${a.dt_txt.slice(5, 7)}`
         };
       })
       .slice(0, 9);
@@ -68,24 +59,18 @@ class WeatherDetails extends Component {
     return (
       <div>
         <div className="row">
-          <div className="col-md-4" >
-            <CurrentWeatherDetails city={this.props.data.list[0]} cityName={this.props.data.city.name}/>
+          <div className="col-md-4">
+            <CurrentWeatherDetails
+              city={this.props.data.list[0]}
+              cityName={this.props.data.city.name}
+            />
           </div>
           <div className="col-md-8">
-            <LineChart
-              width={730}
-              height={250}
-              data={forecastData}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid stroke="#000" strokeDasharray="2 2" />
-              <XAxis dataKey="time" />
-              <YAxis />
-
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="temperature" stroke="#e91b1b" />
-            </LineChart>
+            <Chart
+              chartData={forecastData}
+              title="temperature"
+              cityName={this.props.data.city.name}
+            />
           </div>
         </div>
 
@@ -94,7 +79,10 @@ class WeatherDetails extends Component {
             <h2>Forecast for 4 days</h2>
           </div>
           <ForecastPlaceHolder
-            dayForecast={this.state.dayForecast.slice(1, this.state.dayForecast.length)}
+            dayForecast={this.state.dayForecast.slice(
+              1,
+              this.state.dayForecast.length
+            )}
             nightForecast={this.state.nightForecast}
           />
         </div>
@@ -105,7 +93,7 @@ class WeatherDetails extends Component {
 
 const mapStateToProps = currentState => {
   return {
-    data: currentState.weather.cityDetails,
+    data: currentState.weather.cityDetails
   };
 };
 
