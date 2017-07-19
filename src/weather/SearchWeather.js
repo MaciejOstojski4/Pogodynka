@@ -55,12 +55,13 @@ export class SearchWeather extends Component {
     const urlForWeather = this.prepareUrl();
     this.fetchWeather(urlForWeather);
   };
-
+  /*className="col-xs-1 col-sm-1 col-md-1"*/
+  /* className="col-md-12"*/
   render() {
     return (
       <SearchBox>
         <SearchForm className="">
-          <div className="col-xs-9 col-sm-10 col-md-10">
+          <div className="col-xs-12 col-sm-10 col-md-10">
             <SearchInput
               className="form-control input-lg"
               placeholder="type city name or latitude:longitude..."
@@ -68,7 +69,7 @@ export class SearchWeather extends Component {
               onChange={this.refreshState}
             />
           </div>
-          <div className="col-xs-1 col-sm-1 col-md-1">
+          <div>
             <SubmitButton
               className="btn btn-lg"
               type="submit"
@@ -79,7 +80,7 @@ export class SearchWeather extends Component {
           </div>
         </SearchForm>
         <div className="row">
-          <ErrorMessage className="col-md-12">
+          <ErrorMessage>
             {this.state.errorInfo}
           </ErrorMessage>
         </div>
@@ -116,7 +117,11 @@ const SubmitButton = styled.button`
 
 const ErrorMessage = styled.div`margin-top: 5px;`;
 
-const SearchForm = styled.form`display: flex;`;
+const SearchForm = styled.form`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
 
 const SEARCH_URL = "forecast?units=metric&";
 
