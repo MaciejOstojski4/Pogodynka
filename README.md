@@ -6,3 +6,4 @@
     - react-router
     - react-responsive
     - react-loader-advanced
+    - react-owl-carousel
