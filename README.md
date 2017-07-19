@@ -5,3 +5,4 @@
     - react-localstorage
     - react-router
     - react-responsive
+    - react-loader-advanced

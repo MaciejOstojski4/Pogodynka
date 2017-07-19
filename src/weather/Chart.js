@@ -1,15 +1,14 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 import {
-  LineChart,
+  CartesianGrid,
+  Legend,
   Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer
 } from "recharts";
-import MediaQuery from "react-responsive";
 import styled from "styled-components";
 
 class Chart extends Component {

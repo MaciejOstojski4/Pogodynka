@@ -2,16 +2,14 @@
  * Created by react on 14.07.17.
  */
 import React from "react";
-import { Link } from "react-router";
-import SearchWeather from "../weather/SearchWeather";
+import {Link} from "react-router";
 import styled from "styled-components";
 
 class Header extends React.Component {
   render() {
     return (
-      <div>
-        <Navbar className="navbar navbar-default ">
-          <div className="container-fluid">
+      <div className="container">
+        <Navbar className="navbar">
             <div className="navbar-header">
               <a
                 className="navbar-brand"
@@ -34,19 +32,19 @@ class Header extends React.Component {
                 </Link>
               </li>
             </ul>
-          </div>
         </Navbar>
       </div>
     );
   }
 }
 
+
 const Navbar = styled.nav`
   background-color: #000000; /*827717;*/
+
   border-radius: 0px;
   border-color: #9e9d24;
   box-shadow: 2px 2px 4px #888888;
-  color: white;
   font-size: 120%;
 `;
 
