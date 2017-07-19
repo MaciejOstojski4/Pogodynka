@@ -11,8 +11,7 @@ class WeatherTile extends React.Component {
       tileColor: {
         "background-color": GOOD_WEATHER_COLOR
       },
-      textColor: "",
-      kkkooo: ""
+      textColor: ""
     };
   }
 
@@ -47,7 +46,7 @@ class WeatherTile extends React.Component {
       (weatherCode >= 700 && weatherCode < 800) ||
       (weatherCode >= 803 && weatherCode <= 804)
     ) {
-      this.setState({ kkkooo: AVERAGE_WEATHER_TEXT });
+      this.setState({ textColor: AVERAGE_WEATHER_TEXT });
       return true;
     }
     return false;
@@ -55,7 +54,7 @@ class WeatherTile extends React.Component {
 
   isGoodWeather = weatherCode => {
     if (weatherCode >= 800 && weatherCode <= 802) {
-      this.setState({ kkkooo: GOOD_WEATHER_TEXT });
+      this.setState({ textColor: GOOD_WEATHER_TEXT });
       return true;
     }
     return false;
@@ -85,23 +84,20 @@ class WeatherTile extends React.Component {
         <div className="row">
           <div>
             <CardField>
-              <TitleField style={{ color: `${this.state.kkkooo}` }}>
+              <TitleField style={{ color: `${this.state.textColor}` }}>
                 {this.props.city.name}
               </TitleField>
             </CardField>
             <CardField>
-              <img
-                src={this.getWeatherIcon()}
-                alt="Cannot render weather image"
-              />
+              <img src={this.getWeatherIcon()} alt="Cannot render weather" />
             </CardField>
             <CardField>
-              <span style={{ color: `${this.state.kkkooo}` }}>
+              <span style={{ color: `${this.state.textColor}` }}>
                 {this.props.city.weather[0].description}
               </span>
             </CardField>
             <CardField>
-              <span style={{ color: `${this.state.kkkooo}` }}>
+              <span style={{ color: `${this.state.textColor}` }}>
                 {" "}{this.props.city.main.temp} &deg;C
               </span>
             </CardField>

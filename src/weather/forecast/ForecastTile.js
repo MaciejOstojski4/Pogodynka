@@ -5,25 +5,26 @@ import React from "react";
 import styled from "styled-components";
 
 class ForecastTile extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
-      <Tile style={{"background-color": this.props.backgroundColor}}>
-
+      <Tile style={{ "background-color": this.props.backgroundColor }}>
         <TileField className="text-center">
           <DescriptionParagraph>Temperature:</DescriptionParagraph>
-          <ValueParagraph>{this.props.forecast.main.temp} &deg;C</ValueParagraph>
+          <ValueParagraph>
+            {this.props.forecast.main.temp} &deg;C
+          </ValueParagraph>
         </TileField>
         <TileField className="text-center">
           <DescriptionParagraph>Pressure:</DescriptionParagraph>
-          <ValueParagraph>{this.props.forecast.main.pressure} hPa</ValueParagraph>
+          <ValueParagraph>
+            {this.props.forecast.main.pressure} hPa
+          </ValueParagraph>
         </TileField>
         <TileField className="text-center">
           <DescriptionParagraph>Wind:</DescriptionParagraph>
-          <ValueParagraph>{this.props.forecast.wind.speed} km/h</ValueParagraph>
+          <ValueParagraph>
+            {this.props.forecast.wind.speed} km/h
+          </ValueParagraph>
         </TileField>
       </Tile>
     );
@@ -43,13 +44,9 @@ const Tile = styled.div`
   }
 `;
 
-const TileField = styled.div`
-  flex: 1;
-`;
+const TileField = styled.div`flex: 1;`;
 
-const DescriptionParagraph = styled.p`
-  font-style: italic;
-`;
+const DescriptionParagraph = styled.p`font-style: italic;`;
 
 const ValueParagraph = styled.p`
   font-size: 150%;
