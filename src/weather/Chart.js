@@ -25,12 +25,17 @@ class Chart extends Component {
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           >
             <CartesianGrid stroke="#000" strokeDasharray="2 2" />
-            <XAxis dataKey="time" />
+            <XAxis dataKey="time" minTickGap={30} />
             <YAxis />
 
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey={this.props.title} stroke="#e91b1b" />
+            <Line
+              type="monotone"
+              animationDuration="2000"
+              dataKey={this.props.title}
+              stroke="#e91b1b"
+            />
           </LineChart>
         </ResponsiveContainer>
       </ChartContainer>
@@ -41,7 +46,7 @@ class Chart extends Component {
 const ChartContainer = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: 16px;
+  font-size: 20px;
   height: 40vh;
   text-align: center;
 `;

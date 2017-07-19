@@ -89,7 +89,7 @@ export class SearchWeather extends Component {
 }
 
 const SearchBox = styled.div`
-  background-color: #a683ff; /*#cddc39*/
+  background-color: #cddc39;
   padding: 20px;
   margin-bottom: 20px;
   margin-left: 5px;
