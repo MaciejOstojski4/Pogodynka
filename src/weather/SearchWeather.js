@@ -110,6 +110,13 @@ const SubmitButton = styled.button`
   box-shadow: 2px 2px 4px #888888;
   background-color: #827717;
   color: white;
+  @media only screen and (max-width: 767px) {
+    margin-top: 10px;
+    margin-left: 37vw;
+  }
+  @media only screen and (max-width: 430px) {
+    margin-left: 30vw;
+  }
   &:hover {
     color: black;
   }
