@@ -15,9 +15,6 @@ class Chart extends Component {
   render() {
     return (
       <ChartContainer>
-        <StyledTitle>
-          Temperatures in next 24 hours in {this.props.cityName}
-        </StyledTitle>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={this.props.chartData}
@@ -28,7 +25,6 @@ class Chart extends Component {
             <YAxis />
 
             <Tooltip />
-            <Legend />
             <Line
               type="monotone"
               animationDuration="2000"
@@ -41,13 +37,19 @@ class Chart extends Component {
     );
   }
 }
-const StyledTitle = styled.h3`font-size: 27px;`;
+
 const ChartContainer = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 20px;
   height: 40vh;
+  margin-left: -30px;
+
   text-align: center;
+  @media only screen and (max-height: 600px) {
+    height: 50vh;
+    width: 90vw;
+  }
 `;
 
 export default Chart;

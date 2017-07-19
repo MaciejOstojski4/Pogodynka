@@ -20,20 +20,24 @@ class Header extends React.Component {
               Pogodynka
             </a>
           </div>
-          <ul className="nav navbar-nav">
+          <Ul className="nav navbar-nav">
             <li>
               <Link to="/">Home</Link>
             </li>
             <li>
               <Link to="weatherdetails">Weather Details</Link>
             </li>
-          </ul>
+          </Ul>
         </Navbar>
       </div>
     );
   }
 }
-
+const Ul = styled.ul`
+  @media only screen and (max-width: 767px) {
+    margin-left: 20px;
+  }
+`;
 const Navbar = styled.nav`
   background-color: #000000; /*827717;*/
   border-radius: 0px;

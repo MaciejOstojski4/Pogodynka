@@ -55,8 +55,7 @@ export class SearchWeather extends Component {
     const urlForWeather = this.prepareUrl();
     this.fetchWeather(urlForWeather);
   };
-  /*className="col-xs-1 col-sm-1 col-md-1"*/
-  /* className="col-md-12"*/
+
   render() {
     return (
       <SearchBox>

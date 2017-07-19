@@ -4,7 +4,7 @@ import CurrentWeatherDetails from "./CurrentWeatherDetails";
 import Chart from "./Chart";
 import ResponsiveForecast from "./forecast/ResponsiveForecast";
 import styled from "styled-components";
-
+import SearchWeather from "./SearchWeather";
 class WeatherDetails extends Component {
   constructor(props) {
     super(props);
@@ -78,6 +78,7 @@ class WeatherDetails extends Component {
       return (
         <div>
           <div className="row">
+            <SearchWeather />
             <div className="col-md-4">
               <CurrentWeatherDetails
                 city={this.props.data.list[0]}
@@ -85,6 +86,9 @@ class WeatherDetails extends Component {
               />
             </div>
             <div className="col-md-8">
+              <StyledTitle>
+                Temperatures in next 24 hours in {this.props.data.city.name}
+              </StyledTitle>
               <Chart
                 chartData={this.state.forecastForChart}
                 title="temperature"
@@ -124,7 +128,7 @@ const ERROR_MESSAGE =
   "Please, try again later.";
 
 const forecastTitle = styled.h2`padding-top: 20px;`;
-
+const StyledTitle = styled.h3`font-size: 27px;`;
 const mapStateToProps = currentState => {
   return {
     data: currentState.weather.cityDetails
