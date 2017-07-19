@@ -1,14 +1,18 @@
 /**
- * Created by react on 17.07.17.
+ * Created by react on 19.07.17.
  */
 import React from "react";
-import styled from "styled-components";
+import OwlCarousel from "react-owl-carousel";
 import DailyForecastPlaceHolder from "./DailyForecastPlaceHolder";
 
-class ForecastPlaceHolder extends React.Component {
+class ScrolledForecastPlaceHolder extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
-      <PlaceHolder>
+      <OwlCarousel className="owl-theme" items={1} loop={true}>
         {this.props.dayForecast.map((forecast, index) => {
           return (
             <DailyForecastPlaceHolder
@@ -17,15 +21,9 @@ class ForecastPlaceHolder extends React.Component {
             />
           );
         })}
-      </PlaceHolder>
+      </OwlCarousel>
     );
   }
 }
 
-const PlaceHolder = styled.div`
-  display: flex;
-  margin-bottom: 20px;
-  flex-direction: wrap;
-`;
-
-export default ForecastPlaceHolder;
+export default ScrolledForecastPlaceHolder;

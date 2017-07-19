@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import ForecastPlaceHolder from "./forecast/ForecastPlaceHolder";
 import CurrentWeatherDetails from "./CurrentWeatherDetails";
 import Chart from "./Chart";
+import ResponsiveForecast from "./forecast/ResponsiveForecast";
 import styled from "styled-components";
+
 class WeatherDetails extends Component {
   constructor(props) {
     super(props);
@@ -92,10 +93,7 @@ class WeatherDetails extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="text-center">
-              <h2>Forecast for 4 days</h2>
-            </div>
-            <ForecastPlaceHolder
+            <ResponsiveForecast
               dayForecast={this.state.dayForecast}
               nightForecast={this.state.nightForecast}
             />
