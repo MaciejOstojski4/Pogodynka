@@ -8,7 +8,7 @@ export class Home extends Component {
     super(props);
 
     this.state = {
-      cities: [],
+      cities: []
     };
   }
 
@@ -21,12 +21,12 @@ export class Home extends Component {
       .get(this.prepareUrl())
       .then(response => {
         this.setState({
-          cities: response.data.list,
+          cities: response.data.list
         });
       })
       .catch(error => {
         console.log(
-          "Error occurred during fetching weather for cities: " + error,
+          "Error occurred during fetching weather for cities: " + error
         );
       });
   };
@@ -50,7 +50,7 @@ export class Home extends Component {
 }
 
 const initialCities = [
-  6695624, // Warszawa
+  3421319, // Warszawa  6695624
   2988507, // Paris
   3117735, // Madrid
   2643743, // London
@@ -59,7 +59,7 @@ const initialCities = [
   524901, // Moscow
   2759794, // Amsterdam
   3143244, //Oslo
-  6458923, // Lisbon
+  6458923 // Lisbon
 ];
 
 const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric&";

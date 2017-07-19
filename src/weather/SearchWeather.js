@@ -89,7 +89,7 @@ export class SearchWeather extends Component {
 }
 
 const SearchBox = styled.div`
-  background-color: #cddc39;
+  background-color: #a683ff; /*#cddc39;*/
   padding: 20px;
   margin-bottom: 20px;
   margin-left: 5px;
@@ -107,16 +107,14 @@ const SubmitButton = styled.button`
   border: none;
   border-radius: 0px;
   box-shadow: 2px 2px 4px #888888;
-  background-color: #827717;
+  background-color: #A683FF /*#827717;*/
   color: white;
   &:hover {
     color: white;
   }
 `;
 
-const ErrorMessage = styled.div`
-  margin-top: 5px;
-`;
+const ErrorMessage = styled.div`margin-top: 5px;`;
 
 const SearchForm = styled.form`display: flex;`;
 

@@ -16,7 +16,7 @@ class Header extends React.Component {
               <a
                 className="navbar-brand"
                 style={{
-                  color: "white",
+                  color: "white"
                 }}
               >
                 Pogodynka
@@ -42,9 +42,9 @@ class Header extends React.Component {
 }
 
 const Navbar = styled.nav`
-  background-color: #827717;
+  background-color: #000000; /*827717;*/
   border-radius: 0px;
-  border-color:  #9e9d24;
+  border-color: #9e9d24;
   box-shadow: 2px 2px 4px #888888;
   color: white;
   font-size: 120%;
