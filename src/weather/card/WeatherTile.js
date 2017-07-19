@@ -8,7 +8,11 @@ class WeatherTile extends React.Component {
     super(props);
 
     this.state = {
-      tileColor: { "background-color": GOOD_WEATHER_COLOR },
+      tileColor: {
+        "background-color": GOOD_WEATHER_COLOR
+      },
+      textColor: "",
+      weatherTextColor: ""
     };
   }
 
@@ -43,6 +47,7 @@ class WeatherTile extends React.Component {
       (weatherCode >= 700 && weatherCode < 800) ||
       (weatherCode >= 803 && weatherCode <= 804)
     ) {
+      this.setState({ weatherTextColor: AVERAGE_WEATHER_TEXT });
       return true;
     }
     return false;
@@ -50,6 +55,7 @@ class WeatherTile extends React.Component {
 
   isGoodWeather = weatherCode => {
     if (weatherCode >= 800 && weatherCode <= 802) {
+      this.setState({ weatherTextColor: GOOD_WEATHER_TEXT });
       return true;
     }
     return false;
@@ -79,7 +85,7 @@ class WeatherTile extends React.Component {
         <div className="row">
           <div>
             <CardField>
-              <TitleField>
+              <TitleField style={{ color: `${this.state.weatherTextColor}` }}>
                 {this.props.city.name}
               </TitleField>
             </CardField>
@@ -87,10 +93,14 @@ class WeatherTile extends React.Component {
               <img src={this.getWeatherIcon()} alt="Cannot render weather" />
             </CardField>
             <CardField>
-              {this.props.city.weather[0].description}
+              <span style={{ color: `${this.state.weatherTextColor}` }}>
+                {this.props.city.weather[0].description}
+              </span>
             </CardField>
             <CardField>
-              {this.props.city.main.temp} &deg;C
+              <span style={{ color: `${this.state.weatherTextColor}` }}>
+                {" "}{this.props.city.main.temp} &deg;C
+              </span>
             </CardField>
           </div>
         </div>
@@ -100,10 +110,11 @@ class WeatherTile extends React.Component {
 }
 
 const GOOD_WEATHER_COLOR = "#ffd600";
-
+const GOOD_WEATHER_TEXT = "#6d7078";
 const AVERAGE_WEATHER_COLOR = "#7cb342";
-
+const AVERAGE_WEATHER_TEXT = "";
 const BAD_WEATHER_COLOR = "#0277bd";
+const BAD_WEATHER_TEXT = " ";
 
 const ICON_URL = "http://openweathermap.org/img/w/";
 

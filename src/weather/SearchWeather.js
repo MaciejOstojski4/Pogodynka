@@ -114,9 +114,7 @@ const SubmitButton = styled.button`
   }
 `;
 
-const ErrorMessage = styled.div`
-  margin-top: 5px;
-`;
+const ErrorMessage = styled.div`margin-top: 5px;`;
 
 const SearchForm = styled.form`display: flex;`;
 
