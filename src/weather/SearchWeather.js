@@ -59,7 +59,7 @@ export class SearchWeather extends Component {
   render() {
     return (
       <SearchBox>
-        <SearchForm className="row">
+        <SearchForm className="">
           <div className="col-xs-9 col-sm-10 col-md-10">
             <SearchInput
               className="form-control input-lg"
@@ -68,7 +68,7 @@ export class SearchWeather extends Component {
               onChange={this.refreshState}
             />
           </div>
-          <div className="col-xs-2 col-sm-1 col-md-1">
+          <div className="col-xs-1 col-sm-1 col-md-1">
             <SubmitButton
               className="btn btn-lg"
               type="submit"
