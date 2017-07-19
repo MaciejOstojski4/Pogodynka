@@ -73,6 +73,7 @@ class WeatherDetails extends Component {
     }
   }
 
+  // znowu, nie zwracasz tutaj zadnego 'data' tylko komponenty
   getDataToRender = () => {
     if (this.isForecastFetched()) {
       return (
@@ -118,6 +119,7 @@ class WeatherDetails extends Component {
 
 const NUMBER_OF_DAYS_IN_FORECAST = 5;
 
+// zamiast robic tak i "+" laczyc stringi mozecie uzyc `` i rozbic na kilka linijek to
 const ERROR_MESSAGE =
   "Error occurred while application trying to fetch details information about weather. " +
   "Probably the problem is with the OpenWeatherMap API. " +

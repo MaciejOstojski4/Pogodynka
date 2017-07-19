@@ -42,6 +42,7 @@ export class SearchWeather extends Component {
         this.props.router.push("weatherdetails");
       })
       .catch(error => {
+        // zbedny komentarz
         console.log("Error while searching by city name: ");
         console.log(error);
         this.setState({
@@ -55,6 +56,7 @@ export class SearchWeather extends Component {
     const urlForWeather = this.prepareUrl();
     this.fetchWeather(urlForWeather);
   };
+  // zbedne komentarze
   /*className="col-xs-1 col-sm-1 col-md-1"*/
   /* className="col-md-12"*/
   render() {
@@ -73,8 +75,7 @@ export class SearchWeather extends Component {
             <SubmitButton
               className="btn btn-lg"
               type="submit"
-              onClick={this.onSubmit}
-            >
+              onClick={this.onSubmit}>
               Search
             </SubmitButton>
           </div>

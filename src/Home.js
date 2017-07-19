@@ -3,6 +3,7 @@ import WeatherCardAggregator from "./weather/WeatherTilesAggregator";
 import apiClient from "./lib/api-client";
 import SearchWeather from "./weather/SearchWeather";
 import Loader from "react-loader-advanced";
+// linijka przerwy pomiedzy klasa a importami
 export class Home extends Component {
   constructor(props) {
     super(props);
@@ -47,12 +48,12 @@ export class Home extends Component {
           <SearchWeather />
         </div>
         <div className="row">
+          {/* taki loader tez bardzo prosto zrobic samemu, moge wam pokazac jak cos ;) */}
           <Loader
             show={this.state.loading}
             message={"loading"}
             foregroundStyle={{ color: "green" }}
-            backgroundStyle={{ backgroundColor: "black" }}
-          >
+            backgroundStyle={{ backgroundColor: "black" }}>
             <div>
               <WeatherCardAggregator weatherItems={this.state.cities} />
             </div>
