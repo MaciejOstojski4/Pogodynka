@@ -9,12 +9,12 @@ class Header extends React.Component {
   render() {
     return (
       <div className="container">
-        <Navbar className="navbar">
+        <Navbar className="navbar navbar-inverse">
           <div className="navbar-header">
             <a
               className="navbar-brand"
               style={{
-                color: "white"
+                color: "#cddc39"
               }}
             >
               Pogodynka
@@ -22,14 +22,10 @@ class Header extends React.Component {
           </div>
           <ul className="nav navbar-nav">
             <li>
-              <Link to="/" style={{ color: "white" }}>
-                Home
-              </Link>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="weatherdetails" style={{ color: "white" }}>
-                Weather Details
-              </Link>
+              <Link to="weatherdetails">Weather Details</Link>
             </li>
           </ul>
         </Navbar>

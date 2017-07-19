@@ -7,7 +7,7 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis,
+  YAxis
 } from "recharts";
 import styled from "styled-components";
 
@@ -15,9 +15,9 @@ class Chart extends Component {
   render() {
     return (
       <ChartContainer>
-        <h3>
+        <StyledTitle>
           Temperatures in next 24 hours in {this.props.cityName}
-        </h3>
+        </StyledTitle>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={this.props.chartData}
@@ -41,7 +41,7 @@ class Chart extends Component {
     );
   }
 }
-
+const StyledTitle = styled.h3`font-size: 27px;`;
 const ChartContainer = styled.div`
   display: flex;
   flex-direction: column;

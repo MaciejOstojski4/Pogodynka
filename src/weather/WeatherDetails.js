@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import ForecastPlaceHolder from "./forecast/ForecastPlaceHolder";
 import CurrentWeatherDetails from "./CurrentWeatherDetails";
 import Chart from "./Chart";
+import styled from "styled-components";
 class WeatherDetails extends Component {
   constructor(props) {
     super(props);
@@ -20,8 +21,8 @@ class WeatherDetails extends Component {
   };
 
   getDailyForecastAtHour = hour => {
-    return this.props.data.list.filter(weather =>
-      this.getHoursFromDate(weather.dt_txt) === hour
+    return this.props.data.list.filter(
+      weather => this.getHoursFromDate(weather.dt_txt) === hour
     );
   };
 
@@ -123,6 +124,8 @@ const ERROR_MESSAGE =
   "Error occurred while application trying to fetch details information about weather. " +
   "Probably the problem is with the OpenWeatherMap API. " +
   "Please, try again later.";
+
+const forecastTitle = styled.h2`padding-top: 20px;`;
 
 const mapStateToProps = currentState => {
   return {

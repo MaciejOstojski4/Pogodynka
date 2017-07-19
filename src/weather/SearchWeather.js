@@ -60,7 +60,7 @@ export class SearchWeather extends Component {
     return (
       <SearchBox>
         <SearchForm className="row">
-          <div className="col-md-10">
+          <div className="col-xs-9 col-sm-10 col-md-10">
             <SearchInput
               className="form-control input-lg"
               placeholder="type city name or latitude:longitude..."
@@ -68,7 +68,7 @@ export class SearchWeather extends Component {
               onChange={this.refreshState}
             />
           </div>
-          <div className="col-md-2">
+          <div className="col-xs-2 col-sm-1 col-md-1">
             <SubmitButton
               className="btn btn-lg"
               type="submit"
@@ -110,7 +110,7 @@ const SubmitButton = styled.button`
   background-color: #827717;
   color: white;
   &:hover {
-    color: white;
+    color: black;
   }
 `;
 
