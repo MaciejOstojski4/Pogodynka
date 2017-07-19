@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import WeatherCardAggregator from "./weather/WeatherTilesAggregator";
 import apiClient from "./lib/api-client";
 import SearchWeather from "./weather/SearchWeather";
-
+import Loader from "react-loader-advanced";
 export class Home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       cities: [],
+      loading: false,
     };
   }
 
@@ -17,11 +18,15 @@ export class Home extends Component {
   };
 
   fetchWeatherForCities = () => {
+    this.setState({
+      loading: true,
+    });
     apiClient
       .get(this.prepareUrl())
       .then(response => {
         this.setState({
           cities: response.data.list,
+          loading: false,
         });
       })
       .catch(error => {
@@ -42,7 +47,16 @@ export class Home extends Component {
           <SearchWeather />
         </div>
         <div className="row">
-          <WeatherCardAggregator weatherItems={this.state.cities} />
+          <Loader
+            show={this.state.loading}
+            message={"loading"}
+            foregroundStyle={{ color: "green" }}
+            backgroundStyle={{ backgroundColor: "black" }}
+          >
+            <div>
+              <WeatherCardAggregator weatherItems={this.state.cities} />
+            </div>
+          </Loader>
         </div>
       </div>
     );

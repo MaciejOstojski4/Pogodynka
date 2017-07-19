@@ -922,6 +922,12 @@ babel-runtime@6.23.0, babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtim
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
 
+babel-runtime@6.6.1:
+  version "6.6.1"
+  resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.6.1.tgz#788b94b6f634e25b91bd6c5df72d467457afb000"
+  dependencies:
+    core-js "^2.1.0"
+
 babel-template@^6.16.0, babel-template@^6.24.1, babel-template@^6.25.0:
   version "6.25.0"
   resolved "https://registry.yarnpkg.com/babel-template/-/babel-template-6.25.0.tgz#665241166b7c2aa4c619d71e192969552b10c071"
@@ -1519,7 +1525,7 @@ cookie@0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
 
-core-js@2.4.1, core-js@^2.4.0:
+core-js@2.4.1, core-js@^2.1.0, core-js@^2.4.0:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.4.1.tgz#4de911e667b0eae9124e34254b53aea6fc618d3e"
 
@@ -5144,6 +5150,14 @@ react-hover@^1.1.0:
   dependencies:
     prop-types "^15.5.10"
 
+react-loader-advanced@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/react-loader-advanced/-/react-loader-advanced-1.6.2.tgz#53adcc93dafeb618be9f2e020a79b6dd9ea25c70"
+  dependencies:
+    babel-runtime "6.6.1"
+    prop-types "15.5.8"
+    react-transition-group "^1.2.0"
+
 react-motion@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/react-motion/-/react-motion-0.5.0.tgz#1708fc2aee552900d21c1e6bed28346863e017b6"
@@ -5272,7 +5286,7 @@ react-sparklines@^1.6.0:
   dependencies:
     react-addons-shallow-compare "^15.0.2"
 
-react-transition-group@^1.1.1:
+react-transition-group@^1.1.1, react-transition-group@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-1.2.0.tgz#b51fc921b0c3835a7ef7c571c79fc82c73e9204f"
   dependencies:
