@@ -7,62 +7,79 @@ import styled from "styled-components";
 class CurrentWeatherDetails extends React.Component {
   render() {
     return (
-      <div className="text-center">
-        <TileField>
-          <h2>
-            <b>
+      <div>
+        <InfoContainer>
+          <TitleRow>
               {this.props.cityName}
-            </b>
-          </h2>
-        </TileField>
-        <TileField>
-          <div className="col-md-6 text-left" >
-            Temperature:
-          </div>
-          <div className="col-md-6 text-right" >
-            {this.props.city.main.temp} &deg;C
-          </div>
-        </TileField>
-        <TileField>
-          <div className="col-md-6 text-left" >
-            Pressure::
-          </div>
-          <div className="col-md-6 text-right" >
-            {this.props.city.main.pressure} hPa
-          </div>
-        </TileField>
-        <TileField>
-          <div className="col-md-6 text-left" >
-            Wind:
-          </div>
-          <div className="col-md-6 text-right" >
-            {this.props.city.wind.speed} km/h
-          </div>
-        </TileField>
-        <TileField>
-          <div className="col-md-6 text-left" >
-            Humidity:
-          </div>
-          <div className="col-md-6 text-right" >
-            {this.props.city.main.humidity} %
-          </div>
-        </TileField>
-        <TileField>
-          <div className="col-md-6 text-left" >
-            Cloudiness:
-          </div>
-          <div className="col-md-6 text-right" >
-            {this.props.city.clouds.all} %
-          </div>
-        </TileField>
+          </TitleRow>
+          <InfoRow>
+            <div className="text-left">
+              Temperature:
+            </div>
+            <div clasName="text-right">
+              {this.props.city.main.temp} &deg;C
+            </div>
+          </InfoRow>
+          <InfoRow>
+            <div className="text-left">
+              Pressure:
+            </div>
+            <div clasName="text-right">
+              {this.props.city.main.pressure} hPa
+            </div>
+          </InfoRow>
+          <InfoRow>
+            <div className="text-left">
+              Wind:
+            </div>
+            <div clasName="text-right">
+              {this.props.city.wind.speed} km/h
+            </div>
+          </InfoRow>
+          <InfoRow>
+            <div className="text-left">
+              Humidity:
+            </div>
+            <div clasName="text-right">
+              {this.props.city.main.humidity} %
+            </div>
+          </InfoRow>
+          <InfoRow>
+            <div className="text-left">
+              Cloudiness:
+            </div>
+            <div clasName="text-right">
+              {this.props.city.clouds.all} %
+            </div>
+          </InfoRow>
+        </InfoContainer>
       </div>
     );
   }
 }
 
-const TileField = styled.div`
-  color: #1b5e20;
-  font-size: 150%;
+const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-left: 0px;
+  padding-right: 0px;
+  font-size: 160%;
+`;
+
+const TitleRow = styled.div`
+  flex: 1;
+  font-size: 170%;
+  font-weight: bold;
+  text-align: center;
+`;
+
+const InfoRow = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 15px;
+  @media
 `;
 
 export default CurrentWeatherDetails;
