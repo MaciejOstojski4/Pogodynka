@@ -9,23 +9,20 @@ import styled from "styled-components";
 class App extends Component {
   render() {
     return (
-      <Container className="container">
+      <AppMainContainer>
         <Router history={hashHistory}>
           <Route path="/" component={Layout}>
             <IndexRoute component={Home} />
             <Route component={WeatherDetails} path="weatherdetails" />
           </Route>
         </Router>
-      </Container>
+      </AppMainContainer>
     );
   }
 }
 
-const Container = styled.div`
+const AppMainContainer = styled.div`
   background-image: url(http://i.stack.imgur.com/oslRB.png);
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-bottom: 25px;
   height: 100%;
   color: #1b5e20;
   min-height: 100vh;
