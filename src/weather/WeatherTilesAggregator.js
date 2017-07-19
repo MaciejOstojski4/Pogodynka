@@ -24,21 +24,27 @@ class WeatherCardAggregator extends React.Component {
       .catch(error => {
         console.log("Error while searching by city name: " + error);
         this.setState({
-          errorInfo: "Cannot find this city",
+          errorInfo: "Cannot find this city"
         });
       });
   };
 
+  // cos jest nie tak z kolejnoscia tu :D raczej 'redirectToDetails'
   toDetailsRedirect = cityName => {
     const url = this.prepareUrl(cityName);
     this.fetchWeather(url);
     this.props.router.push("weatherdetails");
   };
 
+  // tutaj nie zwracasz zadnego data tylko renderujesz komponent
   getDataToRender = () => {
     return this.props.weatherItems.map(city => {
       return (
-        <WeatherTile key={city.name} city={city} onClickRedirect={this.toDetailsRedirect} />
+        <WeatherTile
+          key={city.name}
+          city={city}
+          onClickRedirect={this.toDetailsRedirect}
+        />
       );
     });
   };
@@ -48,14 +54,12 @@ class WeatherCardAggregator extends React.Component {
       <div>
         <MediaQuery
           query="(max-device-width: 700px)"
-          component={AggregatorResponsiveColumn}
-        >
+          component={AggregatorResponsiveColumn}>
           {this.getDataToRender()}
         </MediaQuery>
         <MediaQuery
           query="(min-device-width: 701px)"
-          component={AggregatorResponsiveRow}
-        >
+          component={AggregatorResponsiveRow}>
           {this.getDataToRender()}
         </MediaQuery>
       </div>

@@ -5,7 +5,9 @@ import { CHANGE_DISPLAYED_DETAILS_ACTION } from "./actions/weather-actions";
 
 const initialState = {
   cities: [],
-  cityDetails: undefined,
+  // raczej nie piszemy jawnie "undefined", taka wartosc bedzie jak nic nie podasz
+  // jesli juz to null bym wpisal
+  cityDetails: undefined
 };
 
 const weather = (currentState = initialState, action) => {

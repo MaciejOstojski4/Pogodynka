@@ -79,8 +79,7 @@ class WeatherTile extends React.Component {
       <Card
         className="text-center"
         onClick={this.showDetails}
-        style={this.state.tileColor}
-      >
+        style={this.state.tileColor}>
         <div className="row">
           <div>
             <CardField>
@@ -108,6 +107,10 @@ class WeatherTile extends React.Component {
   }
 }
 
+// zamknalbym to raczej jako jakis obiekt :D
+// const tileColors = {
+//   sunny: {color: '#fff', backgroundColor: '#ddd' }
+// }
 const GOOD_WEATHER_COLOR = "#ffd600";
 const GOOD_WEATHER_TEXT = "#6d7078";
 const AVERAGE_WEATHER_COLOR = "#7cb342";
