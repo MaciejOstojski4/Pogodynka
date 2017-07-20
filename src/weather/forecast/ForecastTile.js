@@ -1,6 +1,3 @@
-/**
- * Created by react on 17.07.17.
- */
 import React from "react";
 import styled from "styled-components";
 
@@ -37,7 +34,7 @@ const Tile = styled.div`
   color: white;
   min-height: 200px;
   min-width: 200px;
-  box-shadow: 2px 2px 4px black;
+  box-shadow: 2px 2px 4px grey;
   padding: 10px;
   &:hover {
     opacity: 0.7;

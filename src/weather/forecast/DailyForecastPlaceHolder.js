@@ -1,6 +1,3 @@
-/**
- * Created by react on 19.07.17.
- */
 import React from "react";
 import styled from "styled-components";
 import ForecastTile from "./ForecastTile";
@@ -39,14 +36,14 @@ const DateTile = styled.div`
   margin-bottom: 10px;
   color: white;
   padding: 1px;
-  box-shadow: 2px 2px 4px black;
+  box-shadow: 2px 2px 4px grey;
 `;
 
 const PlaceHolder = styled.div`
   flex: 1;
   background-color: #e6ee9c;
   margin: 5px;
-  box-shadow: 2px 2px 4px black;
+  box-shadow: 2px 2px 4px grey;
 `;
 
 export default DailyForecastPlaceHolder;

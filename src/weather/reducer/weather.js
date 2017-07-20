@@ -1,7 +1,4 @@
-/**
- * Created by react on 13.07.17.
- */
-import { CHANGE_DISPLAYED_DETAILS_ACTION } from "./actions/weather-actions";
+import { CHANGE_DISPLAYED_DETAILS_ACTION } from "../../actions/weather-actions";
 
 const initialState = {
   cities: [],

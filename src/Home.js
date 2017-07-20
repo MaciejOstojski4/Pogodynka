@@ -3,6 +3,7 @@ import WeatherCardAggregator from "./weather/WeatherTilesAggregator";
 import apiClient from "./lib/api-client";
 import SearchWeather from "./weather/SearchWeather";
 import Loader from "react-loader-advanced";
+
 export class Home extends Component {
   constructor(props) {
     super(props);

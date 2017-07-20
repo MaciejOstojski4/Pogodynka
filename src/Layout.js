@@ -16,9 +16,10 @@ class Layout extends React.Component {
 }
 
 const Container = styled.div`
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-bottom: 25px;
+  padding: 0 25px 25px 25px;
+  background-color: white;
+  min-height: 100vh;
+  height: 100%;
 `;
 
 export default Layout;

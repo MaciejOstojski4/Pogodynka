@@ -73,7 +73,7 @@ class WeatherDetails extends Component {
     }
   }
 
-  getDataToRender = () => {
+  getComponentToRender = () => {
     if (this.isForecastFetched()) {
       return (
         <div>
@@ -116,18 +116,19 @@ class WeatherDetails extends Component {
   };
 
   render() {
-    return this.getDataToRender();
+    return this.getComponentToRender();
   }
 }
 
 const NUMBER_OF_DAYS_IN_FORECAST = 5;
 
 const ERROR_MESSAGE =
-  "Error occurred while application trying to fetch details information about weather. " +
-  "Probably the problem is with the OpenWeatherMap API. " +
-  "Please, try again later.";
+  `Error occurred while application trying to fetch details information about weather.
+  Probably the problem is with the OpenWeatherMap API.
+  Please, try again later.`;
 
 const StyledTitle = styled.h3`font-size: 27px;`;
+
 const mapStateToProps = currentState => {
   return {
     data: currentState.weather.cityDetails

@@ -1,6 +1,3 @@
-/**
- * Created by react on 17.07.17.
- */
 import React from "react";
 import styled from "styled-components";
 import DailyForecastPlaceHolder from "./DailyForecastPlaceHolder";

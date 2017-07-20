@@ -1,6 +1,3 @@
-/**
- * Created by react on 17.07.17.
- */
 import React from "react";
 import styled from "styled-components";
 
@@ -79,7 +76,6 @@ const InfoRow = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   margin-top: 15px;
-  @media
 `;
 
 export default CurrentWeatherDetails;

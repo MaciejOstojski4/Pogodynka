@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import apiClient from "../lib/api-client";
 import { connect } from "react-redux";
-import { changeDisplayedDetailsAction } from "./reducer/actions/weather-actions";
+import { changeDisplayedDetailsAction } from "../actions/weather-actions";
 import styled from "styled-components";
 import { withRouter } from "react-router";
 
@@ -42,7 +42,6 @@ export class SearchWeather extends Component {
         this.props.router.push("weatherdetails");
       })
       .catch(error => {
-        console.log("Error while searching by city name: ");
         console.log(error);
         this.setState({
           errorInfo: "Cannot find this city"
@@ -94,19 +93,19 @@ const SearchBox = styled.div`
   margin-bottom: 20px;
   margin-left: 5px;
   margin-right: 5px;
-  box-shadow: 2px 2px 4px;
+  box-shadow: 2px 2px 4px grey;
 `;
 
 const SearchInput = styled.input`
   border: none;
   border-radius: 0px;
-  box-shadow: 2px 2px 4px;
+  box-shadow: 2px 2px 4px grey;
 `;
 
 const SubmitButton = styled.button`
   border: none;
   border-radius: 0px;
-  box-shadow: 2px 2px 4px #888888;
+  box-shadow: 2px 2px 4px grey;
   background-color: #827717;
   color: white;
   @media only screen and (max-width: 767px) {
