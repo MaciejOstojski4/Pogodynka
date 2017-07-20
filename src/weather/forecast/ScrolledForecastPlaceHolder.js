@@ -6,10 +6,6 @@ import OwlCarousel from "react-owl-carousel";
 import DailyForecastPlaceHolder from "./DailyForecastPlaceHolder";
 
 class ScrolledForecastPlaceHolder extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <OwlCarousel className="owl-theme" items={1} loop={true}>

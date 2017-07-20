@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   CartesianGrid,
-  Legend,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -46,10 +45,11 @@ const ChartContainer = styled.div`
   margin-left: -30px;
 
   text-align: center;
+  /*
   @media only screen and (max-height: 600px) {
     height: 50vh;
     width: 90vw;
-  }
+  }*/
 `;
 
 export default Chart;

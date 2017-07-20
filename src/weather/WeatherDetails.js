@@ -127,7 +127,6 @@ const ERROR_MESSAGE =
   "Probably the problem is with the OpenWeatherMap API. " +
   "Please, try again later.";
 
-const forecastTitle = styled.h2`padding-top: 20px;`;
 const StyledTitle = styled.h3`font-size: 27px;`;
 const mapStateToProps = currentState => {
   return {
