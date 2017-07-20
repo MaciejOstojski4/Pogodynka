@@ -15,9 +15,16 @@ export class SearchWeather extends Component {
     this.state = {
       inputText: "",
       errorInfo: "",
-      similarCities: [],
+      similarCities: []
     };
   }
+
+  onSimilarCityNameClick = e => {
+    e.preventDefault();
+    this.setState({
+      inputText: e.target.id
+    });
+  };
 
   refreshState = (inputText, similarCities) => {
     this.setState({
@@ -27,7 +34,7 @@ export class SearchWeather extends Component {
   };
 
   searchDynamically = inputText => {
-    if(inputText.length === 0) {
+    if (inputText.length === 0) {
       return [];
     }
     return this.props.cities.filter(val =>
@@ -55,7 +62,6 @@ export class SearchWeather extends Component {
 
   dispatchData = response => {
     this.props.dispatch(changeDisplayedDetailsAction(response.data));
-    console.log(response);
     this.props.dispatch(saveSearchedCityNameAction(response.data.city.name));
   };
 
@@ -64,7 +70,7 @@ export class SearchWeather extends Component {
       <SimilarCitiesHint>
         {this.state.similarCities.map(cityName => {
           return (
-            <SimilarCitiesListElement>
+            <SimilarCitiesListElement key={cityName} id={cityName} onClick={this.onSimilarCityNameClick}>
               {cityName}
             </SimilarCitiesListElement>
           );
@@ -100,15 +106,18 @@ export class SearchWeather extends Component {
         <SearchForm className="">
           <div className="col-xs-12 col-sm-10 col-md-10">
             <div className="row">
-            <SearchInput
-              className="form-control input-lg"
-              placeholder="type city name or latitude:longitude..."
-              type="text"
-              onChange={this.handleChange}
-            />
+              <SearchInput
+                className="form-control input-lg"
+                placeholder="type city name or latitude:longitude..."
+                type="text"
+                onChange={this.handleChange}
+                value={this.state.inputText}
+              />
             </div>
             <div className="row">
-              {this.state.similarCities.length > 0 ? this.renderSimilarCities(): <div></div>}
+              {this.state.similarCities.length > 0
+                ? this.renderSimilarCities()
+                : <div />}
             </div>
           </div>
 
@@ -133,16 +142,18 @@ export class SearchWeather extends Component {
 }
 
 const SimilarCitiesHint = styled.div`
-  padding: 5px;
   z-index: 1;
+  padding: 5px;
   position: absolute;
   background-color: white;
   border: 1px solid;
   border-color: black;
   font-size: 120%;
+  min-width: 200px;
 `;
 
-const SimilarCitiesListElement = styled.p`
+const SimilarCitiesListElement = styled.div`
+  width: 100%;
   &:hover {
     background-color: grey;
   }
