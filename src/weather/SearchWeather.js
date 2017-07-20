@@ -6,6 +6,7 @@ import {
   saveSearchedCityNameAction,
 } from "../actions/weather-actions";
 import styled from "styled-components";
+import SearchCityNameHint from "./SearchCityNameHint";
 import { withRouter } from "react-router";
 
 export class SearchWeather extends Component {
@@ -15,14 +16,14 @@ export class SearchWeather extends Component {
     this.state = {
       inputText: "",
       errorInfo: "",
-      similarCities: []
+      similarCities: [],
     };
   }
 
-  onSimilarCityNameClick = e => {
-    e.preventDefault();
+  onSimilarCityNameClick = cityName => {
     this.setState({
-      inputText: e.target.id
+      inputText: cityName,
+      similarCities: [],
     });
   };
 
@@ -65,20 +66,6 @@ export class SearchWeather extends Component {
     this.props.dispatch(saveSearchedCityNameAction(response.data.city.name));
   };
 
-  renderSimilarCities = () => {
-    return (
-      <SimilarCitiesHint>
-        {this.state.similarCities.map(cityName => {
-          return (
-            <SimilarCitiesListElement key={cityName} id={cityName} onClick={this.onSimilarCityNameClick}>
-              {cityName}
-            </SimilarCitiesListElement>
-          );
-        })}
-      </SimilarCitiesHint>
-    );
-  };
-
   fetchWeather = url => {
     apiClient
       .get(url)
@@ -116,7 +103,10 @@ export class SearchWeather extends Component {
             </div>
             <div className="row">
               {this.state.similarCities.length > 0
-                ? this.renderSimilarCities()
+                ? <SearchCityNameHint
+                    similarCities={this.state.similarCities}
+                    onClick={this.onSimilarCityNameClick}
+                  />
                 : <div />}
             </div>
           </div>
@@ -140,24 +130,6 @@ export class SearchWeather extends Component {
     );
   }
 }
-
-const SimilarCitiesHint = styled.div`
-  z-index: 1;
-  padding: 5px;
-  position: absolute;
-  background-color: white;
-  border: 1px solid;
-  border-color: black;
-  font-size: 120%;
-  min-width: 200px;
-`;
-
-const SimilarCitiesListElement = styled.div`
-  width: 100%;
-  &:hover {
-    background-color: grey;
-  }
-`;
 
 const SearchBox = styled.div`
   background-color: #cddc39;
