@@ -70,34 +70,34 @@ class WeatherTile extends React.Component {
 
   render() {
     return (
-      <Card
+      <Tile
         className="text-center"
         onClick={this.showDetails}
         style={this.state.tileColor}
       >
         <div className="row">
           <div>
-            <CardField>
+            <TileField>
               <TitleField style={{ color: `${this.state.textColor}` }}>
                 {this.props.city.name}
               </TitleField>
-            </CardField>
-            <CardField>
+            </TileField>
+            <TileField>
               <img src={this.getWeatherIcon()} alt="Cannot render weather" />
-            </CardField>
-            <CardField>
+            </TileField>
+            <TileField>
               <span style={{ color: `${this.state.textColor}` }}>
                 {this.props.city.weather[0].description}
               </span>
-            </CardField>
-            <CardField>
+            </TileField>
+            <TileField>
               <span style={{ color: `${this.state.textColor}` }}>
                 {" "}{this.props.city.main.temp} &deg;C
               </span>
-            </CardField>
+            </TileField>
           </div>
         </div>
-      </Card>
+      </Tile>
     );
   }
 }
@@ -112,15 +112,16 @@ const ICON_URL = "http://openweathermap.org/img/w/";
 
 const TitleField = styled.b`font-size: 160%;`;
 
-const CardField = styled.div`
+const TileField = styled.div`
   flex: 1;
   min-height: 40px;
   font-size: 150%;
 `;
 
-const Card = styled.div`
+const Tile = styled.div`
   float: left;
   margin: 5px;
+  padding-top: 10px;
   min-width: 200px;
   flex: 1;
   flex-direction: column;
