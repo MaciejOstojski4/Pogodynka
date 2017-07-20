@@ -5,6 +5,7 @@ import { Home } from "./Home";
 import Layout from "./Layout";
 import WeatherDetails from "./weather/WeatherDetails";
 import styled from "styled-components";
+import RegisterForm from "./user/form/registerForm";
 
 class App extends Component {
   render() {
@@ -14,6 +15,7 @@ class App extends Component {
           <Route path="/" component={Layout}>
             <IndexRoute component={Home} />
             <Route component={WeatherDetails} path="weatherdetails" />
+            <Route path="register-form" component={RegisterForm} />
           </Route>
         </Router>
       </AppMainContainer>

@@ -24,6 +24,9 @@ class Header extends React.Component {
             <li>
               <Link to="weatherdetails">Weather Details</Link>
             </li>
+            <li>
+              <Link to="register-form">Register</Link>
+            </li>
           </Ul>
         </Navbar>
       </NavbarContainer>
