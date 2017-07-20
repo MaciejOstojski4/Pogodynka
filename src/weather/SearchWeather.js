@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import apiClient from "../lib/api-client";
 import { connect } from "react-redux";
-import { changeDisplayedDetailsAction } from "../actions/weather-actions";
+import {
+  changeDisplayedDetailsAction,
+  saveSearchedCityNameAction,
+} from "../actions/weather-actions";
 import styled from "styled-components";
 import { withRouter } from "react-router";
 
@@ -11,15 +14,31 @@ export class SearchWeather extends Component {
 
     this.state = {
       inputText: "",
-      errorInfo: ""
+      errorInfo: "",
+      similarCities: [],
     };
   }
 
-  refreshState = e => {
-    e.preventDefault();
+  refreshState = (inputText, similarCities) => {
     this.setState({
-      inputText: e.target.value
+      inputText: inputText,
+      similarCities: similarCities,
     });
+  };
+
+  searchDynamically = inputText => {
+    if(inputText.length === 0) {
+      return [];
+    }
+    return this.props.cities.filter(val =>
+      val.toLowerCase().includes(inputText.toLowerCase()),
+    );
+  };
+
+  handleChange = e => {
+    e.preventDefault();
+    const similarCities = this.searchDynamically(e.target.value);
+    this.refreshState(e.target.value, similarCities);
   };
 
   isSearchingByCityName = () => {
@@ -34,17 +53,37 @@ export class SearchWeather extends Component {
     return `${SEARCH_URL}lat=${latAndLongValue[0]}&lon=${latAndLongValue[1]}`;
   };
 
+  dispatchData = response => {
+    this.props.dispatch(changeDisplayedDetailsAction(response.data));
+    console.log(response);
+    this.props.dispatch(saveSearchedCityNameAction(response.data.city.name));
+  };
+
+  renderSimilarCities = () => {
+    return (
+      <SimilarCitiesHint>
+        {this.state.similarCities.map(cityName => {
+          return (
+            <SimilarCitiesListElement>
+              {cityName}
+            </SimilarCitiesListElement>
+          );
+        })}
+      </SimilarCitiesHint>
+    );
+  };
+
   fetchWeather = url => {
     apiClient
       .get(url)
       .then(response => {
-        this.props.dispatch(changeDisplayedDetailsAction(response.data));
+        this.dispatchData(response);
         this.props.router.push("weatherdetails");
       })
       .catch(error => {
         console.log(error);
         this.setState({
-          errorInfo: "Cannot find this city"
+          errorInfo: "Cannot find this city",
         });
       });
   };
@@ -60,13 +99,19 @@ export class SearchWeather extends Component {
       <SearchBox>
         <SearchForm className="">
           <div className="col-xs-12 col-sm-10 col-md-10">
+            <div className="row">
             <SearchInput
               className="form-control input-lg"
               placeholder="type city name or latitude:longitude..."
               type="text"
-              onChange={this.refreshState}
+              onChange={this.handleChange}
             />
+            </div>
+            <div className="row">
+              {this.state.similarCities.length > 0 ? this.renderSimilarCities(): <div></div>}
+            </div>
           </div>
+
           <div>
             <SubmitButton
               className="btn btn-lg"
@@ -86,6 +131,22 @@ export class SearchWeather extends Component {
     );
   }
 }
+
+const SimilarCitiesHint = styled.div`
+  padding: 5px;
+  z-index: 1;
+  position: absolute;
+  background-color: white;
+  border: 1px solid;
+  border-color: black;
+  font-size: 120%;
+`;
+
+const SimilarCitiesListElement = styled.p`
+  &:hover {
+    background-color: grey;
+  }
+`;
 
 const SearchBox = styled.div`
   background-color: #cddc39;
@@ -126,10 +187,17 @@ const SearchForm = styled.form`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  position: relative;
 `;
 
 const SEARCH_URL = "forecast?units=metric&";
 
 const LAT_LONG_REGEX = /(-)?[0-9]+\.[0-9]+:(-)?[0-9]+\.[0-9]+/;
 
-export default connect()(withRouter(SearchWeather));
+const mapStateToProps = currentState => {
+  return {
+    cities: currentState.weather.searchedCities,
+  };
+};
+
+export default connect(mapStateToProps)(withRouter(SearchWeather));

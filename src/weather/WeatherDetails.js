@@ -63,7 +63,7 @@ class WeatherDetails extends Component {
   };
 
   isForecastFetched = () => {
-    return this.props.data !== undefined;
+    return this.props.data !== null;
   };
 
   componentDidMount() {
