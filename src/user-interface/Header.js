@@ -1,6 +1,3 @@
-/**
- * Created by react on 14.07.17.
- */
 import React from "react";
 import { Link } from "react-router";
 import styled from "styled-components";

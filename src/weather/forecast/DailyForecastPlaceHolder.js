@@ -1,6 +1,3 @@
-/**
- * Created by react on 19.07.17.
- */
 import React from "react";
 import styled from "styled-components";
 import ForecastTile from "./ForecastTile";

@@ -1,6 +1,3 @@
-/**
- * Created by react on 19.07.17.
- */
 import React from "react";
 import OwlCarousel from "react-owl-carousel";
 import DailyForecastPlaceHolder from "./DailyForecastPlaceHolder";

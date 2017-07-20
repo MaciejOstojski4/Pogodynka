@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import apiClient from "../lib/api-client";
 import { connect } from "react-redux";
-import { changeDisplayedDetailsAction } from "./reducer/actions/weather-actions";
+import { changeDisplayedDetailsAction } from "../actions/weather-actions";
 import styled from "styled-components";
 import { withRouter } from "react-router";
 
@@ -42,7 +42,6 @@ export class SearchWeather extends Component {
         this.props.router.push("weatherdetails");
       })
       .catch(error => {
-        console.log("Error while searching by city name: ");
         console.log(error);
         this.setState({
           errorInfo: "Cannot find this city"

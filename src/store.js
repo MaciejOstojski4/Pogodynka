@@ -1,6 +1,3 @@
-/**
- * Created by react on 13.07.17.
- */
 import { compose, createStore, combineReducers } from "redux";
 import persistState from "redux-localstorage";
 import { weatherReducer } from "./weather/reducer/weather";

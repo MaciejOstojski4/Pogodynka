@@ -1,17 +1,13 @@
-/**
- * Created by react on 12.07.17.
- */
 import React from "react";
 import styled from "styled-components";
+
 class WeatherTile extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      tileColor: {
-        "background-color": GOOD_WEATHER_COLOR
-      },
-      textColor: ""
+      tileColor: tileColors.goodWeather,
+      textColor: "",
     };
   }
 
@@ -25,7 +21,7 @@ class WeatherTile extends React.Component {
 
   refreshTileColorInState = tileColor => {
     this.setState({
-      tileColor: { "background-color": tileColor }
+      tileColor: tileColor
     });
   };
 
@@ -46,7 +42,6 @@ class WeatherTile extends React.Component {
       (weatherCode >= 700 && weatherCode < 800) ||
       (weatherCode >= 803 && weatherCode <= 804)
     ) {
-      this.setState({ textColor: AVERAGE_WEATHER_TEXT });
       return true;
     }
     return false;
@@ -54,7 +49,6 @@ class WeatherTile extends React.Component {
 
   isGoodWeather = weatherCode => {
     if (weatherCode >= 800 && weatherCode <= 802) {
-      this.setState({ textColor: GOOD_WEATHER_TEXT });
       return true;
     }
     return false;
@@ -62,11 +56,11 @@ class WeatherTile extends React.Component {
 
   resolveTileColor = weatherCode => {
     if (this.isBadWeather(weatherCode)) {
-      this.refreshTileColorInState(BAD_WEATHER_COLOR);
+      this.refreshTileColorInState(tileColors.badWeather);
     } else if (this.isAverageWeather(weatherCode)) {
-      this.refreshTileColorInState(AVERAGE_WEATHER_COLOR);
+      this.refreshTileColorInState(tileColors.averageWeather);
     } else if (this.isGoodWeather(weatherCode)) {
-      this.refreshTileColorInState(GOOD_WEATHER_COLOR);
+      this.refreshTileColorInState(tileColors.goodWeather);
     }
   };
 
@@ -108,12 +102,11 @@ class WeatherTile extends React.Component {
   }
 }
 
-const GOOD_WEATHER_COLOR = "#ffd600";
-const GOOD_WEATHER_TEXT = "#6d7078";
-const AVERAGE_WEATHER_COLOR = "#7cb342";
-const AVERAGE_WEATHER_TEXT = "";
-const BAD_WEATHER_COLOR = "#0277bd";
-const BAD_WEATHER_TEXT = " ";
+const tileColors = {
+  goodWeather: { color: "#6d7078", backgroundColor: "#ffd600" },
+  averageWeather: { color: "#FFFFFF", backgroundColor: "#7cb342" },
+  badWeather: { color: "#FFFFFF", backgroundColor: "#0277bd" },
+};
 
 const ICON_URL = "http://openweathermap.org/img/w/";
 
@@ -123,7 +116,6 @@ const CardField = styled.div`
   flex: 1;
   min-height: 40px;
   font-size: 150%;
-  color: white;
 `;
 
 const Card = styled.div`
