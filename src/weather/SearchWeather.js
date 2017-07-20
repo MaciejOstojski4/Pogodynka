@@ -95,19 +95,19 @@ const SearchBox = styled.div`
   margin-bottom: 20px;
   margin-left: 5px;
   margin-right: 5px;
-  box-shadow: 2px 2px 4px;
+  box-shadow: 2px 2px 4px grey;
 `;
 
 const SearchInput = styled.input`
   border: none;
   border-radius: 0px;
-  box-shadow: 2px 2px 4px;
+  box-shadow: 2px 2px 4px grey;
 `;
 
 const SubmitButton = styled.button`
   border: none;
   border-radius: 0px;
-  box-shadow: 2px 2px 4px #888888;
+  box-shadow: 2px 2px 4px grey;
   background-color: #827717;
   color: white;
   @media only screen and (max-width: 767px) {

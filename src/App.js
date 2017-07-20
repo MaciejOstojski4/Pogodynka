@@ -22,7 +22,7 @@ class App extends Component {
 }
 
 const AppMainContainer = styled.div`
-  background-image: url(http://i.stack.imgur.com/oslRB.png);
+  background-image: url(http://img.freepik.com/free-vector/grey-linen-texture-background_1053-253.jpg?size=338&ext=jpg);
   height: 100%;
   color: #1b5e20;
   min-height: 100vh;

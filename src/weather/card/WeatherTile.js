@@ -133,7 +133,7 @@ const Card = styled.div`
   flex: 1;
   flex-direction: column;
   display: flex;
-  box-shadow: 2px 2px 4px black;
+  box-shadow: 2px 2px 4px grey;
   &:hover {
     opacity: 0.7;
   }
