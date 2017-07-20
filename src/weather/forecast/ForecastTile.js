@@ -2,6 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 class ForecastTile extends React.Component {
+  getForecastIcon = () => {
+    return ICON_URL + this.props.forecast.weather[0].icon + ".png";
+  };
+
   render() {
     return (
       <Tile style={{ "background-color": this.props.backgroundColor }}>
@@ -10,6 +14,9 @@ class ForecastTile extends React.Component {
           <ValueParagraph>
             {this.props.forecast.main.temp} &deg;C
           </ValueParagraph>
+        </TileField>
+        <TileField>
+          <img src={this.getForecastIcon()} alt="Cannot render weather" />
         </TileField>
         <TileField className="text-center">
           <DescriptionParagraph>Pressure:</DescriptionParagraph>
@@ -49,5 +56,7 @@ const ValueParagraph = styled.p`
   font-size: 150%;
   font-weight: bold;
 `;
+
+const ICON_URL = "http://openweathermap.org/img/w/";
 
 export default ForecastTile;
