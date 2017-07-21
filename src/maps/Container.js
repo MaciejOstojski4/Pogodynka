@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import SearchWeather from "../weather/SearchWeather";
 import SimpleMapExample from "./mapa";
+import SimpleExample from "./leaf";
 /**
  * Container
  */
@@ -12,6 +13,7 @@ class Container extends Component {
         <div className="row">
           <SearchWeather />
           <SimpleMapExample />
+          <SimpleExample />
         </div>
       </div>
     );
