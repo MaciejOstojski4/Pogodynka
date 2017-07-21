@@ -11,7 +11,7 @@ export class Home extends Component {
 
     this.state = {
       cities: [],
-      loading: false,
+      loading: false
     };
   }
 
@@ -21,13 +21,14 @@ export class Home extends Component {
 
   renderLoader = () => {
     return (
-      <div className="col-md-12" >
+      <div className="col-md-12">
         <Loader />
       </div>
     );
   };
 
   renderComponent = () => {
+    console.log(this.state.cities);
     return (
       <div>
         <WeatherCardAggregator weatherItems={this.state.cities} />
@@ -37,19 +38,19 @@ export class Home extends Component {
 
   fetchWeatherForCities = () => {
     this.setState({
-      loading: true,
+      loading: true
     });
     apiClient
       .get(this.prepareUrl())
       .then(response => {
         this.setState({
           cities: response.data.list,
-          loading: false,
+          loading: false
         });
       })
       .catch(error => {
         console.log(
-          "Error occurred during fetching weather for cities: " + error,
+          "Error occurred during fetching weather for cities: " + error
         );
       });
   };
@@ -73,7 +74,7 @@ export class Home extends Component {
 }
 
 const initialCities = [
-  6695624, // Warszawa
+  819827 /*6695624, // Warszawa*/,
   2988507, // Paris
   3117735, // Madrid
   2643743, // London
@@ -82,10 +83,8 @@ const initialCities = [
   524901, // Moscow
   2759794, // Amsterdam
   3143244, //Oslo
-  6458923, // Lisbon
+  6458923 // Lisbon
 ];
-
-
 
 const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric&";
 
