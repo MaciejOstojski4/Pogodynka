@@ -2,10 +2,10 @@
  * Created by react on 21.07.17.
  */
 import React from "react";
-import userClientApi from "../../lib/userApi-client";
+import { connect } from "react-redux";
+import { loginAction } from "../../actions/user-action";
 
 class LoginForm extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -31,20 +31,17 @@ class LoginForm extends React.Component {
     }
   };
 
+  createUserObject = () => {
+    return {
+      email: this.state.email,
+      password: this.state.password,
+    };
+  };
+
   onSubmit = e => {
     e.preventDefault();
-    userClientApi.post(LOGIN_URL, {
-      user: {
-        email: this.state.email,
-        password: this.state.password
-      }
-    })
-      .then(response => {
-        console.log(response);
-      })
-      .then(error => {
-        console.log(error);
-      })
+    const user = this.createUserObject();
+    this.props.dispatch(loginAction(user));
   };
 
   render() {
@@ -80,6 +77,4 @@ class LoginForm extends React.Component {
   }
 }
 
-const LOGIN_URL = "/api/v1/sessions";
-
-export default LoginForm;
+export default connect()(LoginForm);

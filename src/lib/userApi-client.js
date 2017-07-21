@@ -10,8 +10,8 @@ const configureApi = store => {
     function(config) {
       const state = store.getState();
       if (state.session.user.token) {
-        config.headers["X-User-Email"] = state.sessionReducer.user.userEmail;
-        config.headers["X-User-Token"] = state.sessionReducer.user.token;
+        config.headers["X-User-Email"] = state.session.user.userEmail;
+        config.headers["X-User-Token"] = state.session.user.token;
       }
       return config;
     },

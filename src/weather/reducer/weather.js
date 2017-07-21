@@ -6,7 +6,6 @@ const initialState = {
 };
 
 const weather = (currentState = initialState, action) => {
-  //window.localStorage.clear();
   switch (action.type) {
     case CHANGE_DISPLAYED_DETAILS_ACTION:
       return { ...currentState, cityDetails: action.data.city };
