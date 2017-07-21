@@ -39,6 +39,7 @@ class WeatherCardAggregator extends React.Component {
           key={city.name}
           city={city}
           onClickRedirect={this.redirectToDetails}
+          showLikeButton={this.props.userId !== "" ? true : false}
         />
       );
     });
@@ -79,4 +80,10 @@ const AggregatorResponsiveColumn = styled.div`
 
 const SEARCH_URL = "forecast?units=metric&";
 
-export default connect()(withRouter(WeatherCardAggregator));
+const mapStateToProps = currentState => {
+  return {
+    userId: currentState.session.user.userId,
+  };
+};
+
+export default connect(mapStateToProps)(withRouter(WeatherCardAggregator));
