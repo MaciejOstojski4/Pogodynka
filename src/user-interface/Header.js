@@ -30,6 +30,9 @@ class Header extends React.Component {
             <li>
               <Link to="register-form">Register</Link>
             </li>
+            <li>
+              <Link to="login-form">Login</Link>
+            </li>
           </Ul>
         </Navbar>
       </NavbarContainer>

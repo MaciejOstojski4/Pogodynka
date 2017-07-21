@@ -7,6 +7,7 @@ import WeatherDetails from "./weather/WeatherDetails";
 import styled from "styled-components";
 import Container from "./maps/Container";
 import RegisterForm from "./user/form/RegisterForm";
+import LoginForm from "./user/form/LoginForm";
 
 class App extends Component {
   render() {
@@ -18,6 +19,7 @@ class App extends Component {
             <Route component={WeatherDetails} path="weatherdetails" />
             <Route component={Container} path="container" />
             <Route path="register-form" component={RegisterForm} />
+            <Route path="login-form" component={LoginForm} />
           </Route>
         </Router>
       </AppMainContainer>
