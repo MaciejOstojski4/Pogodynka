@@ -52,6 +52,9 @@ class Header extends React.Component {
             <li>
               {this.renderUserSessionLink()}
             </li>
+            <li>
+              <Link to="favourite-cities">My cities</Link>
+            </li>
           </ResponsiveList>
         </Navbar>
       </NavbarContainer>
