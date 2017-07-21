@@ -17,11 +17,12 @@ class WeatherCardAggregator extends React.Component {
       .get(url)
       .then(response => {
         this.props.dispatch(changeDisplayedDetailsAction(response.data));
+        this.props.dispach(saveSearchedWeather());
       })
       .catch(error => {
         console.log("Error while searching by city name: " + error);
         this.setState({
-          errorInfo: "Cannot find this city",
+          errorInfo: "Cannot find this city"
         });
       });
   };

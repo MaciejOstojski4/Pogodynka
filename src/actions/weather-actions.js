@@ -2,12 +2,13 @@ export const CHANGE_DISPLAYED_DETAILS_ACTION = "changeDisplayedDetails";
 
 export const ADD_SEARCHED_CITY_ACTION = "saveSearchedCity";
 
+export const SAVE_SEARCHED_WEATHER = "saveSearchedWeather";
 export const changeDisplayedDetailsAction = city => {
   return {
     type: CHANGE_DISPLAYED_DETAILS_ACTION,
     data: {
-      city: city,
-    },
+      city: city
+    }
   };
 };
 
@@ -15,7 +16,16 @@ export const saveSearchedCityNameAction = cityName => {
   return {
     type: ADD_SEARCHED_CITY_ACTION,
     data: {
-      name: cityName,
-    },
+      name: cityName
+    }
+  };
+};
+
+export const saveSearchedWeatherAction = weatherData => {
+  return {
+    type: SAVE_SEARCHED_WEATHER,
+    data: {
+      weather: weatherData
+    }
   };
 };
