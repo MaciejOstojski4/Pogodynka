@@ -1,23 +1,28 @@
-/**
- * Created by react on 20.07.17.
- */
 import React from "react";
 import styled from "styled-components";
 
-class Loader extends React.Component {
+class LoaderWrapper extends React.Component {
   render() {
-    return <LoaderSquare />;
+    return (
+      <LoaderContainer>
+        <LoaderSquare />
+      </LoaderContainer>
+    );
   }
 }
 
+const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const LoaderSquare = styled.div`
   background-color: #7cb342;
-  border-radius: 0%;
-  width: 120px;
+  width: 100px;
   height: 120px;
-  animation: spin 2s linear infinite;
-  margin: 30% 0 0 40%;
-  @keyframes spin {
+  animation: rotate 1.5s linear infinite;
+  @keyframes rotate {
     0% {
       transform: rotateY(0deg);
     }
@@ -27,4 +32,4 @@ const LoaderSquare = styled.div`
   }
 `;
 
-export default Loader;
+export default LoaderWrapper;

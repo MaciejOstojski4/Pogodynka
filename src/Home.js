@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import WeatherCardAggregator from "./weather/WeatherTilesAggregator";
 import apiClient from "./lib/api-client";
 import SearchWeather from "./weather/SearchWeather";
-import Loader from "./user-interface/Loader";
-// import Loader from "react-loader-advanced";
+import LoaderWrapper from "./user-interface/Loader";
 
 export class Home extends Component {
   constructor(props) {
@@ -21,9 +20,7 @@ export class Home extends Component {
 
   renderLoader = () => {
     return (
-      <div className="col-md-12" >
-        <Loader />
-      </div>
+      <LoaderWrapper />
     );
   };
 
