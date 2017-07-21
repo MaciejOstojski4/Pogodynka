@@ -1,5 +1,6 @@
 import React from "react";
 import userClientApi from "../../lib/userApi-client";
+import { withRouter } from "react-router";
 
 class RegisterForm extends React.Component {
   constructor(props) {
@@ -9,6 +10,8 @@ class RegisterForm extends React.Component {
       email: "",
       password: "",
       repeatedPassword: "",
+      passwordNotIdenticalErr: false,
+      serverError: false,
     };
   }
 
@@ -25,28 +28,52 @@ class RegisterForm extends React.Component {
           password: e.target.value,
         });
         break;
-      case "repeatInput":
+      case "repeatPasswordInput":
         this.setState({
           repeatedPassword: e.target.value,
         });
         break;
+      default:
+        break;
     }
+  };
+
+  registerUser = () => {
+    userClientApi
+      .post(REGISTER_URL, {
+        user: {
+          email: this.state.email,
+          password: this.state.password,
+        },
+      })
+      .then(response => {
+        this.props.router.push("login-form");
+      })
+      .then(error => {
+        console.log(error);
+        this.setState({
+          serverError: true,
+        });
+      });
+  };
+
+  isPasswordIdentical = () => {
+    return this.state.password === this.state.repeatedPassword;
+  };
+
+  showError = () => {
+    this.setState({
+      passwordNotIdenticalErr: true,
+    });
   };
 
   onSubmit = e => {
     e.preventDefault();
-    userClientApi.post(REGISTER_URL, {
-      user: {
-        email: this.state.email,
-        password: this.state.password
-      }
-    })
-      .then(response => {
-        console.log(response);
-      })
-      .then(error => {
-        console.log(error);
-      })
+    if (this.isPasswordIdentical()) {
+      this.registerUser();
+    } else {
+      this.showError();
+    }
   };
 
   render() {
@@ -70,6 +97,11 @@ class RegisterForm extends React.Component {
               className="form-control"
               onChange={this.refreshState}
             />
+            <div>
+              {this.state.passwordNotIdenticalErr
+                ? "Passwords aren't identical"
+                : ""}
+            </div>
           </div>
           <div className="form-group">
             <label>Repeat password</label>
@@ -79,6 +111,7 @@ class RegisterForm extends React.Component {
               className="form-control"
               onChange={this.refreshState}
             />
+            <div />
           </div>
           <div className="form-group">
             <button type="submit" onClick={this.onSubmit}>
@@ -86,6 +119,12 @@ class RegisterForm extends React.Component {
             </button>
           </div>
         </form>
+        <div />
+        <div>
+          {this.state.serverError
+            ? "Server error occurred, Please try again later"
+            : ""}
+        </div>
       </div>
     );
   }
@@ -93,4 +132,4 @@ class RegisterForm extends React.Component {
 
 const REGISTER_URL = "/api/v1/registrations";
 
-export default RegisterForm;
+export default withRouter(RegisterForm);
