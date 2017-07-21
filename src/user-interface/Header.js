@@ -24,6 +24,9 @@ class Header extends React.Component {
             <li>
               <Link to="weatherdetails">Weather Details</Link>
             </li>
+            <li>
+              <Link to="container">Weather Map</Link>
+            </li>
           </Ul>
         </Navbar>
       </NavbarContainer>
@@ -43,8 +46,6 @@ const Navbar = styled.nav`
   font-size: 120%;
 `;
 
-const NavbarContainer = styled.div`
-  background-color: white;
-`;
+const NavbarContainer = styled.div`background-color: white;`;
 
 export default Header;

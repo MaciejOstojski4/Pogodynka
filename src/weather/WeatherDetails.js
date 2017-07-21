@@ -5,6 +5,7 @@ import Chart from "./Chart";
 import ResponsiveForecast from "./forecast/ResponsiveForecast";
 import styled from "styled-components";
 import SearchWeather from "./SearchWeather";
+
 class WeatherDetails extends Component {
   constructor(props) {
     super(props);
@@ -122,8 +123,7 @@ class WeatherDetails extends Component {
 
 const NUMBER_OF_DAYS_IN_FORECAST = 5;
 
-const ERROR_MESSAGE =
-  `Error occurred while application trying to fetch details information about weather.
+const ERROR_MESSAGE = `Error occurred while application trying to fetch details information about weather.
   Probably the problem is with the OpenWeatherMap API.
   Please, try again later.`;
 

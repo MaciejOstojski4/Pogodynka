@@ -5,6 +5,7 @@ import { Home } from "./Home";
 import Layout from "./Layout";
 import WeatherDetails from "./weather/WeatherDetails";
 import styled from "styled-components";
+import Container from "./maps/Container";
 
 class App extends Component {
   render() {
@@ -14,6 +15,7 @@ class App extends Component {
           <Route path="/" component={Layout}>
             <IndexRoute component={Home} />
             <Route component={WeatherDetails} path="weatherdetails" />
+            <Route component={Container} path="container" />
           </Route>
         </Router>
       </AppMainContainer>
