@@ -5,9 +5,8 @@ import { Home } from "./Home";
 import Layout from "./Layout";
 import WeatherDetails from "./weather/WeatherDetails";
 import styled from "styled-components";
-
-import RegisterForm from "./user/form/registerForm";
 import Container from "./maps/Container";
+import RegisterForm from "./user/form/RegisterForm";
 
 class App extends Component {
   render() {
