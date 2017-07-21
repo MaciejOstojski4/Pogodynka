@@ -3,9 +3,10 @@ import { hashHistory } from "react-router";
 
 export const LOGIN_SUCCESS_ACTION = "loginSuccess";
 
+export const LOGOUT_ACTION = "logout";
+
 export const loginAction = user => {
-  return (dispatch) => {
-    console.log(user.email);
+  return dispatch => {
     userApiClient
       .post(LOGIN_URL, {
         user: user,
@@ -24,6 +25,12 @@ export const loginAction = user => {
       .catch(error => {
         console.log(error);
       });
+  };
+};
+
+export const logoutAction = () => {
+  return {
+    type: LOGOUT_ACTION,
   };
 };
 

@@ -1,6 +1,3 @@
-/**
- * Created by react on 21.07.17.
- */
 import React from "react";
 import { connect } from "react-redux";
 import { loginAction } from "../../actions/user-action";

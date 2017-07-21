@@ -1,8 +1,27 @@
 import React from "react";
 import { Link } from "react-router";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { logoutAction } from "../actions/user-action";
 
 class Header extends React.Component {
+  renderRegisterLink = () => {
+    if (this.props.userEmail === "") {
+      return <Link to="register-form">Register</Link>;
+    }
+  };
+
+  renderUserSessionLink = () => {
+    if (this.props.userEmail === "") {
+      return <Link to="login-form">Login</Link>;
+    }
+    return (
+      <Link to="/" onClick={() => this.props.dispatch(logoutAction())}>
+        Logout
+      </Link>
+    );
+  };
+
   render() {
     return (
       <NavbarContainer className="container">
@@ -11,13 +30,13 @@ class Header extends React.Component {
             <a
               className="navbar-brand"
               style={{
-                color: "#cddc39"
+                color: "#cddc39",
               }}
             >
               Pogodynka
             </a>
           </div>
-          <Ul className="nav navbar-nav">
+          <ResponsiveList className="nav navbar-nav">
             <li>
               <Link to="/">Home</Link>
             </li>
@@ -28,24 +47,25 @@ class Header extends React.Component {
               <Link to="container">Weather Map</Link>
             </li>
             <li>
-              <Link to="register-form">Register</Link>
+              {this.renderRegisterLink()}
             </li>
             <li>
-              <Link to="login-form">Login</Link>
+              {this.renderUserSessionLink()}
             </li>
-          </Ul>
+          </ResponsiveList>
         </Navbar>
       </NavbarContainer>
     );
   }
 }
-const Ul = styled.ul`
+const ResponsiveList = styled.ul`
   @media only screen and (max-width: 767px) {
     margin-left: 20px;
   }
 `;
+
 const Navbar = styled.nav`
-  background-color: #000000; /*827717;*/
+  background-color: #000000;
   border-radius: 0px;
   border-color: #9e9d24;
   box-shadow: 2px 2px 4px grey;
@@ -54,4 +74,10 @@ const Navbar = styled.nav`
 
 const NavbarContainer = styled.div`background-color: white;`;
 
-export default Header;
+const mapStateToProps = currentState => {
+  return {
+    userEmail: currentState.session.user.email,
+  };
+};
+
+export default connect(mapStateToProps)(Header);
