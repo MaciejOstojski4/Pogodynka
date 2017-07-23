@@ -8,7 +8,6 @@ class Container extends Component {
       <div>
         <div className="row">
           <SearchWeather />
-
           <MarkerClustererExample />
         </div>
       </div>

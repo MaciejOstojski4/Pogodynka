@@ -11,11 +11,14 @@ const initialState = {
 };
 
 const weather = (currentState = initialState, action) => {
-  //window.localStorage.clear();
-  console.log(...currentState);
+  window.localStorage.clear();
+  console.log(currentState);
   switch (action.type) {
     case CHANGE_DISPLAYED_DETAILS_ACTION:
-      return { ...currentState, cityDetails: action.data.city };
+      return {
+        ...currentState,
+        cityDetails: action.data.city
+      };
     case ADD_SEARCHED_CITY_ACTION:
       return {
         ...currentState,
@@ -23,8 +26,8 @@ const weather = (currentState = initialState, action) => {
       };
     case SAVE_SEARCHED_WEATHER:
       return {
-        ...curentState,
-        savedWeather: [...currentState.savedWeather, action.data.weather]
+        ...currentState,
+        savedWeather: [action.data.weather]
       };
     default:
       return currentState;

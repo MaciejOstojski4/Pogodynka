@@ -47,6 +47,7 @@ class WeatherDetails extends Component {
   };
 
   parseDataForChart = () => {
+    console.log(this.props);
     return this.props.data.list
       .map(forecast => {
         return {

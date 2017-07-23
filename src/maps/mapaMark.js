@@ -5,31 +5,45 @@ import MarkerClusterer from "react-google-maps/lib/addons/MarkerClusterer";
 import { connect } from "react-redux";
 
 const MarkerClustererExampleGoogleMap = withGoogleMap(props =>
-  <GoogleMap defaultZoom={3} defaultCenter={{ lat: 25.0391667, lng: 121.525 }}>
-    <MarkerClusterer averageCenter enableRetinaIcons gridSize={60}>
-      {props.markers.map(marker =>
-        <Marker
-          position={{ lat: marker.latitude, lng: marker.longitude }}
-          key={marker.photo_id}
-        />
-      )}
+  <GoogleMap
+    defaultZoom={4}
+    defaultCenter={{
+      lat: 55,
+      lng: 10
+    }}
+  >
+    <MarkerClusterer averageCenter enableRetinaIcons gridSize={30}>
+      {props.markers.map(marker => {
+        return (
+          <Marker
+            position={{
+              lat: marker.coord.lat,
+              lng: marker.coord.lon
+            }}
+            key={marker.sys.id}
+          />
+        );
+      })}
     </MarkerClusterer>
   </GoogleMap>
 );
-
-export default class MarkerClustererExample extends Component {
-  state = {
-    markers: [{ latitude: 51.51, longitude: -0.13 }]
-  };
-
+class MarkerClustererExample extends Component {
   render() {
-    console.lo;
+    const markers = this.props.data[0];
+
     return (
       <MarkerClustererExampleGoogleMap
         containerElement={<div style={{ height: `600px` }} />}
         mapElement={<div style={{ height: `600px` }} />}
-        markers={this.state.markers}
+        markers={markers}
       />
     );
   }
 }
+const mapStateToProps = currentState => {
+  return {
+    data: currentState.weather.savedWeather
+  };
+};
+
+export default connect(mapStateToProps)(MarkerClustererExample);

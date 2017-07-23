@@ -74,7 +74,7 @@ export class Home extends Component {
 }
 
 const initialCities = [
-  819827 /*6695624, // Warszawa*/,
+  6695624, // Warszawa
   2988507, // Paris
   3117735, // Madrid
   2643743, // London

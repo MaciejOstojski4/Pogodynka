@@ -3,7 +3,7 @@ import apiClient from "../lib/api-client";
 import { connect } from "react-redux";
 import {
   changeDisplayedDetailsAction,
-  saveSearchedCityNameAction,
+  saveSearchedCityNameAction
 } from "../actions/weather-actions";
 import styled from "styled-components";
 import SearchCityNameHint from "./SearchCityNameHint";
@@ -16,21 +16,21 @@ export class SearchWeather extends Component {
     this.state = {
       inputText: "",
       errorInfo: "",
-      similarCities: [],
+      similarCities: []
     };
   }
 
   onSimilarCityNameClick = cityName => {
     this.setState({
       inputText: cityName,
-      similarCities: [],
+      similarCities: []
     });
   };
 
   refreshState = (inputText, similarCities) => {
     this.setState({
       inputText: inputText,
-      similarCities: similarCities,
+      similarCities: similarCities
     });
   };
 
@@ -39,7 +39,7 @@ export class SearchWeather extends Component {
       return [];
     }
     return this.props.cities.filter(val =>
-      val.toLowerCase().includes(inputText.toLowerCase()),
+      val.toLowerCase().includes(inputText.toLowerCase())
     );
   };
 
@@ -62,6 +62,7 @@ export class SearchWeather extends Component {
   };
 
   dispatchData = response => {
+    console.log(response.data);
     this.props.dispatch(changeDisplayedDetailsAction(response.data));
     this.props.dispatch(saveSearchedCityNameAction(response.data.city.name));
   };
@@ -76,7 +77,7 @@ export class SearchWeather extends Component {
       .catch(error => {
         console.log(error);
         this.setState({
-          errorInfo: "Cannot find this city",
+          errorInfo: "Cannot find this city"
         });
       });
   };
@@ -179,7 +180,7 @@ const LAT_LONG_REGEX = /(-)?[0-9]+\.[0-9]+:(-)?[0-9]+\.[0-9]+/;
 
 const mapStateToProps = currentState => {
   return {
-    cities: currentState.weather.searchedCities,
+    cities: currentState.weather.searchedCities
   };
 };
 

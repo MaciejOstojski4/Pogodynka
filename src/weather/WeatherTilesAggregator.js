@@ -5,7 +5,10 @@ import MediaQuery from "react-responsive";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import apiClient from "../lib/api-client";
-import { changeDisplayedDetailsAction } from "../actions/weather-actions";
+import {
+  changeDisplayedDetailsAction,
+  saveSearchedWeatherAction
+} from "../actions/weather-actions";
 
 class WeatherCardAggregator extends React.Component {
   prepareUrl = cityName => {
@@ -17,7 +20,6 @@ class WeatherCardAggregator extends React.Component {
       .get(url)
       .then(response => {
         this.props.dispatch(changeDisplayedDetailsAction(response.data));
-        this.props.dispach(saveSearchedWeather());
       })
       .catch(error => {
         console.log("Error while searching by city name: " + error);
@@ -44,8 +46,11 @@ class WeatherCardAggregator extends React.Component {
       );
     });
   };
-
+  componentDidMount() {
+    this.props.dispatch(saveSearchedWeatherAction(this.props.weatherItems));
+  }
   render() {
+    console.log(this.props);
     return (
       <div>
         <MediaQuery
@@ -77,7 +82,10 @@ const AggregatorResponsiveColumn = styled.div`
   justify-content: space-between;
   flex-direction: column;
 `;
-
+const mapStateToProps = currentState => {
+  return {
+    data: currentState.weather
+  };
+};
 const SEARCH_URL = "forecast?units=metric&";
-
-export default connect()(withRouter(WeatherCardAggregator));
+export default connect(mapStateToProps)(withRouter(WeatherCardAggregator));
