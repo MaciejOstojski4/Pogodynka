@@ -9,6 +9,7 @@ import {
   changeDisplayedDetailsAction,
   saveGroupWeatherAction,
 } from "../actions/weather-actions";
+import { addUserCityAction } from "../actions/user-action";
 import userApiClient from "../lib/userApi-client";
 
 class WeatherCardAggregator extends React.Component {
@@ -69,15 +70,8 @@ class WeatherCardAggregator extends React.Component {
   };
 
   addCityToFavourite = city => {
-    const apiCity = this.createFavouriteCityObject(city);
-    userApiClient
-      .post(CHANGE_FAV_CITY_STATUS_URL, apiCity)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    const favCity = this.createFavouriteCityObject(city);
+    this.props.dispatch(addUserCityAction(favCity));
   };
 
   getComponentToRender = () => {

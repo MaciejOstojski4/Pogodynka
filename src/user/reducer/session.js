@@ -2,6 +2,7 @@ import {
   LOGIN_SUCCESS_ACTION,
   LOGOUT_ACTION,
   FETCH_USER_FAV_CITIES_ACTION,
+  ADD_USER_CITY_ACTION,
 } from "../../actions/user-action";
 
 const initialState = {
@@ -37,6 +38,11 @@ const session = (currentState = initialState, action) => {
       return {
         ...currentState,
         userCities: action.data.favCities,
+      };
+    case ADD_USER_CITY_ACTION:
+      return {
+        ...currentState,
+        userCities: [...currentState.userCities, action.data.favCity],
       };
     default:
       return currentState;
