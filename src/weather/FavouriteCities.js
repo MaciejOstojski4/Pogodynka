@@ -19,6 +19,30 @@ class FavouriteCities extends React.Component {
     return `${WEATHER_FOR_SEVERAL_CITIES_URL}id=${favCitiesIds.join(",")}`
   };
 
+  getFromFavoriteIfExists = cityName => {
+    return this.props.favCities.filter(favCity => favCity.name === cityName)[0];
+  };
+
+  mergeCities(favCity, pubCity) {
+    if (favCity === undefined) {
+      return {
+        ...pubCity,
+        favCity: null,
+      };
+    }
+    return {
+      ...pubCity,
+      favCity: favCity,
+    };
+  }
+
+  mergeFavWithPublicCities = pubCities => {
+    return pubCities.map(pubCity => {
+      const favCity = this.getFromFavoriteIfExists(pubCity.name);
+      return this.mergeCities(favCity, pubCity);
+    });
+  };
+
   fetchWeatherForFavCities = () => {
     const url = this.createUrl();
     console.log(url);
@@ -26,7 +50,7 @@ class FavouriteCities extends React.Component {
       .get(url)
       .then(response => {
         this.setState({
-          favCitiesWeather: response.data.list,
+          favCitiesWeather: this.mergeFavWithPublicCities(response.data.list),
         });
         this.changeLoaderVisibility();
       })
