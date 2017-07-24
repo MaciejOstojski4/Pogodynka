@@ -77,6 +77,8 @@ class Home extends Component {
   }
 
   render() {
+    console.log("daskldasdasdasdasdasdasdasdasasdasD");
+    console.log(this.props.favCities);
     return (
       <div>
         <div className="row">

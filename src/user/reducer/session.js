@@ -3,6 +3,7 @@ import {
   LOGOUT_ACTION,
   FETCH_USER_FAV_CITIES_ACTION,
   ADD_USER_CITY_ACTION,
+  REMOVE_USER_CITY_ACTION,
 } from "../../actions/user-action";
 
 const initialState = {
@@ -43,6 +44,11 @@ const session = (currentState = initialState, action) => {
       return {
         ...currentState,
         userCities: [...currentState.userCities, action.data.favCity],
+      };
+    case REMOVE_USER_CITY_ACTION:
+      return {
+        ...currentState,
+        userCities: currentState.userCities.filter(city => city.name !== action.data.favCity.name),
       };
     default:
       return currentState;

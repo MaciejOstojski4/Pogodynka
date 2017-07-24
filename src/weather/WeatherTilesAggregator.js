@@ -9,8 +9,7 @@ import {
   changeDisplayedDetailsAction,
   saveGroupWeatherAction,
 } from "../actions/weather-actions";
-import { addUserCityAction } from "../actions/user-action";
-import userApiClient from "../lib/userApi-client";
+import { addUserCityAction, removeUserCityAction } from "../actions/user-action";
 
 class WeatherCardAggregator extends React.Component {
   prepareUrl = cityName => {
@@ -58,15 +57,7 @@ class WeatherCardAggregator extends React.Component {
   };
 
   removeCityFromFavourite = city => {
-    const url = `${CHANGE_FAV_CITY_STATUS_URL}/${city.favCity.id}`;
-    userApiClient
-      .delete(url)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    this.props.dispatch(removeUserCityAction(city));
   };
 
   addCityToFavourite = city => {
@@ -126,8 +117,6 @@ const AggregatorResponsiveColumn = styled.div`
 `;
 
 const SEARCH_URL = "forecast?units=metric&";
-
-const CHANGE_FAV_CITY_STATUS_URL = "/weather/api/v1/places";
 
 const mapStateToProps = currentState => {
   return {

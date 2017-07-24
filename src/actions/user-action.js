@@ -7,6 +7,8 @@ export const FETCH_USER_FAV_CITIES_ACTION = "fetchUserFavCities";
 
 export const ADD_USER_CITY_ACTION = "addUserCity";
 
+export const REMOVE_USER_CITY_ACTION = "removeUserCity";
+
 export const LOGOUT_ACTION = "logout";
 
 export const loginAction = user => {
@@ -60,6 +62,25 @@ export const addUserCityAction = favCity => {
           type: ADD_USER_CITY_ACTION,
           data: {
             favCity: response.data,
+          },
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+};
+
+export const removeUserCityAction = city => {
+  return dispatch => {
+    const url = `${CHANGE_FAV_CITY_STATUS_URL}/${city.favCity.id}`;
+    userApiClient
+      .delete(url)
+      .then(response => {
+        dispatch({
+          type: REMOVE_USER_CITY_ACTION,
+          data: {
+            favCity: city.favCity,
           },
         });
       })
