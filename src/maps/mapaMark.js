@@ -8,15 +8,18 @@ import {
 } from "react-google-maps";
 import MarkerClusterer from "react-google-maps/lib/addons/MarkerClusterer";
 import { connect } from "react-redux";
+import {
+  showMapPopUpAction,
+  hideMapPopUpAction
+} from "../actions/weather-actions";
 
 const MarkerClustererExampleGoogleMap = withGoogleMap(props => {
-  console.log(props);
   return (
     <GoogleMap
       defaultZoom={4}
       defaultCenter={{
-        lat: 55,
-        lng: 10
+        lat: props.markers[0].coord.lat,
+        lng: props.markers[0].coord.lon
       }}
     >
       <MarkerClusterer averageCenter enableRetinaIcons gridSize={30}>
@@ -28,7 +31,17 @@ const MarkerClustererExampleGoogleMap = withGoogleMap(props => {
                 lng: marker.coord.lon
               }}
               key={marker.sys.id}
-            />
+              onClick={() => props.onClick(marker)}
+            >
+              {marker.showInfo &&
+                <InfoWindow onCloseClick={() => props.onClose(marker)}>
+                  <div>
+                    <p>{marker.name}</p>
+                    <p>Temperature: {marker.main.temp} C</p>
+                    Humidity: {marker.main.humidity} %
+                  </div>
+                </InfoWindow>}
+            </Marker>
           );
         })}
       </MarkerClusterer>
@@ -36,16 +49,36 @@ const MarkerClustererExampleGoogleMap = withGoogleMap(props => {
   );
 });
 class MarkerClustererExample extends Component {
+  // Toggle to 'true' to show InfoWindow and re-renders component
+
+  markerClick = marker => {
+    const temp = this.props.data;
+    temp.map(p => {
+      if (p === marker) {
+        p.showInfo = true;
+        this.props.dispatch(showMapPopUpAction(temp));
+      }
+    });
+  };
+  popUpHide = marker => {
+    const temp = this.props.data;
+    temp.map(p => {
+      if (p === marker) {
+        p.showInfo = false;
+        this.props.dispatch(hideMapPopUpAction(temp));
+      }
+    });
+  };
   render() {
     const markers = this.props.data;
-    const mar = [markers];
     console.log(markers);
-    console.log(mar);
     return (
       <MarkerClustererExampleGoogleMap
         containerElement={<div style={{ height: `600px` }} />}
         mapElement={<div style={{ height: `600px` }} />}
         markers={markers}
+        onClick={this.markerClick}
+        onClose={this.popUpHide}
       />
     );
   }

@@ -5,7 +5,7 @@ import Chart from "./Chart";
 import ResponsiveForecast from "./forecast/ResponsiveForecast";
 import styled from "styled-components";
 import SearchWeather from "./SearchWeather";
-import { saveSearchedWeatherAction } from "../actions/weather-actions";
+import { parseSearchedWeatherAction } from "../actions/weather-actions";
 
 class WeatherDetails extends Component {
   constructor(props) {
@@ -77,7 +77,7 @@ class WeatherDetails extends Component {
 
   getComponentToRender = () => {
     console.log(this.props.data);
-    this.props.dispatch(saveSearchedWeatherAction(this.props.data));
+
     if (this.isForecastFetched()) {
       return (
         <div>
