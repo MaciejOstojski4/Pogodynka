@@ -23,7 +23,6 @@ class WeatherCardAggregator extends React.Component {
         this.props.dispatch(changeDisplayedDetailsAction(response.data));
       })
       .catch(error => {
-        console.log("Error while searching by city name: " + error);
         this.setState({
           errorInfo: "Cannot find this city",
         });
@@ -72,17 +71,19 @@ class WeatherCardAggregator extends React.Component {
           key={city.name}
           city={city}
           onClickRedirect={this.redirectToDetails}
-          showButtons={this.props.userId === "" ? false : true}
-          likeButton={city.favCity === null ? true : false}
-          dislikeButton={city.favCity === null ? false : true}
           onFavClick={this.changeFavStatusOnServer}
+          showButtons={this.props.userId !== ""}
+          likeButton={city.favCity === null}
+          dislikeButton={city.favCity !== null}
         />
       );
     });
   };
+
   componentDidMount() {
     this.props.dispatch(saveGroupWeatherAction(this.props.weatherItems));
   }
+
   render() {
     return (
       <div>

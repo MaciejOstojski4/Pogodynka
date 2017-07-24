@@ -48,7 +48,9 @@ const session = (currentState = initialState, action) => {
     case REMOVE_USER_CITY_ACTION:
       return {
         ...currentState,
-        userCities: currentState.userCities.filter(city => city.name !== action.data.favCity.name),
+        userCities: currentState.userCities.filter(
+          city => city.name !== action.data.favCity.name,
+        ),
       };
     default:
       return currentState;

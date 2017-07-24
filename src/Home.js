@@ -20,6 +20,60 @@ class Home extends Component {
     return WEATHER_FOR_SEVERAL_CITIES_URL + "id=" + initialCities.join(",");
   };
 
+  getFromFavoriteIfExists = cityName => {
+    return this.props.favCities.filter(favCity => favCity.name === cityName)[0];
+  };
+
+  mergeCities(favCity, pubCity) {
+    if (favCity === undefined) {
+      return {
+        ...pubCity,
+        favCity: null,
+      };
+    }
+    return {
+      ...pubCity,
+      favCity: favCity,
+    };
+  }
+
+  mergeFavWithPublicCities = pubCities => {
+    return pubCities.map(pubCity => {
+      const favCity = this.getFromFavoriteIfExists(pubCity.name);
+      return this.mergeCities(favCity, pubCity);
+    });
+  };
+
+  changeLoaderVisibility = () => {
+    this.setState({
+      loading: !this.state.loading,
+    });
+  };
+
+  fetchWeatherForCities = () => {
+    this.changeLoaderVisibility();
+    apiClient
+      .get(this.prepareUrl())
+      .then(response => {
+        this.setState({
+          cities: this.mergeFavWithPublicCities(response.data.list),
+        });
+        this.changeLoaderVisibility();
+      })
+      .catch(error => {
+        console.log(
+          "Error occurred during fetching weather for cities: " + error,
+        );
+      });
+  };
+
+  componentDidMount() {
+    this.fetchWeatherForCities();
+    if (this.props.userId !== "") {
+      this.props.dispatch(fetchUserFavCitiesAction());
+    }
+  }
+
   renderLoader = () => {
     return <LoaderWrapper />;
   };
@@ -32,53 +86,7 @@ class Home extends Component {
     );
   };
 
-  mergeFavWithPublicCities = pubCities => {
-    return pubCities.map(city => {
-      const userCity = this.props.favCities.filter(
-        c => c.name === city.name,
-      )[0];
-      if (userCity === undefined) {
-        return {
-          ...city,
-          favCity: null,
-        };
-      }
-      return {
-        ...city,
-        favCity: userCity,
-      };
-    });
-  };
-
-  fetchWeatherForCities = () => {
-    this.setState({
-      loading: true,
-    });
-    apiClient
-      .get(this.prepareUrl())
-      .then(response => {
-        this.setState({
-          cities: this.mergeFavWithPublicCities(response.data.list),
-          loading: false,
-        });
-      })
-      .catch(error => {
-        console.log(
-          "Error occurred during fetching weather for cities: " + error,
-        );
-      });
-  };
-
-  componentDidMount() {
-    this.fetchWeatherForCities();
-    if(this.props.userId !== "") {
-      this.props.dispatch(fetchUserFavCitiesAction());
-    }
-  }
-
   render() {
-    console.log("daskldasdasdasdasdasdasdasdasasdasD");
-    console.log(this.props.favCities);
     return (
       <div>
         <div className="row">
