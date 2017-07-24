@@ -38,9 +38,7 @@ class Home extends Component {
       if (userCity === undefined) {
         return {
           ...city,
-          favCity: {
-            name: "",
-          },
+          favCity: null,
         };
       }
       return {

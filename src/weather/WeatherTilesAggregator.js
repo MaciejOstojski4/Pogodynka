@@ -68,7 +68,9 @@ class WeatherCardAggregator extends React.Component {
           key={city.name}
           city={city}
           onClickRedirect={this.redirectToDetails}
-          showLikeButton={this.props.userId !== "" ? true : false}
+          showButtons={this.props.userId === "" ? false : true}
+          likeButton={city.favCity === null ? true : false}
+          dislikeButton={city.favCity === null ? false : true}
           onLikeClick={this.onLikeClick}
         />
       );

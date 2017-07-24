@@ -68,11 +68,17 @@ class WeatherTile extends React.Component {
     this.resolveTileColor(this.props.city.weather[0].id);
   }
 
-  renderLikeButton = () => {
+  renderFavButtons = () => {
+    let className = "";
+    if(this.props.likeButton) {
+      className = "glyphicon glyphicon-thumbs-up";
+    } else {
+      className = "glyphicon glyphicon-thumbs-down";
+    }
     return (
       <LikeIconField>
         <span
-          className="glyphicon glyphicon-thumbs-up"
+          className={className}
           onClick={() => this.props.onLikeClick(this.props.city.name)}
         />
       </LikeIconField>
@@ -108,7 +114,7 @@ class WeatherTile extends React.Component {
             </TileField>
           </div>
         </div>
-        {this.props.showLikeButton ? this.renderLikeButton() : null}
+        {this.props.showButtons ? this.renderFavButtons() : null}
       </Tile>
     );
   }
