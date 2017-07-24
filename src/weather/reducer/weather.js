@@ -32,7 +32,16 @@ const weather = (currentState = initialState, action) => {
       console.log(action.data);
       return {
         ...currentState,
-        savedWeather: action.data.weather
+        savedWeather: [
+          {
+            coord: action.data.weather.city.coord,
+            sys: {
+              id: action.data.weather.city.id
+            },
+            name: action.data.weather.city.name,
+            main: action.data.weather.list[0].main
+          }
+        ]
       };
     default:
       return currentState;

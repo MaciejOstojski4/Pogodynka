@@ -38,7 +38,9 @@ const MarkerClustererExampleGoogleMap = withGoogleMap(props => {
 class MarkerClustererExample extends Component {
   render() {
     const markers = this.props.data;
+    const mar = [markers];
     console.log(markers);
+    console.log(mar);
     return (
       <MarkerClustererExampleGoogleMap
         containerElement={<div style={{ height: `600px` }} />}

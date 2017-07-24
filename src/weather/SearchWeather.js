@@ -66,7 +66,6 @@ export class SearchWeather extends Component {
     this.props.dispatch(changeDisplayedDetailsAction(response.data));
     this.props.dispatch(saveSearchedCityNameAction(response.data.city.name));
     console.log(response.data);
-    this.props.dispatch(saveSearchedWeatherAction(response.data));
   };
 
   fetchWeather = url => {
