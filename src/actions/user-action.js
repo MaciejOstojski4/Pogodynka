@@ -3,6 +3,8 @@ import { hashHistory } from "react-router";
 
 export const LOGIN_SUCCESS_ACTION = "loginSuccess";
 
+export const FETCH_USER_FAV_CITIES_ACTION = "fetchUserFavCities";
+
 export const LOGOUT_ACTION = "logout";
 
 export const loginAction = user => {
@@ -16,9 +18,28 @@ export const loginAction = user => {
           type: LOGIN_SUCCESS_ACTION,
           data: {
             email: user.email,
-            token: response.data.data.aut_token,
+            token: response.data.data.auth_token,
             userId: response.data.data.user_id,
           },
+        });
+        dispatch(fetchUserFavCitiesAction());
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+};
+
+export const fetchUserFavCitiesAction = () => {
+  return dispatch => {
+    userApiClient
+      .get(USER_FAV_CITIES_URL)
+      .then(response => {
+        dispatch({
+          type: FETCH_USER_FAV_CITIES_ACTION,
+          data: {
+            favCities: response.data.places
+          }
         });
         hashHistory.push("/");
       })
@@ -33,5 +54,7 @@ export const logoutAction = () => {
     type: LOGOUT_ACTION,
   };
 };
+
+const USER_FAV_CITIES_URL = "/weather/api/v1/places";
 
 const LOGIN_URL = "/api/v1/sessions";

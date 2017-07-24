@@ -3,8 +3,9 @@ import WeatherCardAggregator from "./weather/WeatherTilesAggregator";
 import apiClient from "./lib/api-client";
 import SearchWeather from "./weather/SearchWeather";
 import LoaderWrapper from "./user-interface/Loader";
+import { connect } from "react-redux";
 
-export class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
 
@@ -19,9 +20,7 @@ export class Home extends Component {
   };
 
   renderLoader = () => {
-    return (
-      <LoaderWrapper />
-    );
+    return <LoaderWrapper />;
   };
 
   renderComponent = () => {
@@ -32,6 +31,27 @@ export class Home extends Component {
     );
   };
 
+  mergeFavWithPublicCities = pubCities => {
+    console.log(this.props.favCities);
+    return pubCities.map(city => {
+      const userCity = this.props.favCities.filter(c => c.name === city.name)[0];
+      if (userCity === undefined) {
+        return {
+          ...city,
+          favCity: {
+            name: "",
+          },
+        };
+      }
+      return {
+        ...city,
+        favCity: {
+          name: userCity.name,
+        },
+      };
+    });
+  };
+
   fetchWeatherForCities = () => {
     this.setState({
       loading: true,
@@ -39,8 +59,10 @@ export class Home extends Component {
     apiClient
       .get(this.prepareUrl())
       .then(response => {
+        const test = this.mergeFavWithPublicCities(response.data.list);
+        console.log(test);
         this.setState({
-          cities: response.data.list,
+          cities: test,
           loading: false,
         });
       })
@@ -82,8 +104,14 @@ const initialCities = [
   6458923, // Lisbon
 ];
 
-
-
 const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric&";
 
-export default Home;
+const mapStateToProps = currentState => {
+  console.log(currentState);
+  return {
+    favCities: currentState.session.userCities,
+    userId: currentState.session.user.userId,
+  };
+};
+
+export default connect(mapStateToProps)(Home);

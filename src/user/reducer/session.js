@@ -1,4 +1,8 @@
-import { LOGIN_SUCCESS_ACTION, LOGOUT_ACTION } from "../../actions/user-action";
+import {
+  LOGIN_SUCCESS_ACTION,
+  LOGOUT_ACTION,
+  FETCH_USER_FAV_CITIES_ACTION,
+} from "../../actions/user-action";
 
 const initialState = {
   user: {
@@ -6,12 +10,14 @@ const initialState = {
     userId: "",
     token: "",
   },
+  userCities: [],
 };
 
 const session = (currentState = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS_ACTION:
       return {
+        ...currentState,
         user: {
           email: action.data.email,
           userId: action.data.userId,
@@ -25,6 +31,12 @@ const session = (currentState = initialState, action) => {
           userId: "",
           token: "",
         },
+        userCities: [],
+      };
+    case FETCH_USER_FAV_CITIES_ACTION:
+      return {
+        ...currentState,
+        userCities: action.data.favCities,
       };
     default:
       return currentState;

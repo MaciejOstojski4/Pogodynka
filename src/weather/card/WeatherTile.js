@@ -73,7 +73,7 @@ class WeatherTile extends React.Component {
       <LikeIconField>
         <span
           className="glyphicon glyphicon-thumbs-up"
-          onClick={() => this.props.onLikeClick()}
+          onClick={() => this.props.onLikeClick(this.props.city.name)}
         />
       </LikeIconField>
     );

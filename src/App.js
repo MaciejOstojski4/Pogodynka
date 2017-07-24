@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import { hashHistory, IndexRoute, Route, Router } from "react-router";
-import { Home } from "./Home";
+import Home from "./Home";
 import Layout from "./Layout";
 import WeatherDetails from "./weather/WeatherDetails";
 import styled from "styled-components";
