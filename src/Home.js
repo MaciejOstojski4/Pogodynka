@@ -4,6 +4,7 @@ import apiClient from "./lib/api-client";
 import SearchWeather from "./weather/SearchWeather";
 import LoaderWrapper from "./user-interface/Loader";
 import { connect } from "react-redux";
+import { fetchUserFavCitiesAction } from "./actions/user-action";
 
 class Home extends Component {
   constructor(props) {
@@ -70,6 +71,9 @@ class Home extends Component {
 
   componentDidMount() {
     this.fetchWeatherForCities();
+    if(this.props.userId !== "") {
+      this.props.dispatch(fetchUserFavCitiesAction());
+    }
   }
 
   render() {
