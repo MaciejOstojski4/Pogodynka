@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import "./App.css";
 import { hashHistory, IndexRoute, Route, Router } from "react-router";
-import { Home } from "./Home";
+import Home from "./Home";
 import Layout from "./Layout";
 import WeatherDetails from "./weather/WeatherDetails";
 import styled from "styled-components";
 import Container from "./maps/Container";
 import RegisterForm from "./user/form/RegisterForm";
 import LoginForm from "./user/form/LoginForm";
+import FavouriteCities from "./weather/FavouriteCities";
 
 class App extends Component {
   render() {
@@ -20,6 +21,7 @@ class App extends Component {
             <Route component={Container} path="container" />
             <Route path="register-form" component={RegisterForm} />
             <Route path="login-form" component={LoginForm} />
+            <Router path="favourite-cities" component={FavouriteCities} />
           </Route>
         </Router>
       </AppMainContainer>

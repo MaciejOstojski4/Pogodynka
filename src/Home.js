@@ -3,14 +3,15 @@ import WeatherCardAggregator from "./weather/WeatherTilesAggregator";
 import apiClient from "./lib/api-client";
 import SearchWeather from "./weather/SearchWeather";
 import LoaderWrapper from "./user-interface/Loader";
+import { connect } from "react-redux";
 
-export class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       cities: [],
-      loading: false
+      loading: false,
     };
   }
 
@@ -31,21 +32,42 @@ export class Home extends Component {
     );
   };
 
+  mergeFavWithPublicCities = pubCities => {
+    console.log(this.props.favCities);
+    return pubCities.map(city => {
+      const userCity = this.props.favCities.filter(
+        c => c.name === city.name,
+      )[0];
+      if (userCity === undefined) {
+        return {
+          ...city,
+          favCity: null,
+        };
+      }
+      return {
+        ...city,
+        favCity: {
+          name: userCity.name,
+        },
+      };
+    });
+  };
+
   fetchWeatherForCities = () => {
     this.setState({
-      loading: true
+      loading: true,
     });
     apiClient
       .get(this.prepareUrl())
       .then(response => {
         this.setState({
-          cities: response.data.list,
-          loading: false
+          cities: this.mergeFavWithPublicCities(response.data.list),
+          loading: false,
         });
       })
       .catch(error => {
         console.log(
-          "Error occurred during fetching weather for cities: " + error
+          "Error occurred during fetching weather for cities: " + error,
         );
       });
   };
@@ -78,9 +100,17 @@ const initialCities = [
   524901, // Moscow
   2759794, // Amsterdam
   3143244, //Oslo
-  6458923 // Lisbon
+  6458923, // Lisbon
 ];
 
 const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric&";
 
-export default Home;
+const mapStateToProps = currentState => {
+  console.log(currentState);
+  return {
+    favCities: currentState.session.userCities,
+    userId: currentState.session.user.userId,
+  };
+};
+
+export default connect(mapStateToProps)(Home);

@@ -7,8 +7,9 @@ import { withRouter } from "react-router";
 import apiClient from "../lib/api-client";
 import {
   changeDisplayedDetailsAction,
-  saveGroupWeatherAction
+  saveGroupWeatherAction,
 } from "../actions/weather-actions";
+import userApiClient from "../lib/userApi-client";
 
 class WeatherCardAggregator extends React.Component {
   prepareUrl = cityName => {
@@ -24,7 +25,7 @@ class WeatherCardAggregator extends React.Component {
       .catch(error => {
         console.log("Error while searching by city name: " + error);
         this.setState({
-          errorInfo: "Cannot find this city"
+          errorInfo: "Cannot find this city",
         });
       });
   };
@@ -35,6 +36,34 @@ class WeatherCardAggregator extends React.Component {
     this.props.router.push("weatherdetails");
   };
 
+  createFavouriteCityObject = cityName => {
+    const city = this.props.weatherItems.filter(
+      city => city.name === cityName,
+    )[0];
+    console.log(this.props.token);
+    return {
+      place: {
+        name: city.name,
+        external_id: city.id,
+        lat: city.coord.lat,
+        lon: city.coord.lon,
+        description: "",
+      },
+    };
+  };
+
+  onLikeClick = cityName => {
+    console.log(this.props.token);
+    userApiClient
+      .post(ADD_TO_FAVOURITE_URL, this.createFavouriteCityObject(cityName))
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   getComponentToRender = () => {
     return this.props.weatherItems.map(city => {
       return (
@@ -42,6 +71,10 @@ class WeatherCardAggregator extends React.Component {
           key={city.name}
           city={city}
           onClickRedirect={this.redirectToDetails}
+          showButtons={this.props.userId === "" ? false : true}
+          likeButton={city.favCity === null ? true : false}
+          dislikeButton={city.favCity === null ? false : true}
+          onLikeClick={this.onLikeClick}
         />
       );
     });
@@ -82,10 +115,17 @@ const AggregatorResponsiveColumn = styled.div`
   justify-content: space-between;
   flex-direction: column;
 `;
+
+const SEARCH_URL = "forecast?units=metric&";
+
+const ADD_TO_FAVOURITE_URL = "/weather/api/v1/places";
+
 const mapStateToProps = currentState => {
   return {
-    data: currentState.weather
+    userId: currentState.session.user.userId,
+    token: currentState.session.user.token,
+    data: currentState.weather,
   };
 };
-const SEARCH_URL = "forecast?units=metric&";
+
 export default connect(mapStateToProps)(withRouter(WeatherCardAggregator));

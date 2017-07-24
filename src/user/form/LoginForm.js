@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { loginAction } from "../../actions/user-action";
+import { loginAction, fetchUserFavCitiesAction } from "../../actions/user-action";
 import styled from "styled-components";
 
 class LoginForm extends React.Component {

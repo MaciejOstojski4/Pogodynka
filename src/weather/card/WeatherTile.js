@@ -21,7 +21,7 @@ class WeatherTile extends React.Component {
 
   refreshTileColorInState = tileColor => {
     this.setState({
-      tileColor: tileColor
+      tileColor: tileColor,
     });
   };
 
@@ -68,6 +68,23 @@ class WeatherTile extends React.Component {
     this.resolveTileColor(this.props.city.weather[0].id);
   }
 
+  renderFavButtons = () => {
+    let className = "";
+    if(this.props.likeButton) {
+      className = "glyphicon glyphicon-thumbs-up";
+    } else {
+      className = "glyphicon glyphicon-thumbs-down";
+    }
+    return (
+      <LikeIconField>
+        <span
+          className={className}
+          onClick={() => this.props.onLikeClick(this.props.city.name)}
+        />
+      </LikeIconField>
+    );
+  };
+
   render() {
     return (
       <Tile
@@ -97,6 +114,7 @@ class WeatherTile extends React.Component {
             </TileField>
           </div>
         </div>
+        {this.props.showButtons ? this.renderFavButtons() : null}
       </Tile>
     );
   }
@@ -110,6 +128,12 @@ const tileColors = {
 
 const ICON_URL = "http://openweathermap.org/img/w/";
 
+const LikeIconField = styled.div`
+  flex: 1;
+  text-align: right;
+  font-size: 120%;
+`;
+
 const TitleField = styled.b`font-size: 160%;`;
 
 const TileField = styled.div`
@@ -121,7 +145,7 @@ const TileField = styled.div`
 const Tile = styled.div`
   float: left;
   margin: 5px;
-  padding-top: 10px;
+  padding: 10px;
   min-width: 200px;
   flex: 1;
   flex-direction: column;
