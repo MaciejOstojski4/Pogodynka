@@ -55,7 +55,8 @@ class WeatherTile extends React.Component {
     this.resolveTileColor(this.props.city.weather[0].id);
   }
 
-  onFavClick = () => {
+  onFavClick = e => {
+    e.stopPropagation();
     if (this.props.likeButton) {
       this.props.onFavClick(this.props.city, true);
     } else {
