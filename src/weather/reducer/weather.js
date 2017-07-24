@@ -1,7 +1,8 @@
 import {
   CHANGE_DISPLAYED_DETAILS_ACTION,
   ADD_SEARCHED_CITY_ACTION,
-  SAVE_SEARCHED_WEATHER
+  SAVE_GROUP_WEATHER,
+  SAVE_SEARCHED_WEATHER_ACTION
 } from "../../actions/weather-actions";
 
 const initialState = {
@@ -11,8 +12,7 @@ const initialState = {
 };
 
 const weather = (currentState = initialState, action) => {
-  window.localStorage.clear();
-  console.log(currentState);
+  console.log(action.data);
   switch (action.type) {
     case CHANGE_DISPLAYED_DETAILS_ACTION:
       return {
@@ -24,10 +24,16 @@ const weather = (currentState = initialState, action) => {
         ...currentState,
         searchedCities: [...currentState.searchedCities, action.data.name]
       };
-    case SAVE_SEARCHED_WEATHER:
+    case SAVE_GROUP_WEATHER:
       return {
         ...currentState,
         savedWeather: [action.data.weather]
+      };
+    case SAVE_SEARCHED_WEATHER_ACTION:
+      console.log(action.data);
+      return {
+        ...currentState,
+        savedWeather: action.data.weather
       };
     default:
       return currentState;

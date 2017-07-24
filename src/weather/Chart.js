@@ -19,7 +19,6 @@ class Chart extends Component {
             data={this.props.chartData}
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           >
-            <CartesianGrid stroke="#000" strokeDasharray="2 2" />
             <XAxis dataKey="time" minTickGap={30} />
             <YAxis />
 

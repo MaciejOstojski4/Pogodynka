@@ -3,7 +3,8 @@ import apiClient from "../lib/api-client";
 import { connect } from "react-redux";
 import {
   changeDisplayedDetailsAction,
-  saveSearchedCityNameAction
+  saveSearchedCityNameAction,
+  saveSearchedWeatherAction
 } from "../actions/weather-actions";
 import styled from "styled-components";
 import SearchCityNameHint from "./SearchCityNameHint";
@@ -62,9 +63,10 @@ export class SearchWeather extends Component {
   };
 
   dispatchData = response => {
-    console.log(response.data);
     this.props.dispatch(changeDisplayedDetailsAction(response.data));
     this.props.dispatch(saveSearchedCityNameAction(response.data.city.name));
+    console.log(response.data);
+    this.props.dispatch(saveSearchedWeatherAction(response.data));
   };
 
   fetchWeather = url => {
@@ -72,6 +74,7 @@ export class SearchWeather extends Component {
       .get(url)
       .then(response => {
         this.dispatchData(response);
+        console.log(response.data);
         this.props.router.push("weatherdetails");
       })
       .catch(error => {
@@ -89,6 +92,7 @@ export class SearchWeather extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <SearchBox>
         <SearchForm className="">
@@ -180,7 +184,8 @@ const LAT_LONG_REGEX = /(-)?[0-9]+\.[0-9]+:(-)?[0-9]+\.[0-9]+/;
 
 const mapStateToProps = currentState => {
   return {
-    cities: currentState.weather.searchedCities
+    cities: currentState.weather.searchedCities,
+    data: currentState.weather
   };
 };
 

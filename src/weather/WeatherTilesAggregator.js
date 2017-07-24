@@ -7,7 +7,7 @@ import { withRouter } from "react-router";
 import apiClient from "../lib/api-client";
 import {
   changeDisplayedDetailsAction,
-  saveSearchedWeatherAction
+  saveGroupWeatherAction
 } from "../actions/weather-actions";
 
 class WeatherCardAggregator extends React.Component {
@@ -47,7 +47,7 @@ class WeatherCardAggregator extends React.Component {
     });
   };
   componentDidMount() {
-    this.props.dispatch(saveSearchedWeatherAction(this.props.weatherItems));
+    this.props.dispatch(saveGroupWeatherAction(this.props.weatherItems));
   }
   render() {
     console.log(this.props);
