@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import {
   changeDisplayedDetailsAction,
   saveSearchedCityNameAction,
-  saveSearchedWeatherAction
+  parseSearchedWeatherAction
 } from "../actions/weather-actions";
 import styled from "styled-components";
 import SearchCityNameHint from "./SearchCityNameHint";
@@ -65,6 +65,7 @@ export class SearchWeather extends Component {
   dispatchData = response => {
     this.props.dispatch(changeDisplayedDetailsAction(response.data));
     this.props.dispatch(saveSearchedCityNameAction(response.data.city.name));
+    this.props.dispatch(parseSearchedWeatherAction(response.data));
   };
 
   fetchWeather = url => {

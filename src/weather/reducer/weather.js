@@ -2,7 +2,9 @@ import {
   CHANGE_DISPLAYED_DETAILS_ACTION,
   ADD_SEARCHED_CITY_ACTION,
   SAVE_GROUP_WEATHER,
-  SAVE_SEARCHED_WEATHER_ACTION
+  PARSE_SEARCHED_WEATHER_ACTION,
+  SHOW_MAP_POP_UP,
+  HIDE_MAP_POP_UP
 } from "../../actions/weather-actions";
 
 const initialState = {
@@ -24,15 +26,19 @@ const weather = (currentState = initialState, action) => {
         searchedCities: [...currentState.searchedCities, action.data.name]
       };
     case SAVE_GROUP_WEATHER:
+      console.log(action.data);
       return {
         ...currentState,
-        savedWeather: action.data.weather
+        savedWeather: action.data.weather.map(p => {
+          return { ...p, showInfo: false };
+        })
       };
-    case SAVE_SEARCHED_WEATHER_ACTION:
+    case PARSE_SEARCHED_WEATHER_ACTION:
       return {
         ...currentState,
         savedWeather: [
           {
+            showInfo: false,
             coord: action.data.weather.city.coord,
             sys: {
               id: action.data.weather.city.id
@@ -41,6 +47,11 @@ const weather = (currentState = initialState, action) => {
             main: action.data.weather.list[0].main
           }
         ]
+      };
+    case SHOW_MAP_POP_UP:
+      return {
+        ...currentState,
+        savedWeather: action.data.weather
       };
     default:
       return currentState;

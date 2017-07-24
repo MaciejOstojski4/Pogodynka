@@ -3,7 +3,9 @@ export const CHANGE_DISPLAYED_DETAILS_ACTION = "changeDisplayedDetails";
 export const ADD_SEARCHED_CITY_ACTION = "saveSearchedCity";
 
 export const SAVE_GROUP_WEATHER = "saveSearchedWeather";
-export const SAVE_SEARCHED_WEATHER_ACTION = "saveSearchedWeatherAction";
+export const PARSE_SEARCHED_WEATHER_ACTION = "parseSearchedWeatherAction";
+export const SHOW_MAP_POP_UP = "showMapPopUpAction";
+export const HIDE_MAP_POP_UP = "hideMapPopUpAction";
 export const changeDisplayedDetailsAction = city => {
   return {
     type: CHANGE_DISPLAYED_DETAILS_ACTION,
@@ -21,9 +23,25 @@ export const saveSearchedCityNameAction = cityName => {
     }
   };
 };
-export const saveSearchedWeatherAction = weatherData => {
+export const showMapPopUpAction = weatherData => {
   return {
-    type: SAVE_SEARCHED_WEATHER_ACTION,
+    type: SHOW_MAP_POP_UP,
+    data: {
+      weather: weatherData
+    }
+  };
+};
+export const hideMapPopUpAction = weatherData => {
+  return {
+    type: SHOW_MAP_POP_UP,
+    data: {
+      weather: weatherData
+    }
+  };
+};
+export const parseSearchedWeatherAction = weatherData => {
+  return {
+    type: PARSE_SEARCHED_WEATHER_ACTION,
     data: {
       weather: weatherData
     }
