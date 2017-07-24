@@ -7,7 +7,7 @@ class WeatherTile extends React.Component {
 
     this.state = {
       tileColor: tileColors.goodWeather,
-      textColor: "",
+      textColor: ""
     };
   }
 
@@ -105,7 +105,7 @@ class WeatherTile extends React.Component {
 const tileColors = {
   goodWeather: { color: "#6d7078", backgroundColor: "#ffd600" },
   averageWeather: { color: "#FFFFFF", backgroundColor: "#7cb342" },
-  badWeather: { color: "#FFFFFF", backgroundColor: "#0277bd" },
+  badWeather: { color: "#FFFFFF", backgroundColor: "#0277bd" }
 };
 
 const ICON_URL = "http://openweathermap.org/img/w/";

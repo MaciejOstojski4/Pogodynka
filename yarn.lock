@@ -3919,6 +3919,16 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
+leaflet-geojson-cluster@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/leaflet-geojson-cluster/-/leaflet-geojson-cluster-0.0.4.tgz#08bfcdcbe36da4280d14f166fdccc870e2ebc2b6"
+  dependencies:
+    leaflet "^0.7.3"
+
+leaflet@^0.7.3:
+  version "0.7.7"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-0.7.7.tgz#1e352ba54e63d076451fa363c900890cb2cf75ee"
+
 leven@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/leven/-/leven-2.1.0.tgz#c2e7a9f772094dee9d34202ae8acce4687875580"
@@ -5139,6 +5149,13 @@ react-addons-shallow-compare@^15.0.2:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
+react-addons-update@^15.6.0:
+  version "15.6.0"
+  resolved "https://registry.yarnpkg.com/react-addons-update/-/react-addons-update-15.6.0.tgz#67f8d5a3d3d8ac7ccfa452565a8310065178e748"
+  dependencies:
+    fbjs "^0.8.9"
+    object-assign "^4.1.0"
+
 react-bootstrap@^0.31.1:
   version "0.31.1"
   resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-0.31.1.tgz#679c9f73ae77ff207867d536496207291f3a3ed7"
@@ -5239,6 +5256,19 @@ react-hover@^1.1.0:
   resolved "https://registry.yarnpkg.com/react-hover/-/react-hover-1.1.0.tgz#d1b28b352c5759febe0a7e3fc9ff25e5dc49b14b"
   dependencies:
     prop-types "^15.5.10"
+
+react-leaflet-geojson-cluster@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/react-leaflet-geojson-cluster/-/react-leaflet-geojson-cluster-0.1.8.tgz#a11ac85669498dc2a7a92ed23c8f18631da4c56b"
+  dependencies:
+    leaflet-geojson-cluster "0.0.4"
+    react-leaflet "^0.10.2"
+
+react-leaflet@^0.10.2:
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-0.10.2.tgz#fa10486656f7eb4bd288d60baf806525784db984"
+  dependencies:
+    lodash "^4.0.0"
 
 react-leaflet@^1.4.0:
   version "1.4.0"

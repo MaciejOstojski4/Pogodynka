@@ -10,7 +10,7 @@ export class Home extends Component {
 
     this.state = {
       cities: [],
-      loading: false,
+      loading: false
     };
   }
 
@@ -19,12 +19,11 @@ export class Home extends Component {
   };
 
   renderLoader = () => {
-    return (
-      <LoaderWrapper />
-    );
+    return <LoaderWrapper />;
   };
 
   renderComponent = () => {
+    console.log(this.state.cities);
     return (
       <div>
         <WeatherCardAggregator weatherItems={this.state.cities} />
@@ -34,19 +33,19 @@ export class Home extends Component {
 
   fetchWeatherForCities = () => {
     this.setState({
-      loading: true,
+      loading: true
     });
     apiClient
       .get(this.prepareUrl())
       .then(response => {
         this.setState({
           cities: response.data.list,
-          loading: false,
+          loading: false
         });
       })
       .catch(error => {
         console.log(
-          "Error occurred during fetching weather for cities: " + error,
+          "Error occurred during fetching weather for cities: " + error
         );
       });
   };
@@ -79,10 +78,8 @@ const initialCities = [
   524901, // Moscow
   2759794, // Amsterdam
   3143244, //Oslo
-  6458923, // Lisbon
+  6458923 // Lisbon
 ];
-
-
 
 const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric&";
 

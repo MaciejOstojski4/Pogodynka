@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import {
   changeDisplayedDetailsAction,
   saveSearchedCityNameAction,
+  saveSearchedWeatherAction
 } from "../actions/weather-actions";
 import styled from "styled-components";
 import SearchCityNameHint from "./SearchCityNameHint";
@@ -16,21 +17,21 @@ export class SearchWeather extends Component {
     this.state = {
       inputText: "",
       errorInfo: "",
-      similarCities: [],
+      similarCities: []
     };
   }
 
   onSimilarCityNameClick = cityName => {
     this.setState({
       inputText: cityName,
-      similarCities: [],
+      similarCities: []
     });
   };
 
   refreshState = (inputText, similarCities) => {
     this.setState({
       inputText: inputText,
-      similarCities: similarCities,
+      similarCities: similarCities
     });
   };
 
@@ -39,7 +40,7 @@ export class SearchWeather extends Component {
       return [];
     }
     return this.props.cities.filter(val =>
-      val.toLowerCase().includes(inputText.toLowerCase()),
+      val.toLowerCase().includes(inputText.toLowerCase())
     );
   };
 
@@ -64,6 +65,8 @@ export class SearchWeather extends Component {
   dispatchData = response => {
     this.props.dispatch(changeDisplayedDetailsAction(response.data));
     this.props.dispatch(saveSearchedCityNameAction(response.data.city.name));
+    console.log(response.data);
+    this.props.dispatch(saveSearchedWeatherAction(response.data));
   };
 
   fetchWeather = url => {
@@ -71,12 +74,13 @@ export class SearchWeather extends Component {
       .get(url)
       .then(response => {
         this.dispatchData(response);
+        console.log(response.data);
         this.props.router.push("weatherdetails");
       })
       .catch(error => {
         console.log(error);
         this.setState({
-          errorInfo: "Cannot find this city",
+          errorInfo: "Cannot find this city"
         });
       });
   };
@@ -88,6 +92,7 @@ export class SearchWeather extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <SearchBox>
         <SearchForm className="">
@@ -180,6 +185,7 @@ const LAT_LONG_REGEX = /(-)?[0-9]+\.[0-9]+:(-)?[0-9]+\.[0-9]+/;
 const mapStateToProps = currentState => {
   return {
     cities: currentState.weather.searchedCities,
+    data: currentState.weather
   };
 };
 
