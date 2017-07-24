@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
   session: sessionReducer,
 });
 
-const enhancer = compose(applyMiddleware(thunk), persistState("weather"));
+const enhancer = compose(applyMiddleware(thunk), persistState());
 
 const store = createStore(rootReducer, {}, enhancer);
 

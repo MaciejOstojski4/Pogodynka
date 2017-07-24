@@ -71,9 +71,9 @@ class WeatherTile extends React.Component {
   renderFavButtons = () => {
     let className = "";
     if (this.state.showLikeButton) {
-      className = "glyphicon glyphicon-thumbs-up";
+      className = "glyphicon glyphicon-plus";
     } else {
-      className = "glyphicon glyphicon-thumbs-down";
+      className = "glyphicon glyphicon-minus";
     }
     return (
       <LikeIconField>
@@ -126,8 +126,10 @@ const tileColors = {
 const ICON_URL = "http://openweathermap.org/img/w/";
 
 const LikeIconField = styled.div`
-  flex: 1;
-  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0px 5px 0px 5px;
   font-size: 120%;
 `;
 
@@ -141,6 +143,7 @@ const TileField = styled.div`
 
 const Tile = styled.div`
   float: left;
+  position: relative;
   margin: 5px;
   padding: 10px;
   min-width: 200px;
