@@ -7,7 +7,7 @@ class WeatherTile extends React.Component {
 
     this.state = {
       tileColor: tileColors.goodWeather,
-      textColor: ""
+      textColor: "",
     };
   }
 
@@ -26,32 +26,19 @@ class WeatherTile extends React.Component {
   };
 
   isBadWeather = weatherCode => {
-    if (
-      weatherCode < 500 ||
+    return weatherCode < 500 ||
       (weatherCode >= 600 && weatherCode < 700) ||
-      weatherCode >= 900
-    ) {
-      return true;
-    }
-    return false;
+      weatherCode >= 900;
   };
 
   isAverageWeather = weatherCode => {
-    if (
-      (weatherCode >= 500 && weatherCode < 600) ||
+    return (weatherCode >= 500 && weatherCode < 600) ||
       (weatherCode >= 700 && weatherCode < 800) ||
-      (weatherCode >= 803 && weatherCode <= 804)
-    ) {
-      return true;
-    }
-    return false;
+      (weatherCode >= 803 && weatherCode <= 804);
   };
 
   isGoodWeather = weatherCode => {
-    if (weatherCode >= 800 && weatherCode <= 802) {
-      return true;
-    }
-    return false;
+    return weatherCode >= 800 && weatherCode <= 802;
   };
 
   resolveTileColor = weatherCode => {
@@ -68,19 +55,24 @@ class WeatherTile extends React.Component {
     this.resolveTileColor(this.props.city.weather[0].id);
   }
 
+  onFavClick = () => {
+    if (this.props.likeButton) {
+      this.props.onFavClick(this.props.city, true);
+    } else {
+      this.props.onFavClick(this.props.city, false);
+    }
+  };
+
   renderFavButtons = () => {
     let className = "";
-    if(this.props.likeButton) {
+    if (this.props.likeButton) {
       className = "glyphicon glyphicon-thumbs-up";
     } else {
       className = "glyphicon glyphicon-thumbs-down";
     }
     return (
       <LikeIconField>
-        <span
-          className={className}
-          onClick={() => this.props.onLikeClick(this.props.city.name)}
-        />
+        <span className={className} onClick={this.onFavClick} />
       </LikeIconField>
     );
   };
@@ -123,7 +115,7 @@ class WeatherTile extends React.Component {
 const tileColors = {
   goodWeather: { color: "#6d7078", backgroundColor: "#ffd600" },
   averageWeather: { color: "#FFFFFF", backgroundColor: "#7cb342" },
-  badWeather: { color: "#FFFFFF", backgroundColor: "#0277bd" }
+  badWeather: { color: "#FFFFFF", backgroundColor: "#0277bd" },
 };
 
 const ICON_URL = "http://openweathermap.org/img/w/";

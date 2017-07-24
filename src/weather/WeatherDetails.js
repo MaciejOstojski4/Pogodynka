@@ -76,7 +76,6 @@ class WeatherDetails extends Component {
   }
 
   getComponentToRender = () => {
-    console.log(this.props.data);
     this.props.dispatch(saveSearchedWeatherAction(this.props.data));
     if (this.isForecastFetched()) {
       return (

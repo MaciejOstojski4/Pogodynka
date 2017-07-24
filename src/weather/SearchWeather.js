@@ -65,7 +65,6 @@ export class SearchWeather extends Component {
   dispatchData = response => {
     this.props.dispatch(changeDisplayedDetailsAction(response.data));
     this.props.dispatch(saveSearchedCityNameAction(response.data.city.name));
-    console.log(response.data);
   };
 
   fetchWeather = url => {
@@ -73,7 +72,6 @@ export class SearchWeather extends Component {
       .get(url)
       .then(response => {
         this.dispatchData(response);
-        console.log(response.data);
         this.props.router.push("weatherdetails");
       })
       .catch(error => {
@@ -91,7 +89,6 @@ export class SearchWeather extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <SearchBox>
         <SearchForm className="">

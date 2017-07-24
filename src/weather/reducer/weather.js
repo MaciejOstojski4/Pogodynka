@@ -29,7 +29,6 @@ const weather = (currentState = initialState, action) => {
         savedWeather: action.data.weather
       };
     case SAVE_SEARCHED_WEATHER_ACTION:
-      console.log(action.data);
       return {
         ...currentState,
         savedWeather: [

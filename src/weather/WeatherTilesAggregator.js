@@ -36,11 +36,7 @@ class WeatherCardAggregator extends React.Component {
     this.props.router.push("weatherdetails");
   };
 
-  createFavouriteCityObject = cityName => {
-    const city = this.props.weatherItems.filter(
-      city => city.name === cityName,
-    )[0];
-    console.log(this.props.token);
+  createFavouriteCityObject = city => {
     return {
       place: {
         name: city.name,
@@ -52,10 +48,30 @@ class WeatherCardAggregator extends React.Component {
     };
   };
 
-  onLikeClick = cityName => {
-    console.log(this.props.token);
+  changeFavStatusOnServer = (city, like) => {
+    if (like) {
+      this.addCityToFavourite(city);
+    } else {
+      this.removeCityFromFavourite(city);
+    }
+  };
+
+  removeCityFromFavourite = city => {
+    const url = `${CHANGE_FAV_CITY_STATUS_URL}/${city.favCity.id}`;
     userApiClient
-      .post(ADD_TO_FAVOURITE_URL, this.createFavouriteCityObject(cityName))
+      .delete(url)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  addCityToFavourite = city => {
+    const apiCity = this.createFavouriteCityObject(city);
+    userApiClient
+      .post(CHANGE_FAV_CITY_STATUS_URL, apiCity)
       .then(response => {
         console.log(response);
       })
@@ -74,7 +90,7 @@ class WeatherCardAggregator extends React.Component {
           showButtons={this.props.userId === "" ? false : true}
           likeButton={city.favCity === null ? true : false}
           dislikeButton={city.favCity === null ? false : true}
-          onLikeClick={this.onLikeClick}
+          onFavClick={this.changeFavStatusOnServer}
         />
       );
     });
@@ -83,7 +99,6 @@ class WeatherCardAggregator extends React.Component {
     this.props.dispatch(saveGroupWeatherAction(this.props.weatherItems));
   }
   render() {
-    console.log(this.props);
     return (
       <div>
         <MediaQuery
@@ -118,7 +133,7 @@ const AggregatorResponsiveColumn = styled.div`
 
 const SEARCH_URL = "forecast?units=metric&";
 
-const ADD_TO_FAVOURITE_URL = "/weather/api/v1/places";
+const CHANGE_FAV_CITY_STATUS_URL = "/weather/api/v1/places";
 
 const mapStateToProps = currentState => {
   return {

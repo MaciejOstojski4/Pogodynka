@@ -24,7 +24,6 @@ class Home extends Component {
   };
 
   renderComponent = () => {
-    console.log(this.state.cities);
     return (
       <div>
         <WeatherCardAggregator weatherItems={this.state.cities} />
@@ -33,7 +32,6 @@ class Home extends Component {
   };
 
   mergeFavWithPublicCities = pubCities => {
-    console.log(this.props.favCities);
     return pubCities.map(city => {
       const userCity = this.props.favCities.filter(
         c => c.name === city.name,
@@ -46,9 +44,7 @@ class Home extends Component {
       }
       return {
         ...city,
-        favCity: {
-          name: userCity.name,
-        },
+        favCity: userCity,
       };
     });
   };
@@ -106,7 +102,6 @@ const initialCities = [
 const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric&";
 
 const mapStateToProps = currentState => {
-  console.log(currentState);
   return {
     favCities: currentState.session.userCities,
     userId: currentState.session.user.userId,
