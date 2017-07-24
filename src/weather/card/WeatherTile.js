@@ -8,6 +8,7 @@ class WeatherTile extends React.Component {
     this.state = {
       tileColor: tileColors.goodWeather,
       textColor: "",
+      showLikeButton: props.likeButton
     };
   }
 
@@ -62,11 +63,14 @@ class WeatherTile extends React.Component {
     } else {
       this.props.onFavClick(this.props.city, false);
     }
+    this.setState({
+      showLikeButton: !this.state.showLikeButton
+    })
   };
 
   renderFavButtons = () => {
     let className = "";
-    if (this.props.likeButton) {
+    if (this.state.showLikeButton) {
       className = "glyphicon glyphicon-thumbs-up";
     } else {
       className = "glyphicon glyphicon-thumbs-down";
