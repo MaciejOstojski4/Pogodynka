@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import WeatherCardAggregator from "./weather/WeatherTilesAggregator";
+import WeatherTilesAggregator from "./weather/WeatherTilesAggregator";
 import apiClient from "./lib/api-client";
 import SearchWeather from "./weather/SearchWeather";
 import LoaderWrapper from "./user-interface/Loader";
@@ -81,7 +81,7 @@ class Home extends Component {
   renderComponent = () => {
     return (
       <div>
-        <WeatherCardAggregator weatherItems={this.state.cities} />
+        <WeatherTilesAggregator weatherItems={this.state.cities} />
       </div>
     );
   };
