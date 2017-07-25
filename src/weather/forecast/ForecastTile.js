@@ -8,7 +8,7 @@ class ForecastTile extends React.Component {
 
   render() {
     return (
-      <Tile style={{ "background-color": this.props.backgroundColor }}>
+      <Tile style={{ "backgroundColor": this.props.backgroundColor }}>
         <TileField className="text-center">
           <DescriptionParagraph>Temperature:</DescriptionParagraph>
           <ValueParagraph>

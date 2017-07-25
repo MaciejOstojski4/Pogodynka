@@ -1,13 +1,5 @@
-import React, { Component } from "react";
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis
-} from "recharts";
+import React, {Component} from "react";
+import {Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import styled from "styled-components";
 
 class Chart extends Component {
@@ -25,7 +17,7 @@ class Chart extends Component {
             <Tooltip />
             <Line
               type="monotone"
-              animationDuration="2000"
+              animationDuration={2000}
               dataKey={this.props.title}
               stroke="#e91b1b"
             />

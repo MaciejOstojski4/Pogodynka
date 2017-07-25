@@ -4,7 +4,6 @@ import {
   SAVE_GROUP_WEATHER,
   PARSE_SEARCHED_WEATHER_ACTION,
   SHOW_MAP_POP_UP,
-  HIDE_MAP_POP_UP
 } from "../../actions/weather-actions";
 
 const initialState = {

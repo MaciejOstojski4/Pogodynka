@@ -1,6 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
-import { loginAction, fetchUserFavCitiesAction } from "../../actions/user-action";
+import {connect} from "react-redux";
+import {loginAction} from "../../actions/user-action";
 import styled from "styled-components";
 
 class LoginForm extends React.Component {
@@ -25,6 +25,8 @@ class LoginForm extends React.Component {
         this.setState({
           password: e.target.value,
         });
+        break;
+      default:
         break;
     }
   };

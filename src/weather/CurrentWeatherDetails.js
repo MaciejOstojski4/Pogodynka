@@ -13,7 +13,7 @@ class CurrentWeatherDetails extends React.Component {
             <div className="text-left">
               Temperature:
             </div>
-            <div clasName="text-right">
+            <div className="text-right">
               {this.props.city.main.temp} &deg;C
             </div>
           </InfoRow>
@@ -21,7 +21,7 @@ class CurrentWeatherDetails extends React.Component {
             <div className="text-left">
               Pressure:
             </div>
-            <div clasName="text-right">
+            <div className="text-right">
               {this.props.city.main.pressure} hPa
             </div>
           </InfoRow>
@@ -29,7 +29,7 @@ class CurrentWeatherDetails extends React.Component {
             <div className="text-left">
               Wind:
             </div>
-            <div clasName="text-right">
+            <div className="text-right">
               {this.props.city.wind.speed} km/h
             </div>
           </InfoRow>
@@ -37,7 +37,7 @@ class CurrentWeatherDetails extends React.Component {
             <div className="text-left">
               Humidity:
             </div>
-            <div clasName="text-right">
+            <div className="text-right">
               {this.props.city.main.humidity} %
             </div>
           </InfoRow>
@@ -45,7 +45,7 @@ class CurrentWeatherDetails extends React.Component {
             <div className="text-left">
               Cloudiness:
             </div>
-            <div clasName="text-right">
+            <div className="text-right">
               {this.props.city.clouds.all} %
             </div>
           </InfoRow>

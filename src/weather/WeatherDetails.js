@@ -5,7 +5,6 @@ import Chart from "./Chart";
 import ResponsiveForecast from "./forecast/ResponsiveForecast";
 import styled from "styled-components";
 import SearchWeather from "./SearchWeather";
-import { parseSearchedWeatherAction } from "../actions/weather-actions";
 
 class WeatherDetails extends Component {
   constructor(props) {
