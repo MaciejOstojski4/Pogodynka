@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { DragSource, DropTarget } from "react-dnd";
+import { findDOMNode } from "react-dom";
 
 class WeatherTile extends React.Component {
   constructor(props) {
@@ -76,9 +77,9 @@ class WeatherTile extends React.Component {
   renderFavButtons = () => {
     let className = "";
     if (this.state.showLikeButton) {
-      className = "glyphicon glyphicon-star";
-    } else {
       className = "glyphicon glyphicon-star-empty";
+    } else {
+      className = "glyphicon glyphicon-star";
     }
     return (
       <LikeIconField>
@@ -93,13 +94,15 @@ class WeatherTile extends React.Component {
       position: "relative",
       margin: "5px",
       padding: "10px",
-      "min-width": "200px",
+      minWidth: "200px",
       flex: "1",
-      "flex-direction": "column",
+      flexDirection: "column",
       display: "flex",
-      "box-shadow": "2px 2px 4px grey",
+      boxShadow: "2px 2px 4px grey",
       color: this.state.tileColor.color,
-      "background-color": this.state.tileColor.backgroundColor,
+      backgroundColor: this.state.tileColor.backgroundColor,
+      cursor: "move",
+      opacity: this.props.isDragging ? 0 : 1,
     };
     return this.props.connectDragSource(
       this.props.connectDropTarget(
@@ -183,11 +186,44 @@ const TileSource = {
   beginDrag(props) {
     return {
       position: props.city.favCity.position,
+      index: props.index,
     };
   },
 };
 
-const TileTarget = {};
+const TileTarget = {
+  hover(props, monitor, component) {
+    const dragIndex = monitor.getItem().index;
+    const hoverIndex = props.index;
+
+    if (dragIndex === hoverIndex) {
+      return;
+    }
+
+    console.log(`Drag index: ${dragIndex}`);
+    console.log(`Hover index: ${hoverIndex}`);
+
+    const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
+
+    const hoverMiddleX = (hoverBoundingRect.left - hoverBoundingRect.right) / 2;
+
+    const clientOffset = monitor.getClientOffset();
+
+    const hoverClientX = clientOffset.x - hoverBoundingRect.right;
+
+    if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
+     return;
+    }
+
+    if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
+     return;
+    }
+
+    props.changePosition(dragIndex, hoverIndex);
+
+    monitor.getItem().index = hoverIndex;
+  },
+};
 
 const collectDrag = (connect, monitor) => {
   return {

@@ -17,6 +17,14 @@ import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 
 class WeatherCardAggregator extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      cities: props.weatherItems
+    }
+  }
+
   prepareUrl = cityName => {
     return `${SEARCH_URL}q=${cityName}`;
   };
@@ -70,24 +78,41 @@ class WeatherCardAggregator extends React.Component {
   };
 
   getComponentToRender = () => {
-    return this.props.weatherItems.map(city => {
-      console.log(city);
-      return (
-        <WeatherTile
-          key={city.name}
-          city={city}
-          onClickRedirect={this.redirectToDetails}
-          onFavClick={this.changeFavStatusOnServer}
-          showButtons={this.props.userId !== ""}
-          likeButton={city.favCity === null}
-          dislikeButton={city.favCity !== null}
-        />
-      );
+    return this.state.cities.map((city, index) => {
+      if(city !== undefined) {
+        return (
+          <WeatherTile
+            key={city.name}
+            city={city}
+            index={index}
+            onClickRedirect={this.redirectToDetails}
+            onFavClick={this.changeFavStatusOnServer}
+            showButtons={this.props.userId !== ""}
+            likeButton={city.favCity === null}
+            dislikeButton={city.favCity !== null}
+            changePosition={this.changePosition}
+          />
+        );
+      } else {
+        return <div/>
+      }
     });
   };
 
+  changePosition = (dragIndex, hoverIndex) => {
+    const dragItem = this.state.cities[dragIndex];
+    const hoverItem = this.state.cities[hoverIndex];
+    const cities = this.state.cities;
+    cities[dragIndex] = hoverItem;
+    cities[hoverIndex] = dragItem;
+    this.setState({
+      cities: cities
+    })
+  }
+
+
   componentDidMount() {
-    this.props.dispatch(saveGroupWeatherAction(this.props.weatherItems));
+    this.props.dispatch(saveGroupWeatherAction(this.state.cities));
   }
 
   render() {
