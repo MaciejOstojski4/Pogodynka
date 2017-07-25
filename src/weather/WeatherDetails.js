@@ -15,6 +15,7 @@ class WeatherDetails extends Component {
       nightForecast: [],
       forecastForChart: [],
       errorInfo: ERROR_MESSAGE,
+      currentForecast: this.props.data.list[0]
     };
   }
 
@@ -24,7 +25,7 @@ class WeatherDetails extends Component {
 
   getDailyForecastAtHour = hour => {
     return this.props.data.list.filter(
-      weather => this.getHoursFromDate(weather.dt_txt) === hour,
+      weather => this.getHoursFromDate(weather.dt_txt) === hour
     );
   };
 
@@ -38,11 +39,11 @@ class WeatherDetails extends Component {
   prepareDataForForecast = () => {
     this.setState({
       dayForecast: this.getForecastSinceTomorrow(
-        this.getDailyForecastAtHour("12:00:00"),
+        this.getDailyForecastAtHour("12:00:00")
       ),
       nightForecast: this.getForecastSinceTomorrow(
-        this.getDailyForecastAtHour("00:00:00"),
-      ),
+        this.getDailyForecastAtHour("00:00:00")
+      )
     });
   };
 
@@ -50,7 +51,7 @@ class WeatherDetails extends Component {
     return this.props.data.list.map(forecast => {
       return {
         temperature: forecast.main.temp,
-        time: this.getHoursFromDate(forecast.dt_txt).slice(0, 5),
+        time: this.getHoursFromDate(forecast.dt_txt).slice(0, 5)
       };
     });
   };
@@ -63,14 +64,22 @@ class WeatherDetails extends Component {
 
   prepareDataForChart = noDay => {
     this.setState({
-      forecastForChart: this.getForecastForDay(noDay, this.parseDataForChart()),
+      forecastForChart: this.getForecastForDay(noDay, this.parseDataForChart())
     });
   };
 
   isForecastFetched = () => {
     return this.props.data !== null;
   };
-
+  setWeatherDetails = noDay => {
+    this.setState({
+      currentForecast: this.state.dayForecast[noDay]
+    });
+  };
+  prepareDataAfterForecastClick = noDay => {
+    this.prepareDataForChart(noDay);
+    this.setWeatherDetails(noDay);
+  };
   componentDidMount() {
     if (this.isForecastFetched()) {
       this.prepareDataForForecast();
@@ -78,7 +87,7 @@ class WeatherDetails extends Component {
     }
   }
 
-  getComponentToRender = () => {
+  getComponentToRender = noDay => {
     if (this.isForecastFetched()) {
       return (
         <div>
@@ -86,8 +95,8 @@ class WeatherDetails extends Component {
             <SearchWeather />
             <div className="col-md-4">
               <CurrentWeatherDetails
-                city={this.props.data.list[0]}
                 cityName={this.props.data.city.name}
+                city={this.state.currentForecast}
               />
             </div>
             <div className="col-md-8">
@@ -103,7 +112,7 @@ class WeatherDetails extends Component {
           </div>
           <div className="row">
             <ResponsiveForecast
-              onForecastClick={this.prepareDataForChart}
+              onForecastClick={this.prepareDataAfterForecastClick}
               dayForecast={this.state.dayForecast}
               nightForecast={this.state.nightForecast}
             />
@@ -122,12 +131,12 @@ class WeatherDetails extends Component {
   };
 
   render() {
-    return this.getComponentToRender();
+    return this.getComponentToRender(this.props.noDay);
   }
 }
 
 WeatherDetails.defaultProps = {
-  noDay: 0,
+  noDay: 0
 };
 
 const NUMBER_OF_DAYS_IN_FORECAST = 5;
@@ -140,7 +149,7 @@ const StyledTitle = styled.h3`font-size: 27px;`;
 
 const mapStateToProps = currentState => {
   return {
-    data: currentState.weather.cityDetails,
+    data: currentState.weather.cityDetails
   };
 };
 

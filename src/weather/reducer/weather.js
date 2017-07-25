@@ -3,7 +3,7 @@ import {
   ADD_SEARCHED_CITY_ACTION,
   SAVE_GROUP_WEATHER,
   PARSE_SEARCHED_WEATHER_ACTION,
-  SHOW_MAP_POP_UP,
+  SHOW_MAP_POP_UP
 } from "../../actions/weather-actions";
 
 const initialState = {
@@ -25,7 +25,6 @@ const weather = (currentState = initialState, action) => {
         searchedCities: [...currentState.searchedCities, action.data.name]
       };
     case SAVE_GROUP_WEATHER:
-      console.log(action.data);
       return {
         ...currentState,
         savedWeather: action.data.weather.map(p => {

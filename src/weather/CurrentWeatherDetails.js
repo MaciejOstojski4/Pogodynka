@@ -7,44 +7,34 @@ class CurrentWeatherDetails extends React.Component {
       <div>
         <InfoContainer>
           <TitleRow>
-              {this.props.cityName}
+            {this.props.cityName}
           </TitleRow>
           <InfoRow>
-            <div className="text-left">
-              Temperature:
-            </div>
+            <div className="text-left">Temperature:</div>
             <div className="text-right">
               {this.props.city.main.temp} &deg;C
             </div>
           </InfoRow>
           <InfoRow>
-            <div className="text-left">
-              Pressure:
-            </div>
+            <div className="text-left">Pressure:</div>
             <div className="text-right">
               {this.props.city.main.pressure} hPa
             </div>
           </InfoRow>
           <InfoRow>
-            <div className="text-left">
-              Wind:
-            </div>
+            <div className="text-left">Wind:</div>
             <div className="text-right">
               {this.props.city.wind.speed} km/h
             </div>
           </InfoRow>
           <InfoRow>
-            <div className="text-left">
-              Humidity:
-            </div>
+            <div className="text-left">Humidity:</div>
             <div className="text-right">
               {this.props.city.main.humidity} %
             </div>
           </InfoRow>
           <InfoRow>
-            <div className="text-left">
-              Cloudiness:
-            </div>
+            <div className="text-left">Cloudiness:</div>
             <div className="text-right">
               {this.props.city.clouds.all} %
             </div>
