@@ -9,7 +9,12 @@ import {
   changeDisplayedDetailsAction,
   saveGroupWeatherAction,
 } from "../actions/weather-actions";
-import { addUserCityAction, removeUserCityAction } from "../actions/user-action";
+import {
+  addUserCityAction,
+  removeUserCityAction,
+} from "../actions/user-action";
+import { DragDropContext } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
 
 class WeatherCardAggregator extends React.Component {
   prepareUrl = cityName => {
@@ -66,6 +71,7 @@ class WeatherCardAggregator extends React.Component {
 
   getComponentToRender = () => {
     return this.props.weatherItems.map(city => {
+      console.log(city);
       return (
         <WeatherTile
           key={city.name}
@@ -127,4 +133,4 @@ const mapStateToProps = currentState => {
   };
 };
 
-export default connect(mapStateToProps)(withRouter(WeatherCardAggregator));
+export default connect(mapStateToProps)(DragDropContext(HTML5Backend)(withRouter(WeatherCardAggregator)));
