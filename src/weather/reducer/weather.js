@@ -2,8 +2,7 @@ import {
   CHANGE_DISPLAYED_DETAILS_ACTION,
   ADD_SEARCHED_CITY_ACTION,
   SAVE_GROUP_WEATHER,
-  PARSE_SEARCHED_WEATHER_ACTION,
-  SHOW_MAP_POP_UP
+  PARSE_SEARCHED_WEATHER_ACTION
 } from "../../actions/weather-actions";
 
 const initialState = {
@@ -46,11 +45,7 @@ const weather = (currentState = initialState, action) => {
           }
         ]
       };
-    case SHOW_MAP_POP_UP:
-      return {
-        ...currentState,
-        savedWeather: action.data.weather
-      };
+
     default:
       return currentState;
   }

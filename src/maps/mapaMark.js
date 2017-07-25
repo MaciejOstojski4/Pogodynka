@@ -7,10 +7,6 @@ import {
 } from "react-google-maps";
 import MarkerClusterer from "react-google-maps/lib/addons/MarkerClusterer";
 import { connect } from "react-redux";
-import {
-  showMapPopUpAction,
-  hideMapPopUpAction
-} from "../actions/weather-actions";
 
 const MarkerClustererExampleGoogleMap = withGoogleMap(props => {
   return (
@@ -35,9 +31,20 @@ const MarkerClustererExampleGoogleMap = withGoogleMap(props => {
               {marker.showInfo &&
                 <InfoWindow onCloseClick={() => props.onClose(marker)}>
                   <div>
-                    <p>{marker.name}</p>
-                    <p>Temperature: {marker.main.temp} C</p>
-                    Humidity: {marker.main.humidity} %
+                    <p>
+                      <b>
+                        {marker.name}
+                      </b>
+                    </p>
+                    <p>
+                      Temperature: {marker.main.temp} C
+                    </p>
+                    <p>
+                      Humidity: {marker.main.humidity} %
+                    </p>
+                    <p>
+                      Pressure: {marker.main.pressure} hPa
+                    </p>
                   </div>
                 </InfoWindow>}
             </Marker>
@@ -80,7 +87,7 @@ class MarkerClustererExample extends Component {
 
   render() {
     const markers = this.props.data;
-    console.log(markers);
+    console.log(this.props.data);
     return (
       <MarkerClustererExampleGoogleMap
         containerElement={<div style={{ height: `600px` }} />}

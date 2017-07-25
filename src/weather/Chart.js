@@ -11,7 +11,6 @@ import styled from "styled-components";
 
 class Chart extends Component {
   render() {
-    console.log(this.props);
     return (
       <ChartContainer>
         <ResponsiveContainer width="100%" height="100%">
