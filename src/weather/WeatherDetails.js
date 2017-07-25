@@ -15,7 +15,6 @@ class WeatherDetails extends Component {
       dayForecast: [],
       nightForecast: [],
       forecastForChart: [],
-      noDayForForecast: 0,
       errorInfo: ERROR_MESSAGE,
     };
   }
@@ -63,12 +62,9 @@ class WeatherDetails extends Component {
     return forecast.slice(startPoint, endPoint);
   };
 
-  prepareDataForChart = () => {
+  prepareDataForChart = noDay => {
     this.setState({
-      forecastForChart: this.getForecastForDay(
-        this.state.noDayForForecast,
-        this.parseDataForChart(),
-      ),
+      forecastForChart: this.getForecastForDay(noDay, this.parseDataForChart()),
     });
   };
 
@@ -79,21 +75,11 @@ class WeatherDetails extends Component {
   componentDidMount() {
     if (this.isForecastFetched()) {
       this.prepareDataForForecast();
-      this.prepareDataForChart();
+      this.prepareDataForChart(this.props.noDay);
     }
   }
 
-  changeForecastDetails = noDay => {
-    this.setState({
-      forecastForChart: this.getForecastForDay(
-        noDay,
-        this.parseDataForChart(),
-      ),
-    });
-  };
-
   getComponentToRender = () => {
-    console.log(this.state.forecastForChart);
     if (this.isForecastFetched()) {
       return (
         <div>
@@ -118,7 +104,7 @@ class WeatherDetails extends Component {
           </div>
           <div className="row">
             <ResponsiveForecast
-              onForecastClick={this.changeForecastDetails}
+              onForecastClick={this.prepareDataForChart}
               dayForecast={this.state.dayForecast}
               nightForecast={this.state.nightForecast}
             />
@@ -140,6 +126,10 @@ class WeatherDetails extends Component {
     return this.getComponentToRender();
   }
 }
+
+WeatherDetails.defaultProps = {
+  noDay: 0,
+};
 
 const NUMBER_OF_DAYS_IN_FORECAST = 5;
 
