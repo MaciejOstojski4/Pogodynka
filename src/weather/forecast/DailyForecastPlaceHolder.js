@@ -7,9 +7,18 @@ class DailyForecastPlaceHolder extends React.Component {
     return forecastDate.dt_txt.split(" ")[0];
   };
 
+  onClick = e => {
+    e.preventDefault();
+    this.props.onForecastClick(this.props.noDay);
+  };
+
   render() {
     return (
-      <PlaceHolder key={this.props.dayForecast.dt_txt} className="text-center">
+      <PlaceHolder
+        key={this.props.dayForecast.dt_txt}
+        className="text-center"
+        onClick={this.onClick}
+      >
         <DateTile>
           <h4>
             {this.getDateWithoutHours(this.props.dayForecast)}

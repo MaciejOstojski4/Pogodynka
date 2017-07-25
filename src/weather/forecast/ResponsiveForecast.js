@@ -13,12 +13,14 @@ class ResponsiveForecast extends React.Component {
         </div>
         <MediaQuery query="(max-device-width: 1080px)" component={ScrolledDiv}>
           <ScrolledForecastPlaceHolder
+            onForecastClick={this.props.onForecastClick}
             dayForecast={this.props.dayForecast}
             nightForecast={this.props.nightForecast}
           />
         </MediaQuery>
         <MediaQuery query="(min-device-width: 1081px)" component={ScrolledDiv}>
           <ForecastPlaceHolder
+            onForecastClick={this.props.onForecastClick}
             dayForecast={this.props.dayForecast}
             nightForecast={this.props.nightForecast}
           />

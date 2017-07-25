@@ -9,6 +9,8 @@ class ForecastPlaceHolder extends React.Component {
         {this.props.dayForecast.map((forecast, index) => {
           return (
             <DailyForecastPlaceHolder
+              noDay={index}
+              onForecastClick={this.props.onForecastClick}
               dayForecast={forecast}
               nightForecast={this.props.nightForecast[index]}
             />

@@ -15,7 +15,8 @@ class WeatherDetails extends Component {
       dayForecast: [],
       nightForecast: [],
       forecastForChart: [],
-      errorInfo: ERROR_MESSAGE
+      noDayForForecast: 0,
+      errorInfo: ERROR_MESSAGE,
     };
   }
 
@@ -25,7 +26,7 @@ class WeatherDetails extends Component {
 
   getDailyForecastAtHour = hour => {
     return this.props.data.list.filter(
-      weather => this.getHoursFromDate(weather.dt_txt) === hour
+      weather => this.getHoursFromDate(weather.dt_txt) === hour,
     );
   };
 
@@ -39,28 +40,35 @@ class WeatherDetails extends Component {
   prepareDataForForecast = () => {
     this.setState({
       dayForecast: this.getForecastSinceTomorrow(
-        this.getDailyForecastAtHour("12:00:00")
+        this.getDailyForecastAtHour("12:00:00"),
       ),
       nightForecast: this.getForecastSinceTomorrow(
-        this.getDailyForecastAtHour("00:00:00")
-      )
+        this.getDailyForecastAtHour("00:00:00"),
+      ),
     });
   };
 
   parseDataForChart = () => {
-    return this.props.data.list
-      .map(forecast => {
-        return {
-          temperature: forecast.main.temp,
-          time: this.getHoursFromDate(forecast.dt_txt).slice(0, 5)
-        };
-      })
-      .slice(0, 9);
+    return this.props.data.list.map(forecast => {
+      return {
+        temperature: forecast.main.temp,
+        time: this.getHoursFromDate(forecast.dt_txt).slice(0, 5),
+      };
+    });
+  };
+
+  getForecastForDay = (noDay, forecast) => {
+    const startPoint = noDay * 10;
+    const endPoint = startPoint + 11;
+    return forecast.slice(startPoint, endPoint);
   };
 
   prepareDataForChart = () => {
     this.setState({
-      forecastForChart: this.parseDataForChart()
+      forecastForChart: this.getForecastForDay(
+        this.state.noDayForForecast,
+        this.parseDataForChart(),
+      ),
     });
   };
 
@@ -75,9 +83,17 @@ class WeatherDetails extends Component {
     }
   }
 
-  getComponentToRender = () => {
-    console.log(this.props.data);
+  changeForecastDetails = noDay => {
+    this.setState({
+      forecastForChart: this.getForecastForDay(
+        noDay,
+        this.parseDataForChart(),
+      ),
+    });
+  };
 
+  getComponentToRender = () => {
+    console.log(this.state.forecastForChart);
     if (this.isForecastFetched()) {
       return (
         <div>
@@ -102,6 +118,7 @@ class WeatherDetails extends Component {
           </div>
           <div className="row">
             <ResponsiveForecast
+              onForecastClick={this.changeForecastDetails}
               dayForecast={this.state.dayForecast}
               nightForecast={this.state.nightForecast}
             />
@@ -134,7 +151,7 @@ const StyledTitle = styled.h3`font-size: 27px;`;
 
 const mapStateToProps = currentState => {
   return {
-    data: currentState.weather.cityDetails
+    data: currentState.weather.cityDetails,
   };
 };
 
