@@ -6,13 +6,13 @@ import { logoutAction } from "../actions/user-action";
 
 class Header extends React.Component {
   renderRegisterLink = () => {
-    if (this.props.userEmail === "") {
+    if (!this.isUserLogged()) {
       return <Link to="register-form">Register</Link>;
     }
   };
 
   renderUserSessionLink = () => {
-    if (this.props.userEmail === "") {
+    if (!this.isUserLogged()) {
       return <Link to="login-form">Login</Link>;
     }
     return (
@@ -20,6 +20,16 @@ class Header extends React.Component {
         Logout
       </Link>
     );
+  };
+
+  renderFavouriteCitiesLink = () => {
+    if (this.isUserLogged()) {
+      return <Link to="user/favourite-cities">My cities</Link>;
+    }
+  };
+
+  isUserLogged = () => {
+    return this.props.userEmail !== "";
   };
 
   render() {
@@ -53,7 +63,7 @@ class Header extends React.Component {
               {this.renderUserSessionLink()}
             </li>
             <li>
-              <Link to="favourite-cities">My cities</Link>
+              {this.renderFavouriteCitiesLink()}
             </li>
           </ResponsiveList>
         </Navbar>

@@ -11,6 +11,14 @@ import LoginForm from "./user/form/LoginForm";
 import FavouriteCities from "./weather/FavouriteCities";
 
 class App extends Component {
+  authenticateUser = (nextState, replace) => {
+    const state = this.props.store.getState();
+    if (state.session.user.token === "") {
+      replace({
+        pathname: "login-form",
+      });
+    }
+  };
   render() {
     return (
       <AppMainContainer>
@@ -21,6 +29,9 @@ class App extends Component {
             <Route component={Container} path="container" />
             <Route path="register-form" component={RegisterForm} />
             <Route path="login-form" component={LoginForm} />
+          </Route>
+          <Route path="user" onEnter={this.authenticateUser} component={Layout}>
+            {/*<IndexRoute component={Home} />*/}
             <Router path="favourite-cities" component={FavouriteCities} />
           </Route>
         </Router>
