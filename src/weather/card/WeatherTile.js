@@ -71,9 +71,9 @@ class WeatherTile extends React.Component {
   renderFavButtons = () => {
     let className = "";
     if (this.state.showLikeButton) {
-      className = "glyphicon glyphicon-plus";
+      className = "glyphicon glyphicon-star";
     } else {
-      className = "glyphicon glyphicon-minus";
+      className = "glyphicon glyphicon-star-empty";
     }
     return (
       <LikeIconField>

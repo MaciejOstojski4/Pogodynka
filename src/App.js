@@ -31,7 +31,7 @@ class App extends Component {
             <Route path="login-form" component={LoginForm} />
           </Route>
           <Route path="user" onEnter={this.authenticateUser} component={Layout}>
-            <IndexRoute component={Home} />
+            {/*<IndexRoute component={Home} />*/}
             <Router path="favourite-cities" component={FavouriteCities} />
           </Route>
         </Router>

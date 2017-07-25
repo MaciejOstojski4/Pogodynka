@@ -2,15 +2,24 @@ import React from "react";
 import { connect } from "react-redux";
 import apiClient from "../lib/api-client";
 import WeatherTilesAggregator from "./WeatherTilesAggregator";
+import SearchWeather from "./SearchWeather";
+import LoaderWrapper from "../user-interface/Loader";
 
 class FavouriteCities extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      favCitiesWeather: []
+      favCitiesWeather: [],
+      loading: false,
     }
   }
+
+  changeLoaderVisibility = () => {
+    this.setState({
+      loading: !this.state.loading,
+    });
+  };
 
   createUrl = () => {
     const favCitiesIds = this.props.favCities.map(favCity => {
@@ -44,8 +53,8 @@ class FavouriteCities extends React.Component {
   };
 
   fetchWeatherForFavCities = () => {
+    this.changeLoaderVisibility();
     const url = this.createUrl();
-    console.log(url);
     apiClient
       .get(url)
       .then(response => {
@@ -65,16 +74,29 @@ class FavouriteCities extends React.Component {
     this.fetchWeatherForFavCities();
   }
 
+  renderLoader = () => {
+    return <LoaderWrapper />;
+  };
+
+  renderComponent = () => {
+    return (
+    <div className="row">
+      <WeatherTilesAggregator weatherItems={this.state.favCitiesWeather}/>
+    </div>
+    )
+  };
+
   render() {
     return (
       <div>
-        <WeatherTilesAggregator weatherItems={this.state.favCitiesWeather}/>
+        <div className="row">
+          <SearchWeather />
+        </div>
+        {this.state.loading ? this.renderLoader() : this.renderComponent()}
       </div>
-    );
+    )
   }
 }
-
-const USER_FAVOURITE_CITY_URL = "";
 
 const mapStateToProps = currentState => {
   return {
