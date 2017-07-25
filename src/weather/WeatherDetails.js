@@ -15,7 +15,8 @@ class WeatherDetails extends Component {
       nightForecast: [],
       forecastForChart: [],
       errorInfo: ERROR_MESSAGE,
-      currentForecast: this.props.data.list[0]
+      currentForecast: this.props.data.list[0],
+      chartState: "temperature"
     };
   }
 
@@ -51,6 +52,8 @@ class WeatherDetails extends Component {
     return this.props.data.list.map(forecast => {
       return {
         temperature: forecast.main.temp,
+        pressure: forecast.main.pressure,
+        humidity: forecast.main.humidity,
         time: this.getHoursFromDate(forecast.dt_txt).slice(0, 5)
       };
     });
@@ -86,7 +89,21 @@ class WeatherDetails extends Component {
       this.prepareDataForChart(this.props.noDay);
     }
   }
-
+  pressureClick = () => {
+    this.setState({
+      chartState: "pressure"
+    });
+  };
+  temperatureClick = () => {
+    this.setState({
+      chartState: "temperature"
+    });
+  };
+  humidityClick = () => {
+    this.setState({
+      chartState: "humidity"
+    });
+  };
   getComponentToRender = noDay => {
     if (this.isForecastFetched()) {
       return (
@@ -105,9 +122,12 @@ class WeatherDetails extends Component {
               </StyledTitle>
               <Chart
                 chartData={this.state.forecastForChart}
-                title="temperature"
+                title={this.state.chartState}
                 cityName={this.props.data.city.name}
               />
+              <button onClick={this.temperatureClick}>Temperature </button>
+              <button onClick={this.pressureClick}>Pressure </button>
+              <button onClick={this.humidityClick}>Humidity</button>
             </div>
           </div>
           <div className="row">
@@ -131,6 +151,7 @@ class WeatherDetails extends Component {
   };
 
   render() {
+    console.log(this.props.data);
     return this.getComponentToRender(this.props.noDay);
   }
 }

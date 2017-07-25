@@ -1,9 +1,17 @@
-import React, {Component} from "react";
-import {Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
+import React, { Component } from "react";
+import {
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis
+} from "recharts";
 import styled from "styled-components";
 
 class Chart extends Component {
   render() {
+    console.log(this.props);
     return (
       <ChartContainer>
         <ResponsiveContainer width="100%" height="100%">
@@ -36,11 +44,6 @@ const ChartContainer = styled.div`
   margin-left: -30px;
 
   text-align: center;
-  /*
-  @media only screen and (max-height: 600px) {
-    height: 50vh;
-    width: 90vw;
-  }*/
 `;
 
 export default Chart;

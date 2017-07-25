@@ -36,7 +36,7 @@ const weather = (currentState = initialState, action) => {
         ...currentState,
         savedWeather: [
           {
-            showInfo: false,
+            showInfo: true,
             coord: action.data.weather.city.coord,
             sys: {
               id: action.data.weather.city.id

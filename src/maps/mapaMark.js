@@ -1,4 +1,3 @@
-import fetch from "isomorphic-fetch";
 import { default as React, Component } from "react";
 import {
   withGoogleMap,
