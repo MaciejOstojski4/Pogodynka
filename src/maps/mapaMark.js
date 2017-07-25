@@ -49,25 +49,35 @@ const MarkerClustererExampleGoogleMap = withGoogleMap(props => {
 });
 class MarkerClustererExample extends Component {
   // Toggle to 'true' to show InfoWindow and re-renders component
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      mark: this.props.data
+    };
+  }
   markerClick = marker => {
-    const temp = this.props.data;
+    const temp = this.state.mark;
     temp.map(p => {
       if (p === marker) {
         p.showInfo = true;
-        this.props.dispatch(showMapPopUpAction(temp));
       }
+      this.setState({
+        mark: temp
+      });
     });
   };
   popUpHide = marker => {
-    const temp = this.props.data;
+    const temp = this.state.mark;
     temp.map(p => {
       if (p === marker) {
         p.showInfo = false;
-        this.props.dispatch(hideMapPopUpAction(temp));
       }
+      this.setState({
+        mark: temp
+      });
     });
   };
+
   render() {
     const markers = this.props.data;
     console.log(markers);
@@ -75,7 +85,7 @@ class MarkerClustererExample extends Component {
       <MarkerClustererExampleGoogleMap
         containerElement={<div style={{ height: `600px` }} />}
         mapElement={<div style={{ height: `600px` }} />}
-        markers={markers}
+        markers={this.state.mark}
         onClick={this.markerClick}
         onClose={this.popUpHide}
       />
