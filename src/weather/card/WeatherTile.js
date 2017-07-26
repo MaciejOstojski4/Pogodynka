@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { DragSource, DropTarget } from "react-dnd";
+import { findDOMNode } from "react-dom";
 
 class WeatherTile extends React.Component {
   constructor(props) {
@@ -8,7 +10,8 @@ class WeatherTile extends React.Component {
     this.state = {
       tileColor: tileColors.goodWeather,
       textColor: "",
-      showLikeButton: props.likeButton
+      showLikeButton: props.likeButton,
+      replacedIndex: -1,
     };
   }
 
@@ -27,15 +30,19 @@ class WeatherTile extends React.Component {
   };
 
   isBadWeather = weatherCode => {
-    return weatherCode < 500 ||
+    return (
+      weatherCode < 500 ||
       (weatherCode >= 600 && weatherCode < 700) ||
-      weatherCode >= 900;
+      weatherCode >= 900
+    );
   };
 
   isAverageWeather = weatherCode => {
-    return (weatherCode >= 500 && weatherCode < 600) ||
+    return (
+      (weatherCode >= 500 && weatherCode < 600) ||
       (weatherCode >= 700 && weatherCode < 800) ||
-      (weatherCode >= 803 && weatherCode <= 804);
+      (weatherCode >= 803 && weatherCode <= 804)
+    );
   };
 
   isGoodWeather = weatherCode => {
@@ -56,38 +63,74 @@ class WeatherTile extends React.Component {
     this.resolveTileColor(this.props.city.weather[0].id);
   }
 
-  onFavClick = e => {
-    e.stopPropagation();
+  changeFavStatusOnServer = () => {
     if (this.props.likeButton) {
       this.props.onFavClick(this.props.city, true);
-    } else {
-      this.props.onFavClick(this.props.city, false);
     }
+    this.props.onFavClick(this.props.city, false);
+  };
+
+  changeStarIcon = () => {
     this.setState({
-      showLikeButton: !this.state.showLikeButton
-    })
+      showLikeButton: !this.state.showLikeButton,
+    });
+  };
+
+  onFavClick = e => {
+    e.stopPropagation();
+    this.changeFavStatusOnServer();
+    this.changeStarIcon();
+  };
+
+  getStarIcon = () => {
+    if (this.state.showLikeButton) {
+      return "glyphicon glyphicon-star-empty";
+    }
+    return "glyphicon glyphicon-star";
   };
 
   renderFavButtons = () => {
-    let className = "";
-    if (this.state.showLikeButton) {
-      className = "glyphicon glyphicon-star";
-    } else {
-      className = "glyphicon glyphicon-star-empty";
-    }
     return (
       <LikeIconField>
-        <span className={className} onClick={this.onFavClick} />
+        <span className={this.getStarIcon()} onClick={this.onFavClick} />
       </LikeIconField>
     );
   };
 
-  render() {
+  setOpacity = () => {
+    return this.props.isDragging ? 0 : 1;
+  };
+
+  getTileStyle = () => {
+    return {
+      float: "left",
+      position: "relative",
+      margin: "5px",
+      padding: "10px",
+      minWidth: "200px",
+      flex: "1",
+      flexDirection: "column",
+      display: "flex",
+      boxShadow: "2px 2px 4px grey",
+      color: this.state.tileColor.color,
+      backgroundColor: this.state.tileColor.backgroundColor,
+      cursor: "move",
+      opacity: this.setOpacity(),
+    };
+  };
+
+  getDraggableComponentToRender = () => {
+    return this.props.connectDragSource(
+      this.props.connectDropTarget(this.getComponentToRender()),
+    );
+  };
+
+  getComponentToRender = () => {
     return (
-      <Tile
+      <div
         className="text-center"
         onClick={this.showDetails}
-        style={this.state.tileColor}
+        style={this.getTileStyle()}
       >
         <div className="row">
           <div>
@@ -112,8 +155,19 @@ class WeatherTile extends React.Component {
           </div>
         </div>
         {this.props.showButtons ? this.renderFavButtons() : null}
-      </Tile>
+      </div>
     );
+  };
+
+  renderComponent = () => {
+    if (this.props.draggable) {
+      return this.getDraggableComponentToRender();
+    }
+    return this.getComponentToRender();
+  };
+
+  render() {
+    return this.renderComponent();
   }
 }
 
@@ -159,4 +213,60 @@ const Tile = styled.div`
   }
 `;
 
-export default WeatherTile;
+const TileSource = {
+  beginDrag(props) {
+    return {
+      position: props.city.favCity.position,
+      index: props.index,
+    };
+  },
+};
+
+const TileTarget = {
+  hover(props, monitor, component) {
+    const dragIndex = monitor.getItem().index;
+    const hoverIndex = props.index;
+
+    if (dragIndex === hoverIndex) {
+      return;
+    }
+
+    const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
+    const hoverMiddleX = (hoverBoundingRect.left - hoverBoundingRect.right) / 2;
+    const clientOffset = monitor.getClientOffset();
+    const hoverClientX = clientOffset.x - hoverBoundingRect.right;
+
+    if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
+      return;
+    }
+    if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
+      return;
+    }
+
+    props.changePositionDuringDrag(dragIndex, hoverIndex);
+    props.replaceIndex(dragIndex);
+
+    monitor.getItem().index = hoverIndex;
+  },
+  drop(props, monitor, component) {
+    const dragIndex = monitor.getItem().index;
+    props.changePositionOnServer(dragIndex);
+  },
+};
+
+const collectDrag = (connect, monitor) => {
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging(),
+  };
+};
+
+WeatherTile.defaultProps = {
+  draggable: true,
+};
+
+export default DragSource("Tile", TileSource, collectDrag)(
+  DropTarget("Tile", TileTarget, connect => ({
+    connectDropTarget: connect.dropTarget(),
+  }))(WeatherTile),
+);

@@ -64,6 +64,7 @@ class Home extends Component {
         console.log(
           "Error occurred during fetching weather for cities: " + error,
         );
+        this.changeLoaderVisibility();
       });
   };
 
@@ -81,7 +82,7 @@ class Home extends Component {
   renderComponent = () => {
     return (
       <div>
-        <WeatherTilesAggregator weatherItems={this.state.cities} />
+        <WeatherTilesAggregator weatherItems={this.state.cities} draggable={false}/>
       </div>
     );
   };
