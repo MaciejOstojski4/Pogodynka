@@ -2,22 +2,12 @@ import React from "react";
 import WeatherTile from "./card/WeatherTile";
 import styled from "styled-components";
 import MediaQuery from "react-responsive";
-import { connect } from "react-redux";
-import { withRouter } from "react-router";
-import apiClient from "../lib/api-client";
-import {
-  changeDisplayedDetailsAction,
-  saveGroupWeatherAction
-} from "../actions/weather-actions";
-import {
-  addUserCityAction,
-  removeUserCityAction,
-  changeFavCityPosition
-} from "../actions/user-action";
-import { DragDropContext } from "react-dnd";
+import {connect} from "react-redux";
+import {withRouter} from "react-router";
+import {saveGroupWeatherAction} from "../actions/weather-actions";
+import {addUserCityAction, changeFavCityPosition, removeUserCityAction} from "../actions/user-action";
+import {DragDropContext} from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
-
-const SEARCH_URL = "forecast?units=metric&";
 
 class WeatherCardAggregator extends React.Component {
   constructor(props) {
@@ -35,27 +25,9 @@ class WeatherCardAggregator extends React.Component {
     });
   };
 
-  prepareUrl = cityName => {
-    return `${SEARCH_URL}q=${cityName}`;
-  };
-
-  fetchWeather = url => {
-    apiClient
-      .get(url)
-      .then(response => {
-        this.props.dispatch(changeDisplayedDetailsAction(response.data));
-      })
-      .catch(error => {
-        this.setState({
-          errorInfo: "Cannot find this city"
-        });
-      });
-  };
-
   redirectToDetails = cityName => {
-    const url = this.prepareUrl(cityName);
-    this.fetchWeather(url);
-    this.props.router.push("weatherdetails");
+    //this.changeCityDetailsToDisplay(cityName);
+    this.props.router.push("weatherdetails/" + cityName);
   };
 
   createFavouriteCityObjectWithPositionAt = (city, position) => {

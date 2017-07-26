@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import DailyForecastPlaceHolder from "./DailyForecastPlaceholder";
+import DailyForecastPlaceholder from "./DailyForecastPlaceholder";
 
 class ForecastPlaceholder extends React.Component {
   render() {

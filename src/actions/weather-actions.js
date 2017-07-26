@@ -1,16 +1,6 @@
-export const CHANGE_DISPLAYED_DETAILS_ACTION = "changeDisplayedDetails";
 export const ADD_SEARCHED_CITY_ACTION = "saveSearchedCity";
 export const SAVE_GROUP_WEATHER_ACTION = "saveSearchedWeather";
 export const PARSE_SEARCHED_WEATHER_ACTION = "parseSearchedWeatherAction";
-
-export const changeDisplayedDetailsAction = city => {
-  return {
-    type: CHANGE_DISPLAYED_DETAILS_ACTION,
-    data: {
-      city: city
-    }
-  };
-};
 
 export const saveSearchedCityNameAction = cityName => {
   return {

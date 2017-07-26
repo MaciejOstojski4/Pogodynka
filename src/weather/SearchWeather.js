@@ -1,18 +1,9 @@
-import React, { Component } from "react";
-import apiClient from "../lib/api-client";
-import { connect } from "react-redux";
-import {
-  changeDisplayedDetailsAction,
-  saveSearchedCityNameAction,
-  parseSearchedWeatherAction
-} from "../actions/weather-actions";
+import React, {Component} from "react";
+import {connect} from "react-redux";
+import {saveSearchedCityNameAction} from "../actions/weather-actions";
 import styled from "styled-components";
 import SearchCityNameHint from "./SearchCityNameHint";
-import { withRouter } from "react-router";
-
-const SEARCH_URL = "forecast?units=metric&";
-
-const LAT_LONG_REGEX = /(-)?[0-9]+\.[0-9]+:(-)?[0-9]+\.[0-9]+/;
+import {withRouter} from "react-router";
 
 export class SearchWeather extends Component {
   constructor(props) {
@@ -21,21 +12,21 @@ export class SearchWeather extends Component {
     this.state = {
       inputText: "",
       errorInfo: "",
-      similarCities: []
+      similarCities: [],
     };
   }
 
   onSimilarCityNameClick = cityName => {
     this.setState({
       inputText: cityName,
-      similarCities: []
+      similarCities: [],
     });
   };
 
   updateState = (inputText, similarCities) => {
     this.setState({
       inputText: inputText,
-      similarCities: similarCities
+      similarCities: similarCities,
     });
   };
 
@@ -44,7 +35,7 @@ export class SearchWeather extends Component {
       return [];
     }
     return this.props.cities.filter(val =>
-      val.toLowerCase().includes(inputText.toLowerCase())
+      val.toLowerCase().includes(inputText.toLowerCase()),
     );
   };
 
@@ -54,44 +45,14 @@ export class SearchWeather extends Component {
     this.updateState(e.target.value, similarCities);
   };
 
-  isSearchingByCityName = () => {
-    return !this.state.inputText.match(LAT_LONG_REGEX);
-  };
-
-  prepareUrl = () => {
-    if (this.isSearchingByCityName()) {
-      return `${SEARCH_URL}q=${this.state.inputText}`;
-    }
-    const latAndLongValue = this.state.inputText.split(":");
-    return `${SEARCH_URL}lat=${latAndLongValue[0]}&lon=${latAndLongValue[1]}`;
-  };
-
-  dispatchData = response => {
-    console.log(response.data);
-    this.props.dispatch(changeDisplayedDetailsAction(response.data));
-    this.props.dispatch(saveSearchedCityNameAction(response.data.city.name));
-    this.props.dispatch(parseSearchedWeatherAction(response.data));
-  };
-
-  fetchWeather = url => {
-    apiClient
-      .get(url)
-      .then(response => {
-        this.dispatchData(response);
-        this.props.router.push("weatherdetails");
-      })
-      .catch(error => {
-        console.log(error);
-        this.setState({
-          errorInfo: "Cannot find this city"
-        });
-      });
+  dispatchData = () => {
+    this.props.dispatch(saveSearchedCityNameAction(this.state.inputText));
   };
 
   onSubmit = e => {
     e.preventDefault();
-    const urlForWeather = this.prepareUrl();
-    this.fetchWeather(urlForWeather);
+    this.dispatchData();
+    this.props.router.push("weatherdetails/"+this.state.inputText);
   };
 
   render() {
@@ -117,7 +78,6 @@ export class SearchWeather extends Component {
                 : <div />}
             </div>
           </div>
-
           <SubmitButtonContainer>
             <SubmitButton
               className="btn btn-lg"
@@ -173,6 +133,7 @@ const SearchForm = styled.form`
   justify-content: space-between;
   position: relative;
 `;
+
 const SubmitButtonContainer = styled.div`
   @media only screen and (max-width: 767px) {
     width: 100%;
@@ -185,7 +146,7 @@ const SubmitButtonContainer = styled.div`
 const mapStateToProps = currentState => {
   return {
     cities: currentState.weather.searchedCities,
-    data: currentState.weather
+    data: currentState.weather,
   };
 };
 

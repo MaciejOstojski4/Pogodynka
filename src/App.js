@@ -25,13 +25,12 @@ class App extends Component {
         <Router history={hashHistory}>
           <Route path="/" component={Layout}>
             <IndexRoute component={Home} />
-            <Route component={WeatherDetails} path="weatherdetails" />
+            <Route component={WeatherDetails} path="weatherdetails/:cityName" />
             <Route component={MapContainer} path="mapcontainer" />
             <Route path="register-form" component={RegisterForm} />
             <Route path="login-form" component={LoginForm} />
           </Route>
           <Route path="user" onEnter={this.authenticateUser} component={Layout}>
-            {/*<IndexRoute component={Home} />*/}
             <Router path="favourite-cities" component={FavouriteCities} />
           </Route>
         </Router>

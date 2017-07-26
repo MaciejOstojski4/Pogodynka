@@ -36,25 +36,7 @@ class MapContainer extends Component {
   };
 
   infoWindowClick = cityName => {
-    const url = this.prepareUrl(cityName);
-    this.fetchWeather(url);
-    this.props.router.push("weatherdetails");
-  };
-  prepareUrl = cityName => {
-    return `${SEARCH_URL}q=${cityName}`;
-  };
-
-  fetchWeather = url => {
-    apiClient
-      .get(url)
-      .then(response => {
-        this.props.dispatch(changeDisplayedDetailsAction(response.data));
-      })
-      .catch(error => {
-        this.setState({
-          errorInfo: "Cannot find this city"
-        });
-      });
+    this.props.router.push("weatherdetails/"+cityName);
   };
 
   render() {
