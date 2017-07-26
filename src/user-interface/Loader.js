@@ -5,7 +5,7 @@ class LoaderWrapper extends React.Component {
   render() {
     return (
       <LoaderContainer>
-        <LoaderSquare />
+        <LoaderSpin />
       </LoaderContainer>
     );
   }
@@ -17,17 +17,20 @@ const LoaderContainer = styled.div`
   align-items: center;
 `;
 
-const LoaderSquare = styled.div`
-  background-color: #7cb342;
-  width: 100px;
+const LoaderSpin = styled.div`
+  background-color: white;
+  border-radius: 50%;
+  border: 20px solid grey;
+  border-top: 20px solid #7cb342;
+  width: 120px;
   height: 120px;
-  animation: rotate 1.5s linear infinite;
-  @keyframes rotate {
+  animation: spin 1.5s linear infinite;
+  @keyframes spin {
     0% {
-      transform: rotateY(0deg);
+      transform: rotate(0deg);
     }
     100% {
-      transform: rotateY(360deg);
+      transform: rotate(360deg);
     }
   }
 `;
