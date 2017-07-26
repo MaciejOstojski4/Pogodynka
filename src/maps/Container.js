@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import SearchWeatherWithoutPush from "../weather/SearchWeatherWithoutPush";
 import SearchWeather from "../weather/SearchWeather";
 import MarkerClustererExample from "./mapaMark";
 class Container extends Component {

@@ -87,7 +87,6 @@ class MarkerClustererExample extends Component {
 
   render() {
     const markers = this.props.data;
-    console.log(this.props.data);
     return (
       <MarkerClustererExampleGoogleMap
         containerElement={<div style={{ height: `600px` }} />}
