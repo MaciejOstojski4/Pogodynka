@@ -73,16 +73,16 @@ export const addUserCityAction = favCity => {
   };
 };
 
-export const removeUserCityAction = city => {
+export const removeUserCityAction = favCity => {
   return dispatch => {
-    const url = `${CHANGE_FAV_CITY_STATUS_URL}/${city.favCity.id}`;
+    const url = `${CHANGE_FAV_CITY_STATUS_URL}/${favCity.id}`;
     userApiClient
       .delete(url)
       .then(response => {
         dispatch({
           type: REMOVE_USER_CITY_ACTION,
           data: {
-            favCity: city.favCity,
+            favCity: favCity,
           },
         });
       })
