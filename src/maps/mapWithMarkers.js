@@ -1,13 +1,8 @@
 import { default as React, Component } from "react";
-import {
-  withGoogleMap,
-  GoogleMap,
-  Marker,
-  InfoWindow
-} from "react-google-maps";
-import MarkerClusterer from "react-google-maps/lib/addons/MarkerClusterer";
+import { withGoogleMap, GoogleMap } from "react-google-maps";
+import MarkerClustererComponent from "./MarkerClustererComponent";
 
-const MapWithMarkerCluster = withGoogleMap(props => {
+const MapWithMarkerClusterer = withGoogleMap(props => {
   return (
     <GoogleMap
       defaultZoom={4}
@@ -16,47 +11,18 @@ const MapWithMarkerCluster = withGoogleMap(props => {
         lng: props.markers[0].coord.lon
       }}
     >
-      <MarkerClusterer averageCenter enableRetinaIcons gridSize={30}>
-        {props.markers.map(marker => {
-          return (
-            <Marker
-              position={{
-                lat: marker.coord.lat,
-                lng: marker.coord.lon
-              }}
-              key={marker.sys.id}
-              onClick={() => props.onClick(marker)}
-            >
-              {marker.showInfo &&
-                <InfoWindow onCloseClick={() => props.onClose(marker)}>
-                  <div>
-                    <p>
-                      <b>
-                        {marker.name}
-                      </b>
-                    </p>
-                    <p>
-                      Temperature: {marker.main.temp} C
-                    </p>
-                    <p>
-                      Humidity: {marker.main.humidity} %
-                    </p>
-                    <p>
-                      Pressure: {marker.main.pressure} hPa
-                    </p>
-                  </div>
-                </InfoWindow>}
-            </Marker>
-          );
-        })}
-      </MarkerClusterer>
+      <MarkerClustererComponent
+        markers={props.markers}
+        onClick={props.onClick}
+        onClose={props.onClose}
+      />
     </GoogleMap>
   );
 });
 class MapWithMarkers extends Component {
   render() {
     return (
-      <MapWithMarkerCluster
+      <MapWithMarkerClusterer
         containerElement={<div style={{ height: "600px" }} />}
         mapElement={<div style={{ height: "600px" }} />}
         markers={this.props.markers}
