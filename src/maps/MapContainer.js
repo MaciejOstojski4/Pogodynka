@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import SearchWeather from "../weather/SearchWeather";
-import MarkerClustererExample from "./mapWithMarkers";
+import MapWithMarkers from "./MapWithMarkers";
 import { connect } from "react-redux";
-class Container extends Component {
+class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,7 +36,7 @@ class Container extends Component {
       <div>
         <div className="row">
           <SearchWeather />
-          <MarkerClustererExample
+          <MapWithMarkers
             markers={this.state.mapData}
             markerClick={this.markerClick}
             popUpHide={this.popUpHide}
@@ -51,4 +51,4 @@ const mapStateToProps = currentState => {
     data: currentState.weather.savedWeather
   };
 };
-export default connect(mapStateToProps)(Container);
+export default connect(mapStateToProps)(MapContainer);

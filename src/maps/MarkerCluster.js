@@ -1,21 +1,9 @@
-import { default as React, Component } from "react";
-import {
-  withGoogleMap,
-  GoogleMap,
-  Marker,
-  InfoWindow
-} from "react-google-maps";
-import MarkerClusterer from "react-google-maps/lib/addons/MarkerClusterer";
+import React, { Component } from "react";
 
-const MapWithMarkerCluster = withGoogleMap(props => {
-  return (
-    <GoogleMap
-      defaultZoom={4}
-      defaultCenter={{
-        lat: props.markers[0].coord.lat,
-        lng: props.markers[0].coord.lon
-      }}
-    >
+class MarkerClusterer extends Component {
+  render() {
+    return;
+    <div>
       <MarkerClusterer averageCenter enableRetinaIcons gridSize={30}>
         {props.markers.map(marker => {
           return (
@@ -50,21 +38,8 @@ const MapWithMarkerCluster = withGoogleMap(props => {
           );
         })}
       </MarkerClusterer>
-    </GoogleMap>
-  );
-});
-class MapWithMarkers extends Component {
-  render() {
-    return (
-      <MapWithMarkerCluster
-        containerElement={<div style={{ height: "600px" }} />}
-        mapElement={<div style={{ height: "600px" }} />}
-        markers={this.props.markers}
-        onClick={this.props.markerClick}
-        onClose={this.props.popUpHide}
-      />
-    );
+    </div>;
   }
 }
 
-export default MapWithMarkers;
+export default MarkerClusterer;

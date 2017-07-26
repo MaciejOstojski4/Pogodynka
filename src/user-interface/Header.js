@@ -40,7 +40,7 @@ class Header extends React.Component {
             <a
               className="navbar-brand"
               style={{
-                color: "#cddc39",
+                color: "#cddc39"
               }}
             >
               Pogodynka
@@ -54,7 +54,7 @@ class Header extends React.Component {
               <Link to="weatherdetails">Weather Details</Link>
             </li>
             <li>
-              <Link to="container">Weather Map</Link>
+              <Link to="mapcontainer">Weather Map</Link>
             </li>
             <li>
               {this.renderRegisterLink()}
@@ -89,7 +89,7 @@ const NavbarContainer = styled.div`background-color: white;`;
 
 const mapStateToProps = currentState => {
   return {
-    userEmail: currentState.session.user.email,
+    userEmail: currentState.session.user.email
   };
 };
 
