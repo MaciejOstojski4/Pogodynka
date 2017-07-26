@@ -5,7 +5,7 @@ import Home from "./Home";
 import Layout from "./Layout";
 import WeatherDetails from "./weather/WeatherDetails";
 import styled from "styled-components";
-import Container from "./maps/Container";
+import MapContainer from "./maps/MapContainer";
 import RegisterForm from "./user/form/RegisterForm";
 import LoginForm from "./user/form/LoginForm";
 import FavouriteCities from "./weather/FavouriteCities";
@@ -15,7 +15,7 @@ class App extends Component {
     const state = this.props.store.getState();
     if (state.session.user.token === "") {
       replace({
-        pathname: "login-form",
+        pathname: "login-form"
       });
     }
   };
@@ -26,7 +26,7 @@ class App extends Component {
           <Route path="/" component={Layout}>
             <IndexRoute component={Home} />
             <Route component={WeatherDetails} path="weatherdetails" />
-            <Route component={Container} path="container" />
+            <Route component={MapContainer} path="mapcontainer" />
             <Route path="register-form" component={RegisterForm} />
             <Route path="login-form" component={LoginForm} />
           </Route>

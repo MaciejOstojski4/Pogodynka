@@ -155,13 +155,7 @@ const SubmitButton = styled.button`
   box-shadow: 2px 2px 4px grey;
   background-color: #827717;
   color: white;
-  @media only screen and (max-width: 767px) {
-    margin-top: 10px;
-    margin-left: 37vw;
-  }
-  @media only screen and (max-width: 430px) {
-    margin-left: 30vw;
-  }
+
   &:hover {
     color: black;
   }
@@ -175,7 +169,14 @@ const SearchForm = styled.form`
   justify-content: space-between;
   position: relative;
 `;
-const SubmitButtonContainer = styled.div``;
+const SubmitButtonContainer = styled.div`
+  @media only screen and (max-width: 767px) {
+    width: 100%;
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+  }
+`;
 const SEARCH_URL = "forecast?units=metric&";
 
 const LAT_LONG_REGEX = /(-)?[0-9]+\.[0-9]+:(-)?[0-9]+\.[0-9]+/;
