@@ -9,6 +9,8 @@ export const ADD_USER_CITY_ACTION = "addUserCity";
 
 export const REMOVE_USER_CITY_ACTION = "removeUserCity";
 
+export const CHANGE_FAV_CITY_POSITION_ACTION = "changeFavouriteCityPosition";
+
 export const LOGOUT_ACTION = "logout";
 
 export const loginAction = user => {
@@ -89,6 +91,26 @@ export const removeUserCityAction = city => {
       });
   };
 };
+
+export const changeFavCityPosition = (favDragCity, favDropCity, dragItem, hoverItem, userCities) => {
+  return dispatch => {
+    console.log("favDragCity");
+    console.log(favDragCity);
+    console.log("favDropCity");
+    console.log(favDropCity);
+
+    dispatch(removeUserCityAction(dragItem));
+    dispatch(removeUserCityAction(hoverItem));
+    dispatch(addUserCityAction(favDragCity));
+    dispatch(addUserCityAction(favDropCity));
+    dispatch({
+      type: CHANGE_FAV_CITY_POSITION_ACTION,
+      data: {
+        userCities: userCities
+      }
+    })
+  }
+}
 
 export const logoutAction = () => {
   return {

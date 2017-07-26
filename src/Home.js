@@ -64,6 +64,7 @@ class Home extends Component {
         console.log(
           "Error occurred during fetching weather for cities: " + error,
         );
+        this.changeLoaderVisibility();
       });
   };
 

@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { DragSource, DropTarget } from "react-dnd";
+import { findDOMNode } from "react-dom";
 
 class WeatherTile extends React.Component {
   constructor(props) {
@@ -8,7 +10,8 @@ class WeatherTile extends React.Component {
     this.state = {
       tileColor: tileColors.goodWeather,
       textColor: "",
-      showLikeButton: props.likeButton
+      showLikeButton: props.likeButton,
+      replacedIndex: -1,
     };
   }
 
@@ -27,15 +30,19 @@ class WeatherTile extends React.Component {
   };
 
   isBadWeather = weatherCode => {
-    return weatherCode < 500 ||
+    return (
+      weatherCode < 500 ||
       (weatherCode >= 600 && weatherCode < 700) ||
-      weatherCode >= 900;
+      weatherCode >= 900
+    );
   };
 
   isAverageWeather = weatherCode => {
-    return (weatherCode >= 500 && weatherCode < 600) ||
+    return (
+      (weatherCode >= 500 && weatherCode < 600) ||
       (weatherCode >= 700 && weatherCode < 800) ||
-      (weatherCode >= 803 && weatherCode <= 804);
+      (weatherCode >= 803 && weatherCode <= 804)
+    );
   };
 
   isGoodWeather = weatherCode => {
@@ -64,16 +71,16 @@ class WeatherTile extends React.Component {
       this.props.onFavClick(this.props.city, false);
     }
     this.setState({
-      showLikeButton: !this.state.showLikeButton
-    })
+      showLikeButton: !this.state.showLikeButton,
+    });
   };
 
   renderFavButtons = () => {
     let className = "";
     if (this.state.showLikeButton) {
-      className = "glyphicon glyphicon-star";
-    } else {
       className = "glyphicon glyphicon-star-empty";
+    } else {
+      className = "glyphicon glyphicon-star";
     }
     return (
       <LikeIconField>
@@ -83,36 +90,53 @@ class WeatherTile extends React.Component {
   };
 
   render() {
-    return (
-      <Tile
-        className="text-center"
-        onClick={this.showDetails}
-        style={this.state.tileColor}
-      >
-        <div className="row">
-          <div>
-            <TileField>
-              <TitleField style={{ color: `${this.state.textColor}` }}>
-                {this.props.city.name}
-              </TitleField>
-            </TileField>
-            <TileField>
-              <img src={this.getWeatherIcon()} alt="Cannot render weather" />
-            </TileField>
-            <TileField>
-              <span style={{ color: `${this.state.textColor}` }}>
-                {this.props.city.weather[0].description}
-              </span>
-            </TileField>
-            <TileField>
-              <span style={{ color: `${this.state.textColor}` }}>
-                {" "}{this.props.city.main.temp} &deg;C
-              </span>
-            </TileField>
+    const tileStyle = {
+      float: "left",
+      position: "relative",
+      margin: "5px",
+      padding: "10px",
+      minWidth: "200px",
+      flex: "1",
+      flexDirection: "column",
+      display: "flex",
+      boxShadow: "2px 2px 4px grey",
+      color: this.state.tileColor.color,
+      backgroundColor: this.state.tileColor.backgroundColor,
+      cursor: "move",
+      opacity: this.props.isDragging ? 0 : 1,
+    };
+    return this.props.connectDragSource(
+      this.props.connectDropTarget(
+        <div
+          className="text-center"
+          onClick={this.showDetails}
+          style={tileStyle}
+        >
+          <div className="row">
+            <div>
+              <TileField>
+                <TitleField style={{ color: `${this.state.textColor}` }}>
+                  {this.props.city.name}
+                </TitleField>
+              </TileField>
+              <TileField>
+                <img src={this.getWeatherIcon()} alt="Cannot render weather" />
+              </TileField>
+              <TileField>
+                <span style={{ color: `${this.state.textColor}` }}>
+                  {this.props.city.weather[0].description}
+                </span>
+              </TileField>
+              <TileField>
+                <span style={{ color: `${this.state.textColor}` }}>
+                  {" "}{this.props.city.main.temp} &deg;C
+                </span>
+              </TileField>
+            </div>
           </div>
-        </div>
-        {this.props.showButtons ? this.renderFavButtons() : null}
-      </Tile>
+          {this.props.showButtons ? this.renderFavButtons() : null}
+        </div>,
+      ),
     );
   }
 }
@@ -159,4 +183,59 @@ const Tile = styled.div`
   }
 `;
 
-export default WeatherTile;
+const TileSource = {
+  beginDrag(props) {
+    return {
+      position: props.city.favCity.position,
+      index: props.index,
+    };
+  },
+  // endDrag(props, monitor, component) {
+  //
+  // },
+};
+
+const TileTarget = {
+  hover(props, monitor, component) {
+    const dragIndex = monitor.getItem().index;
+    const hoverIndex = props.index;
+
+    if (dragIndex === hoverIndex) {
+      return;
+    }
+
+    const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
+    const hoverMiddleX = (hoverBoundingRect.left - hoverBoundingRect.right) / 2;
+    const clientOffset = monitor.getClientOffset();
+    const hoverClientX = clientOffset.x - hoverBoundingRect.right;
+
+    if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
+      return;
+    }
+    if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
+      return;
+    }
+
+    props.changePosition(dragIndex, hoverIndex);
+    props.replaceIndex(dragIndex);
+
+    monitor.getItem().index = hoverIndex;
+  },
+  drop(props, monitor, component) {
+    const dragIndex = monitor.getItem().index;
+    props.changePositionOnServer(dragIndex);
+  },
+};
+
+const collectDrag = (connect, monitor) => {
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging(),
+  };
+};
+
+export default DragSource("Tile", TileSource, collectDrag)(
+  DropTarget("Tile", TileTarget, connect => ({
+    connectDropTarget: connect.dropTarget(),
+  }))(WeatherTile),
+);
