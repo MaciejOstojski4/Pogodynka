@@ -85,6 +85,7 @@ class WeatherCardAggregator extends React.Component {
   };
 
   removeCityFromFavourite = city => {
+    console.log(city);
     this.props.dispatch(removeUserCityAction(city));
   };
 

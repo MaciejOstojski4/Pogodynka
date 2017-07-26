@@ -66,8 +66,9 @@ class WeatherTile extends React.Component {
   changeFavStatusOnServer = () => {
     if (this.props.likeButton) {
       this.props.onFavClick(this.props.city, true);
+    } else {
+      this.props.onFavClick(this.props.city, false);
     }
-    this.props.onFavClick(this.props.city, false);
   };
 
   changeStarIcon = () => {
