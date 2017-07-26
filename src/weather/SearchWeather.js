@@ -46,7 +46,10 @@ export class SearchWeather extends Component {
   };
 
   dispatchData = () => {
-    this.props.dispatch(saveSearchedCityNameAction(this.state.inputText));
+    const searchedCity = this.props.cities.filter(city => city.toLowerCase() === this.state.inputText.toLowerCase());
+    if(searchedCity.length < 1) {
+      this.props.dispatch(saveSearchedCityNameAction(this.state.inputText));
+    }
   }
 
   onSubmit = e => {
