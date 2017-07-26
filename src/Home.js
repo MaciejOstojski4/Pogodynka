@@ -12,7 +12,7 @@ class Home extends Component {
 
     this.state = {
       cities: [],
-      loading: false,
+      loading: false
     };
   }
 
@@ -28,12 +28,12 @@ class Home extends Component {
     if (favCity === undefined) {
       return {
         ...pubCity,
-        favCity: null,
+        favCity: null
       };
     }
     return {
       ...pubCity,
-      favCity: favCity,
+      favCity: favCity
     };
   }
 
@@ -46,7 +46,7 @@ class Home extends Component {
 
   changeLoaderVisibility = () => {
     this.setState({
-      loading: !this.state.loading,
+      loading: !this.state.loading
     });
   };
 
@@ -56,13 +56,13 @@ class Home extends Component {
       .get(this.prepareUrl())
       .then(response => {
         this.setState({
-          cities: this.mergeFavWithPublicCities(response.data.list),
+          cities: this.mergeFavWithPublicCities(response.data.list)
         });
         this.changeLoaderVisibility();
       })
       .catch(error => {
         console.log(
-          "Error occurred during fetching weather for cities: " + error,
+          "Error occurred during fetching weather for cities: " + error
         );
         this.changeLoaderVisibility();
       });
@@ -82,7 +82,10 @@ class Home extends Component {
   renderComponent = () => {
     return (
       <div>
-        <WeatherTilesAggregator weatherItems={this.state.cities} draggable={false}/>
+        <WeatherTilesAggregator
+          weatherItems={this.state.cities}
+          draggable={false}
+        />
       </div>
     );
   };
@@ -111,7 +114,7 @@ const initialCities = [
   524901, // Moscow
   2759794, // Amsterdam
   3143244, //Oslo
-  6458923, // Lisbon
+  6458923 // Lisbon
 ];
 
 const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric&";
@@ -119,7 +122,7 @@ const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric&";
 const mapStateToProps = currentState => {
   return {
     favCities: currentState.session.userCities,
-    userId: currentState.session.user.userId,
+    userId: currentState.session.user.userId
   };
 };
 

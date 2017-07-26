@@ -14,6 +14,10 @@ class MarkerClustererComponent extends Component {
                   lat: marker.coord.lat,
                   lng: marker.coord.lon
                 }}
+                icon={{
+                  url: `http://openweathermap.org/img/w/${marker.weather[0]
+                    .icon}.png`
+                }}
                 key={marker.sys.id}
                 onClick={() => this.props.onMarkerClick(marker)}
               >
