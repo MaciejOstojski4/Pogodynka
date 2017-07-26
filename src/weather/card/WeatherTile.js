@@ -11,6 +11,7 @@ class WeatherTile extends React.Component {
       tileColor: tileColors.goodWeather,
       textColor: "",
       showLikeButton: props.likeButton,
+      replacedIndex: -1,
     };
   }
 
@@ -189,6 +190,9 @@ const TileSource = {
       index: props.index,
     };
   },
+  // endDrag(props, monitor, component) {
+  //
+  // },
 };
 
 const TileTarget = {
@@ -200,28 +204,26 @@ const TileTarget = {
       return;
     }
 
-    console.log(`Drag index: ${dragIndex}`);
-    console.log(`Hover index: ${hoverIndex}`);
-
     const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
-
     const hoverMiddleX = (hoverBoundingRect.left - hoverBoundingRect.right) / 2;
-
     const clientOffset = monitor.getClientOffset();
-
     const hoverClientX = clientOffset.x - hoverBoundingRect.right;
 
     if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
-     return;
+      return;
     }
-
     if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
-     return;
+      return;
     }
 
     props.changePosition(dragIndex, hoverIndex);
+    props.replaceIndex(dragIndex);
 
     monitor.getItem().index = hoverIndex;
+  },
+  drop(props, monitor, component) {
+    const dragIndex = monitor.getItem().index;
+    props.changePositionOnServer(dragIndex);
   },
 };
 

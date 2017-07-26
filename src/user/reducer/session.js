@@ -4,6 +4,7 @@ import {
   FETCH_USER_FAV_CITIES_ACTION,
   ADD_USER_CITY_ACTION,
   REMOVE_USER_CITY_ACTION,
+  CHANGE_FAV_CITY_POSITION_ACTION
 } from "../../actions/user-action";
 
 const initialState = {
@@ -52,6 +53,11 @@ const session = (currentState = initialState, action) => {
           city => city.name !== action.data.favCity.name,
         ),
       };
+    case CHANGE_FAV_CITY_POSITION_ACTION:
+      return {
+        ...currentState,
+        userCities: action.data.userCities
+      }
     default:
       return currentState;
   }

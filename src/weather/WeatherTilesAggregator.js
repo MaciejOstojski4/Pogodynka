@@ -12,6 +12,7 @@ import {
 import {
   addUserCityAction,
   removeUserCityAction,
+  changeFavCityPosition,
 } from "../actions/user-action";
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
@@ -21,9 +22,16 @@ class WeatherCardAggregator extends React.Component {
     super(props);
 
     this.state = {
-      cities: props.weatherItems
-    }
+      cities: props.weatherItems,
+      dropIndex: -1,
+    };
   }
+
+  replaceIndex = newIndex => {
+    this.setState({
+      dropIndex: newIndex,
+    });
+  };
 
   prepareUrl = cityName => {
     return `${SEARCH_URL}q=${cityName}`;
@@ -46,6 +54,14 @@ class WeatherCardAggregator extends React.Component {
     const url = this.prepareUrl(cityName);
     this.fetchWeather(url);
     this.props.router.push("weatherdetails");
+  };
+
+  createFavouriteCityObjectWithPositionAt = (city, position) => {
+    const favCity = this.createFavouriteCityObject(city);
+    return {
+      ...favCity,
+      position: position,
+    };
   };
 
   createFavouriteCityObject = city => {
@@ -78,8 +94,9 @@ class WeatherCardAggregator extends React.Component {
   };
 
   getComponentToRender = () => {
+    console.log(this.state.cities);
     return this.state.cities.map((city, index) => {
-      if(city !== undefined) {
+      if (city !== undefined) {
         return (
           <WeatherTile
             key={city.name}
@@ -91,10 +108,12 @@ class WeatherCardAggregator extends React.Component {
             likeButton={city.favCity === null}
             dislikeButton={city.favCity !== null}
             changePosition={this.changePosition}
+            changePositionOnServer={this.changePositionOnServer}
+            replaceIndex={this.replaceIndex}
           />
         );
       } else {
-        return <div/>
+        return <div />;
       }
     });
   };
@@ -106,10 +125,31 @@ class WeatherCardAggregator extends React.Component {
     cities[dragIndex] = hoverItem;
     cities[hoverIndex] = dragItem;
     this.setState({
-      cities: cities
-    })
-  }
+      cities: cities,
+    });
+  };
 
+  changePositionOnServer = (dragIndex) => {
+    const dragCity = this.state.cities[dragIndex];
+    const dropCity = this.state.cities[this.state.dropIndex];
+    const favDragCity = this.createFavouriteCityObjectWithPositionAt(
+      dragCity,
+      dropCity.favCity.position,
+    );
+    console.log("dragCities");
+    console.log(dragCity);
+    console.log(favDragCity);
+    const favDropCity = this.createFavouriteCityObjectWithPositionAt(
+      dropCity,
+      dragCity.favCity.position,
+    );
+    console.log("dropCities");
+    console.log(dropCity);
+    console.log(favDropCity);
+    this.props.dispatch(
+      changeFavCityPosition(favDragCity, favDropCity, dragCity, dropCity, this.state.cities),
+    );
+  };
 
   componentDidMount() {
     this.props.dispatch(saveGroupWeatherAction(this.state.cities));
@@ -158,4 +198,6 @@ const mapStateToProps = currentState => {
   };
 };
 
-export default connect(mapStateToProps)(DragDropContext(HTML5Backend)(withRouter(WeatherCardAggregator)));
+export default connect(mapStateToProps)(
+  DragDropContext(HTML5Backend)(withRouter(WeatherCardAggregator)),
+);
