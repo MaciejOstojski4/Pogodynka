@@ -13,8 +13,9 @@ const MapWithMarkerClusterer = withGoogleMap(props => {
     >
       <MarkerClustererComponent
         markers={props.markers}
-        onClick={props.onClick}
+        onMarkerClick={props.onMarkerClick}
         onClose={props.onClose}
+        onInfoWindowClick={props.onInfoWindowClick}
       />
     </GoogleMap>
   );
@@ -26,8 +27,9 @@ class MapWithMarkers extends Component {
         containerElement={<div style={{ height: "600px" }} />}
         mapElement={<div style={{ height: "600px" }} />}
         markers={this.props.markers}
-        onClick={this.props.markerClick}
+        onMarkerClick={this.props.markerClick}
         onClose={this.props.popUpHide}
+        onInfoWindowClick={this.props.onInfoWindowClick}
       />
     );
   }

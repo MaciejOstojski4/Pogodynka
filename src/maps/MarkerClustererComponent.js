@@ -15,11 +15,11 @@ class MarkerClustererComponent extends Component {
                   lng: marker.coord.lon
                 }}
                 key={marker.sys.id}
-                onClick={() => this.props.onClick(marker)}
+                onClick={() => this.props.onMarkerClick(marker)}
               >
                 {marker.showInfo &&
                   <InfoWindow onCloseClick={() => this.props.onClose(marker)}>
-                    <div>
+                    <div onClick={() => this.props.onInfoWindowClick()}>
                       <p>
                         <b>
                           {marker.name}

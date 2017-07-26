@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SearchWeather from "../weather/SearchWeather";
 import MapWithMarkers from "./MapWithMarkers";
 import { connect } from "react-redux";
+import WeatherDetails from "../weather/WeatherDetails";
 class MapContainer extends Component {
   constructor(props) {
     super(props);
@@ -31,6 +32,9 @@ class MapContainer extends Component {
       });
     });
   };
+  infoWindowClick = () => {
+    return <WeatherDetails />;
+  };
   render() {
     return (
       <div>
@@ -40,6 +44,7 @@ class MapContainer extends Component {
             markers={this.state.mapData}
             markerClick={this.markerClick}
             popUpHide={this.popUpHide}
+            onInfoWindowClick={this.infoWindowClick}
           />
         </div>
       </div>

@@ -120,7 +120,7 @@ class WeatherDetails extends Component {
             </div>
             <div className="col-md-8">
               <StyledTitle>
-                Temperatures in next 24 hours in {this.props.data.city.name}
+                {this.state.chartState} in {this.props.data.city.name}
               </StyledTitle>
               <Chart
                 chartData={this.state.forecastForChart}
@@ -129,10 +129,10 @@ class WeatherDetails extends Component {
               />
               <Div>
                 <SubmitButton onClick={this.temperatureClick}>
-                  Temperature{" "}
+                  Temperature
                 </SubmitButton>
                 <SubmitButton onClick={this.pressureClick}>
-                  Pressure{" "}
+                  Pressure
                 </SubmitButton>
                 <SubmitButton onClick={this.humidityClick}>
                   Humidity
@@ -175,7 +175,11 @@ const ERROR_MESSAGE = `Error occurred while application trying to fetch details 
   Probably the problem is with the OpenWeatherMap API.
   Please, try again later.`;
 
-const StyledTitle = styled.h3`font-size: 27px;`;
+const StyledTitle = styled.h3`
+  width: 100%
+  font-size: 27px;
+  display: flex;
+  justify-content: center`;
 
 const mapStateToProps = currentState => {
   return {
