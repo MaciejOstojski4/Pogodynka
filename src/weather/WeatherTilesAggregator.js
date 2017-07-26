@@ -107,7 +107,7 @@ class WeatherCardAggregator extends React.Component {
             showButtons={this.props.userId !== ""}
             likeButton={city.favCity === null}
             dislikeButton={city.favCity !== null}
-            changePosition={this.changePosition}
+            changePosition={this.changePositionDuringDrag}
             changePositionOnServer={this.changePositionOnServer}
             replaceIndex={this.replaceIndex}
           />
@@ -118,12 +118,16 @@ class WeatherCardAggregator extends React.Component {
     });
   };
 
-  changePosition = (dragIndex, hoverIndex) => {
-    const dragItem = this.state.cities[dragIndex];
-    const hoverItem = this.state.cities[hoverIndex];
-    const cities = this.state.cities;
-    cities[dragIndex] = hoverItem;
-    cities[hoverIndex] = dragItem;
+  swapCitiesInState = (firstIndex, secondIndex) => {
+    let cities = this.state.cities;
+    const firstCity = cities[firstIndex];
+    cities[firstIndex] = cities[secondIndex];
+    cities[secondIndex] = firstCity;
+    return cities;
+  }
+
+  changePositionDuringDrag = (dragIndex, hoverIndex) => {
+    const cities = this.swapCitiesInState(dragIndex, hoverIndex);
     this.setState({
       cities: cities,
     });
@@ -136,16 +140,10 @@ class WeatherCardAggregator extends React.Component {
       dragCity,
       dropCity.favCity.position,
     );
-    console.log("dragCities");
-    console.log(dragCity);
-    console.log(favDragCity);
     const favDropCity = this.createFavouriteCityObjectWithPositionAt(
       dropCity,
       dragCity.favCity.position,
     );
-    console.log("dropCities");
-    console.log(dropCity);
-    console.log(favDropCity);
     this.props.dispatch(
       changeFavCityPosition(favDragCity, favDropCity, dragCity, dropCity, this.state.cities),
     );
