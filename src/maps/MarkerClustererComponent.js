@@ -19,7 +19,9 @@ class MarkerClustererComponent extends Component {
               >
                 {marker.showInfo &&
                   <InfoWindow onCloseClick={() => this.props.onClose(marker)}>
-                    <div onClick={() => this.props.onInfoWindowClick()}>
+                    <div
+                      onClick={() => this.props.onInfoWindowClick(marker.name)}
+                    >
                       <p>
                         <b>
                           {marker.name}

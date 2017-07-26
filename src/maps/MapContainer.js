@@ -3,6 +3,8 @@ import SearchWeather from "../weather/SearchWeather";
 import MapWithMarkers from "./MapWithMarkers";
 import { connect } from "react-redux";
 import WeatherDetails from "../weather/WeatherDetails";
+import apiClient from "../lib/api-client";
+import { changeDisplayedDetailsAction } from "../actions/weather-actions";
 class MapContainer extends Component {
   constructor(props) {
     super(props);
@@ -32,9 +34,29 @@ class MapContainer extends Component {
       });
     });
   };
-  infoWindowClick = () => {
-    return <WeatherDetails />;
+
+  infoWindowClick = cityName => {
+    const url = this.prepareUrl(cityName);
+    this.fetchWeather(url);
+    this.props.router.push("weatherdetails");
   };
+  prepareUrl = cityName => {
+    return `${SEARCH_URL}q=${cityName}`;
+  };
+
+  fetchWeather = url => {
+    apiClient
+      .get(url)
+      .then(response => {
+        this.props.dispatch(changeDisplayedDetailsAction(response.data));
+      })
+      .catch(error => {
+        this.setState({
+          errorInfo: "Cannot find this city"
+        });
+      });
+  };
+
   render() {
     return (
       <div>
@@ -56,4 +78,5 @@ const mapStateToProps = currentState => {
     data: currentState.weather.savedWeather
   };
 };
+const SEARCH_URL = "forecast?units=metric&";
 export default connect(mapStateToProps)(MapContainer);

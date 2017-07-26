@@ -7,12 +7,12 @@ import { withRouter } from "react-router";
 import apiClient from "../lib/api-client";
 import {
   changeDisplayedDetailsAction,
-  saveGroupWeatherAction,
+  saveGroupWeatherAction
 } from "../actions/weather-actions";
 import {
   addUserCityAction,
   removeUserCityAction,
-  changeFavCityPosition,
+  changeFavCityPosition
 } from "../actions/user-action";
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
@@ -23,13 +23,13 @@ class WeatherCardAggregator extends React.Component {
 
     this.state = {
       cities: props.weatherItems,
-      dropIndex: -1,
+      dropIndex: -1
     };
   }
 
   replaceIndex = newIndex => {
     this.setState({
-      dropIndex: newIndex,
+      dropIndex: newIndex
     });
   };
 
@@ -45,7 +45,7 @@ class WeatherCardAggregator extends React.Component {
       })
       .catch(error => {
         this.setState({
-          errorInfo: "Cannot find this city",
+          errorInfo: "Cannot find this city"
         });
       });
   };
@@ -60,7 +60,7 @@ class WeatherCardAggregator extends React.Component {
     const favCity = this.createFavouriteCityObject(city);
     return {
       ...favCity,
-      position: position,
+      position: position
     };
   };
 
@@ -71,8 +71,8 @@ class WeatherCardAggregator extends React.Component {
         external_id: city.id,
         lat: city.coord.lat,
         lon: city.coord.lon,
-        description: "",
-      },
+        description: ""
+      }
     };
   };
 
@@ -125,28 +125,34 @@ class WeatherCardAggregator extends React.Component {
     cities[firstIndex] = cities[secondIndex];
     cities[secondIndex] = firstCity;
     return cities;
-  }
+  };
 
   changePositionDuringDrag = (dragIndex, hoverIndex) => {
     const cities = this.swapCitiesInState(dragIndex, hoverIndex);
     this.setState({
-      cities: cities,
+      cities: cities
     });
   };
 
-  changePositionOnServer = (dragIndex) => {
+  changePositionOnServer = dragIndex => {
     const dragCity = this.state.cities[dragIndex];
     const dropCity = this.state.cities[this.state.dropIndex];
     const favDragCity = this.createFavouriteCityObjectWithPositionAt(
       dragCity,
-      dropCity.favCity.position,
+      dropCity.favCity.position
     );
     const favDropCity = this.createFavouriteCityObjectWithPositionAt(
       dropCity,
-      dragCity.favCity.position,
+      dragCity.favCity.position
     );
     this.props.dispatch(
-      changeFavCityPosition(favDragCity, favDropCity, dragCity, dropCity, this.state.cities),
+      changeFavCityPosition(
+        favDragCity,
+        favDropCity,
+        dragCity,
+        dropCity,
+        this.state.cities
+      )
     );
   };
 
@@ -193,10 +199,10 @@ const mapStateToProps = currentState => {
   return {
     userId: currentState.session.user.userId,
     token: currentState.session.user.token,
-    data: currentState.weather,
+    data: currentState.weather
   };
 };
 
 export default connect(mapStateToProps)(
-  DragDropContext(HTML5Backend)(withRouter(WeatherCardAggregator)),
+  DragDropContext(HTML5Backend)(withRouter(WeatherCardAggregator))
 );
