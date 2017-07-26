@@ -6,6 +6,10 @@ import ResponsiveForecast from "./forecast/ResponsiveForecast";
 import styled from "styled-components";
 import SearchWeather from "./SearchWeather";
 import { parseSearchedWeatherAction } from "../actions/weather-actions";
+import {
+  addUserCityAction,
+  removeUserCityAction,
+} from "../actions/user-action";
 
 class WeatherDetails extends Component {
   constructor(props) {
@@ -117,6 +121,37 @@ class WeatherDetails extends Component {
     return favCities.length > 0;
   }
 
+  createFavouriteCityObject = () => {
+    return {
+      place: {
+        name: this.props.data.city.name,
+        external_id: this.props.data.city.id,
+        lat: this.props.data.city.coord.lat,
+        lon: this.props.data.city.coord.lon,
+        description: "",
+      }
+    }
+  }
+
+  changeFavStatusOnServer = (like) => {
+    if (like) {
+      this.addCityToFavourite();
+    } else {
+      this.removeCityFromFavourite();
+    }
+  };
+
+  removeCityFromFavourite = () => {
+    const favCity = this.createFavouriteCityObject();
+    console.log(favCity);
+    this.props.dispatch(removeUserCityAction(favCity));
+  };
+
+  addCityToFavourite = () => {
+    const favCity = this.createFavouriteCityObject();
+    this.props.dispatch(addUserCityAction(favCity));
+  };
+
   getComponentToRender = () => {
     console.log("city frtom details (data)");
     console.log(this.props.data);
@@ -131,6 +166,7 @@ class WeatherDetails extends Component {
                 cityName={this.props.data.city.name}
                 city={this.state.currentForecast}
                 liked={this.isCityInFavourite()}
+                onLikeClick={this.changeFavStatusOnServer}
               />
             </div>
             <div className="col-md-8">

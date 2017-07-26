@@ -10,12 +10,17 @@ class CurrentWeatherDetails extends React.Component {
     return "glyphicon glyphicon-star-empty";
   }
 
+  changeFavStatusOnServer = e => {
+    e.preventDefault();
+    this.props.onLikeClick(!this.props.liked);
+  }
+
   render() {
     return (
       <div>
         <InfoContainer>
           <TitleRow>
-            <span className={this.getStarIcon()} /> {this.props.cityName}
+            <span onClick={this.changeFavStatusOnServer} className={this.getStarIcon()} /> {this.props.cityName}
           </TitleRow>
           <InfoRow>
             <div className="text-left">Temperature:</div>
