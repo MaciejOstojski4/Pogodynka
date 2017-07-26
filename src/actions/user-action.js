@@ -2,15 +2,10 @@ import userApiClient from "../lib/userApi-client";
 import { hashHistory } from "react-router";
 
 export const LOGIN_SUCCESS_ACTION = "loginSuccess";
-
 export const FETCH_USER_FAV_CITIES_ACTION = "fetchUserFavCities";
-
 export const ADD_USER_CITY_ACTION = "addUserCity";
-
 export const REMOVE_USER_CITY_ACTION = "removeUserCity";
-
 export const CHANGE_FAV_CITY_POSITION_ACTION = "changeFavouriteCityPosition";
-
 export const LOGOUT_ACTION = "logout";
 
 export const loginAction = user => {
@@ -92,7 +87,13 @@ export const removeUserCityAction = favCity => {
   };
 };
 
-export const changeFavCityPosition = (favDragCity, favDropCity, dragItem, hoverItem, userCities) => {
+export const changeFavCityPosition = (
+  favDragCity,
+  favDropCity,
+  dragItem,
+  hoverItem,
+  userCities,
+) => {
   return dispatch => {
     dispatch(removeUserCityAction(dragItem));
     dispatch(removeUserCityAction(hoverItem));
@@ -101,11 +102,11 @@ export const changeFavCityPosition = (favDragCity, favDropCity, dragItem, hoverI
     dispatch({
       type: CHANGE_FAV_CITY_POSITION_ACTION,
       data: {
-        userCities: userCities
-      }
-    })
-  }
-}
+        userCities: userCities,
+      },
+    });
+  };
+};
 
 export const logoutAction = () => {
   return {

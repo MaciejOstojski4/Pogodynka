@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ForecastTile from "./ForecastTile";
 
-class DailyForecastPlaceHolder extends React.Component {
+class DailyForecastPlaceholder extends React.Component {
   getDateWithoutHours = forecastDate => {
     return forecastDate.dt_txt.split(" ")[0];
   };
@@ -55,4 +55,4 @@ const PlaceHolder = styled.div`
   box-shadow: 2px 2px 4px grey;
 `;
 
-export default DailyForecastPlaceHolder;
+export default DailyForecastPlaceholder;

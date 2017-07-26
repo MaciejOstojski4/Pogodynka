@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import DailyForecastPlaceHolder from "./DailyForecastPlaceHolder";
+import DailyForecastPlaceholder from "./DailyForecastPlaceholder";
 
-class ForecastPlaceHolder extends React.Component {
+class ForecastPlaceholder extends React.Component {
   render() {
     return (
-      <PlaceHolder>
+      <Placeholder>
         {this.props.dayForecast.map((forecast, index) => {
           return (
-            <DailyForecastPlaceHolder
+            <DailyForecastPlaceholder
               key={forecast.dt_txt}
               noDay={index}
               onForecastClick={this.props.onForecastClick}
@@ -17,15 +17,15 @@ class ForecastPlaceHolder extends React.Component {
             />
           );
         })}
-      </PlaceHolder>
+      </Placeholder>
     );
   }
 }
 
-const PlaceHolder = styled.div`
+const Placeholder = styled.div`
   display: flex;
   margin-bottom: 20px;
   flex-direction: wrap;
 `;
 
-export default ForecastPlaceHolder;
+export default ForecastPlaceholder;
