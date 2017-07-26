@@ -20,10 +20,12 @@ const MarkerClustererExampleGoogleMap = withGoogleMap(props => {
       defaultCenter={{
         lat: props.markers[0].coord.lat,
         lng: props.markers[0].coord.lon
-      }}
-    >
+      }}>
       <MarkerClusterer averageCenter enableRetinaIcons gridSize={30}>
         {props.markers.map(marker => {
+          {
+            /* przerzucilbym to jako komponent */
+          }
           return (
             <Marker
               position={{
@@ -31,8 +33,7 @@ const MarkerClustererExampleGoogleMap = withGoogleMap(props => {
                 lng: marker.coord.lon
               }}
               key={marker.sys.id}
-              onClick={() => props.onClick(marker)}
-            >
+              onClick={() => props.onClick(marker)}>
               {marker.showInfo &&
                 <InfoWindow onCloseClick={() => props.onClose(marker)}>
                   <div>
@@ -49,32 +50,44 @@ const MarkerClustererExampleGoogleMap = withGoogleMap(props => {
   );
 });
 class MarkerClustererExample extends Component {
+  // zbedny komentarz
   // Toggle to 'true' to show InfoWindow and re-renders component
 
   markerClick = marker => {
+    // slaba nazwa 'temp'
     const temp = this.props.data;
+    // absolutnie nie mozna tego zrobic w ten sposob
+    // domyslam sie ze to jest miejsce w ktorym "nie dziala bez przeladowania"?
     temp.map(p => {
       if (p === marker) {
         p.showInfo = true;
+        // nie wiem czy dispatch jest tu potrzebny
         this.props.dispatch(showMapPopUpAction(temp));
       }
     });
   };
   popUpHide = marker => {
+    // slaba nazwa 'temp'
     const temp = this.props.data;
+    // absolutnie nie mozna tego zrobic w ten sposob
+    // domyslam sie ze to jest miejsce w ktorym "nie dziala bez przeladowania"?
     temp.map(p => {
       if (p === marker) {
         p.showInfo = false;
+        // nie wiem czy dispatch jest tu potrzebny
         this.props.dispatch(hideMapPopUpAction(temp));
       }
     });
   };
   render() {
     const markers = this.props.data;
+    // console.log
     console.log(markers);
     return (
       <MarkerClustererExampleGoogleMap
+        {/* nie trzeba tutaj uzywac ``, masz zwykly string */}
         containerElement={<div style={{ height: `600px` }} />}
+        {/* nie trzeba tutaj uzywac ``, masz zwykly string */}
         mapElement={<div style={{ height: `600px` }} />}
         markers={markers}
         onClick={this.markerClick}

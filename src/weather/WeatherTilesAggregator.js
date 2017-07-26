@@ -7,9 +7,12 @@ import { withRouter } from "react-router";
 import apiClient from "../lib/api-client";
 import {
   changeDisplayedDetailsAction,
-  saveGroupWeatherAction,
+  saveGroupWeatherAction
 } from "../actions/weather-actions";
-import { addUserCityAction, removeUserCityAction } from "../actions/user-action";
+import {
+  addUserCityAction,
+  removeUserCityAction
+} from "../actions/user-action";
 
 class WeatherCardAggregator extends React.Component {
   prepareUrl = cityName => {
@@ -24,13 +27,14 @@ class WeatherCardAggregator extends React.Component {
       })
       .catch(error => {
         this.setState({
-          errorInfo: "Cannot find this city",
+          errorInfo: "Cannot find this city"
         });
       });
   };
 
   redirectToDetails = cityName => {
     const url = this.prepareUrl(cityName);
+    // pobranie danych szczegolowych pogody powinno odbyc sie w komponencie ktory renderuje sie pod dana sciezka
     this.fetchWeather(url);
     this.props.router.push("weatherdetails");
   };
@@ -42,8 +46,8 @@ class WeatherCardAggregator extends React.Component {
         external_id: city.id,
         lat: city.coord.lat,
         lon: city.coord.lon,
-        description: "",
-      },
+        description: ""
+      }
     };
   };
 
@@ -64,6 +68,7 @@ class WeatherCardAggregator extends React.Component {
     this.props.dispatch(addUserCityAction(favCity));
   };
 
+  // mozna by to nazwac jakos lepiej, nazwa moglaby od razu mowic co za "component"
   getComponentToRender = () => {
     return this.props.weatherItems.map(city => {
       return (
@@ -72,6 +77,7 @@ class WeatherCardAggregator extends React.Component {
           city={city}
           onClickRedirect={this.redirectToDetails}
           onFavClick={this.changeFavStatusOnServer}
+          {/* zapisalbym wszystkie takie conditionale jako metody */}
           showButtons={this.props.userId !== ""}
           likeButton={city.favCity === null}
           dislikeButton={city.favCity !== null}
@@ -89,14 +95,12 @@ class WeatherCardAggregator extends React.Component {
       <div>
         <MediaQuery
           query="(max-device-width: 700px)"
-          component={AggregatorResponsiveColumn}
-        >
+          component={AggregatorResponsiveColumn}>
           {this.getComponentToRender()}
         </MediaQuery>
         <MediaQuery
           query="(min-device-width: 701px)"
-          component={AggregatorResponsiveRow}
-        >
+          component={AggregatorResponsiveRow}>
           {this.getComponentToRender()}
         </MediaQuery>
       </div>
@@ -123,7 +127,7 @@ const mapStateToProps = currentState => {
   return {
     userId: currentState.session.user.userId,
     token: currentState.session.user.token,
-    data: currentState.weather,
+    data: currentState.weather
   };
 };
 

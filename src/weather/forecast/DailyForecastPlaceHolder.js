@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ForecastTile from "./ForecastTile";
 
+// 'Placeholder' to jest jedno słowo
 class DailyForecastPlaceHolder extends React.Component {
   getDateWithoutHours = forecastDate => {
     return forecastDate.dt_txt.split(" ")[0];
@@ -17,8 +18,7 @@ class DailyForecastPlaceHolder extends React.Component {
       <PlaceHolder
         key={this.props.dayForecast.dt_txt}
         className="text-center"
-        onClick={this.onClick}
-      >
+        onClick={this.onClick}>
         <DateTile>
           <h4>
             {this.getDateWithoutHours(this.props.dayForecast)}

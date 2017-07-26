@@ -28,6 +28,8 @@ export class SearchWeather extends Component {
     });
   };
 
+  // ta akcja wyglada mi bardziej na 'updateState'
+  // refresh nie kojarzy sie ze zmiana wartosci
   refreshState = (inputText, similarCities) => {
     this.setState({
       inputText: inputText,
@@ -117,8 +119,7 @@ export class SearchWeather extends Component {
             <SubmitButton
               className="btn btn-lg"
               type="submit"
-              onClick={this.onSubmit}
-            >
+              onClick={this.onSubmit}>
               Search
             </SubmitButton>
           </div>
@@ -175,6 +176,7 @@ const SearchForm = styled.form`
   position: relative;
 `;
 
+// takie stale trzymalbym chyba nad klasa
 const SEARCH_URL = "forecast?units=metric&";
 
 const LAT_LONG_REGEX = /(-)?[0-9]+\.[0-9]+:(-)?[0-9]+\.[0-9]+/;

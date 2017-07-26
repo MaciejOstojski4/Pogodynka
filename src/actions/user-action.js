@@ -1,6 +1,8 @@
 import userApiClient from "../lib/userApi-client";
 import { hashHistory } from "react-router";
 
+// przerwy miedzy akcjami chyba zbedne sa, nie wiem czy zwieksza czytelnosc
+// a zabiera sporo wiecej miejsca
 export const LOGIN_SUCCESS_ACTION = "loginSuccess";
 
 export const FETCH_USER_FAV_CITIES_ACTION = "fetchUserFavCities";
@@ -15,7 +17,7 @@ export const loginAction = user => {
   return dispatch => {
     userApiClient
       .post(LOGIN_URL, {
-        user: user,
+        user: user
       })
       .then(response => {
         dispatch({
@@ -23,8 +25,8 @@ export const loginAction = user => {
           data: {
             email: user.email,
             token: response.data.data.auth_token,
-            userId: response.data.data.user_id,
-          },
+            userId: response.data.data.user_id
+          }
         });
         dispatch(fetchUserFavCitiesAction());
       })
@@ -42,8 +44,8 @@ export const fetchUserFavCitiesAction = () => {
         dispatch({
           type: FETCH_USER_FAV_CITIES_ACTION,
           data: {
-            favCities: response.data.places,
-          },
+            favCities: response.data.places
+          }
         });
         hashHistory.push("/");
       })
@@ -61,8 +63,8 @@ export const addUserCityAction = favCity => {
         dispatch({
           type: ADD_USER_CITY_ACTION,
           data: {
-            favCity: response.data,
-          },
+            favCity: response.data
+          }
         });
       })
       .catch(error => {
@@ -80,8 +82,8 @@ export const removeUserCityAction = city => {
         dispatch({
           type: REMOVE_USER_CITY_ACTION,
           data: {
-            favCity: city.favCity,
-          },
+            favCity: city.favCity
+          }
         });
       })
       .catch(error => {
@@ -92,7 +94,7 @@ export const removeUserCityAction = city => {
 
 export const logoutAction = () => {
   return {
-    type: LOGOUT_ACTION,
+    type: LOGOUT_ACTION
   };
 };
 

@@ -89,6 +89,7 @@ class WeatherDetails extends Component {
 
   getComponentToRender = noDay => {
     if (this.isForecastFetched()) {
+      // moznaby to jakos rozbic jeszcze
       return (
         <div>
           <div className="row">

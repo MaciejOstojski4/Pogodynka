@@ -1,3 +1,6 @@
+// powinniscie trzymac taki sam format zapisywania akcji wszedzie
+// tj akcje albo maja przyrostek 'Action' albo nie maja
+// tak samo odstepy pomiedzy akcjami, tutaj bym ich nie robil wcale
 export const CHANGE_DISPLAYED_DETAILS_ACTION = "changeDisplayedDetails";
 
 export const ADD_SEARCHED_CITY_ACTION = "saveSearchedCity";

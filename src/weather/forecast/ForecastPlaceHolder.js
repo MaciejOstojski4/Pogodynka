@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import DailyForecastPlaceHolder from "./DailyForecastPlaceHolder";
 
+// 'Placeholder' to jest jedno słowo
 class ForecastPlaceHolder extends React.Component {
   render() {
     return (
