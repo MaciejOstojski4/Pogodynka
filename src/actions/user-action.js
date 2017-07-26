@@ -94,11 +94,6 @@ export const removeUserCityAction = city => {
 
 export const changeFavCityPosition = (favDragCity, favDropCity, dragItem, hoverItem, userCities) => {
   return dispatch => {
-    console.log("favDragCity");
-    console.log(favDragCity);
-    console.log("favDropCity");
-    console.log(favDropCity);
-
     dispatch(removeUserCityAction(dragItem));
     dispatch(removeUserCityAction(hoverItem));
     dispatch(addUserCityAction(favDragCity));

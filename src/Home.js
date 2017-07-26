@@ -82,7 +82,7 @@ class Home extends Component {
   renderComponent = () => {
     return (
       <div>
-        <WeatherTilesAggregator weatherItems={this.state.cities} />
+        <WeatherTilesAggregator weatherItems={this.state.cities} draggable={false}/>
       </div>
     );
   };

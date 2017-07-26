@@ -63,34 +63,46 @@ class WeatherTile extends React.Component {
     this.resolveTileColor(this.props.city.weather[0].id);
   }
 
-  onFavClick = e => {
-    e.stopPropagation();
+  changeFavStatusOnServer = () => {
     if (this.props.likeButton) {
       this.props.onFavClick(this.props.city, true);
-    } else {
-      this.props.onFavClick(this.props.city, false);
     }
+    this.props.onFavClick(this.props.city, false);
+  };
+
+  changeStarIcon = () => {
     this.setState({
       showLikeButton: !this.state.showLikeButton,
     });
   };
 
-  renderFavButtons = () => {
-    let className = "";
+  onFavClick = e => {
+    e.stopPropagation();
+    this.changeFavStatusOnServer();
+    this.changeStarIcon();
+  };
+
+  getStarIcon = () => {
     if (this.state.showLikeButton) {
-      className = "glyphicon glyphicon-star-empty";
-    } else {
-      className = "glyphicon glyphicon-star";
+      return "glyphicon glyphicon-star-empty";
     }
+    return "glyphicon glyphicon-star";
+  };
+
+  renderFavButtons = () => {
     return (
       <LikeIconField>
-        <span className={className} onClick={this.onFavClick} />
+        <span className={this.getStarIcon()} onClick={this.onFavClick} />
       </LikeIconField>
     );
   };
 
-  render() {
-    const tileStyle = {
+  setOpacity = () => {
+    return this.props.isDragging ? 0 : 1;
+  };
+
+  getTileStyle = () => {
+    return {
       float: "left",
       position: "relative",
       margin: "5px",
@@ -103,41 +115,59 @@ class WeatherTile extends React.Component {
       color: this.state.tileColor.color,
       backgroundColor: this.state.tileColor.backgroundColor,
       cursor: "move",
-      opacity: this.props.isDragging ? 0 : 1,
+      opacity: this.setOpacity(),
     };
+  };
+
+  getDraggableComponentToRender = () => {
     return this.props.connectDragSource(
-      this.props.connectDropTarget(
-        <div
-          className="text-center"
-          onClick={this.showDetails}
-          style={tileStyle}
-        >
-          <div className="row">
-            <div>
-              <TileField>
-                <TitleField style={{ color: `${this.state.textColor}` }}>
-                  {this.props.city.name}
-                </TitleField>
-              </TileField>
-              <TileField>
-                <img src={this.getWeatherIcon()} alt="Cannot render weather" />
-              </TileField>
-              <TileField>
-                <span style={{ color: `${this.state.textColor}` }}>
-                  {this.props.city.weather[0].description}
-                </span>
-              </TileField>
-              <TileField>
-                <span style={{ color: `${this.state.textColor}` }}>
-                  {" "}{this.props.city.main.temp} &deg;C
-                </span>
-              </TileField>
-            </div>
-          </div>
-          {this.props.showButtons ? this.renderFavButtons() : null}
-        </div>,
-      ),
+      this.props.connectDropTarget(this.getComponentToRender()),
     );
+  };
+
+  getComponentToRender = () => {
+    return (
+      <div
+        className="text-center"
+        onClick={this.showDetails}
+        style={this.getTileStyle()}
+      >
+        <div className="row">
+          <div>
+            <TileField>
+              <TitleField style={{ color: `${this.state.textColor}` }}>
+                {this.props.city.name}
+              </TitleField>
+            </TileField>
+            <TileField>
+              <img src={this.getWeatherIcon()} alt="Cannot render weather" />
+            </TileField>
+            <TileField>
+              <span style={{ color: `${this.state.textColor}` }}>
+                {this.props.city.weather[0].description}
+              </span>
+            </TileField>
+            <TileField>
+              <span style={{ color: `${this.state.textColor}` }}>
+                {" "}{this.props.city.main.temp} &deg;C
+              </span>
+            </TileField>
+          </div>
+        </div>
+        {this.props.showButtons ? this.renderFavButtons() : null}
+      </div>
+    );
+  };
+
+  renderComponent = () => {
+    if (this.props.draggable) {
+      return this.getDraggableComponentToRender();
+    }
+    return this.getComponentToRender();
+  };
+
+  render() {
+    return this.renderComponent();
   }
 }
 
@@ -190,9 +220,6 @@ const TileSource = {
       index: props.index,
     };
   },
-  // endDrag(props, monitor, component) {
-  //
-  // },
 };
 
 const TileTarget = {
@@ -216,7 +243,7 @@ const TileTarget = {
       return;
     }
 
-    props.changePosition(dragIndex, hoverIndex);
+    props.changePositionDuringDrag(dragIndex, hoverIndex);
     props.replaceIndex(dragIndex);
 
     monitor.getItem().index = hoverIndex;
@@ -232,6 +259,10 @@ const collectDrag = (connect, monitor) => {
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging(),
   };
+};
+
+WeatherTile.defaultProps = {
+  draggable: true,
 };
 
 export default DragSource("Tile", TileSource, collectDrag)(
