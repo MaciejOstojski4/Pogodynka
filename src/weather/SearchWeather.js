@@ -47,11 +47,15 @@ export class SearchWeather extends Component {
     this.updateState(e.target.value, similarCities);
   };
 
-  dispatchData = () => {
+  isAlreadySearched = () => {
     const searchedCity = this.props.cities.filter(
       city => city.toLowerCase() === this.state.inputText.toLowerCase(),
     );
-    if (searchedCity.length < 1) {
+    return searchedCity.length > 0;
+  }
+
+  dispatchData = () => {
+    if (!this.isAlreadySearched()) {
       this.props.dispatch(saveSearchedCityNameAction(this.state.inputText));
     }
   };
