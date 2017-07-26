@@ -34,7 +34,7 @@ const SimilarCitiesHint = styled.div`
   border: 1px solid;
   border-color: #cddc39;
   font-size: 120%;
-  min-width: 200px;
+  width: 100%;
 `;
 
 const SimilarCitiesListElement = styled.div`
