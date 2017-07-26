@@ -10,6 +10,10 @@ import styled from "styled-components";
 import SearchCityNameHint from "./SearchCityNameHint";
 import { withRouter } from "react-router";
 
+const SEARCH_URL = "forecast?units=metric&";
+
+const LAT_LONG_REGEX = /(-)?[0-9]+\.[0-9]+:(-)?[0-9]+\.[0-9]+/;
+
 export class SearchWeather extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +32,7 @@ export class SearchWeather extends Component {
     });
   };
 
-  refreshState = (inputText, similarCities) => {
+  updateState = (inputText, similarCities) => {
     this.setState({
       inputText: inputText,
       similarCities: similarCities
@@ -47,7 +51,7 @@ export class SearchWeather extends Component {
   handleChange = e => {
     e.preventDefault();
     const similarCities = this.searchDynamically(e.target.value);
-    this.refreshState(e.target.value, similarCities);
+    this.updateState(e.target.value, similarCities);
   };
 
   isSearchingByCityName = () => {
@@ -177,9 +181,6 @@ const SubmitButtonContainer = styled.div`
     justify-content: center;
   }
 `;
-const SEARCH_URL = "forecast?units=metric&";
-
-const LAT_LONG_REGEX = /(-)?[0-9]+\.[0-9]+:(-)?[0-9]+\.[0-9]+/;
 
 const mapStateToProps = currentState => {
   return {

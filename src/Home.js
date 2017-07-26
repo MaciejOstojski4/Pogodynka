@@ -6,6 +6,21 @@ import LoaderWrapper from "./user-interface/Loader";
 import { connect } from "react-redux";
 import { fetchUserFavCitiesAction } from "./actions/user-action";
 
+const initialCities = [
+  6695624, // Warszawa
+  2988507, // Paris
+  3117735, // Madrid
+  2643743, // London
+  2950159, // Berlin
+  703448, // Kiev
+  524901, // Moscow
+  2759794, // Amsterdam
+  3143244, //Oslo
+  6458923, // Lisbon
+];
+
+const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric&";
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -100,21 +115,6 @@ class Home extends Component {
     );
   }
 }
-
-const initialCities = [
-  6695624, // Warszawa
-  2988507, // Paris
-  3117735, // Madrid
-  2643743, // London
-  2950159, // Berlin
-  703448, // Kiev
-  524901, // Moscow
-  2759794, // Amsterdam
-  3143244, //Oslo
-  6458923, // Lisbon
-];
-
-const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric&";
 
 const mapStateToProps = currentState => {
   return {

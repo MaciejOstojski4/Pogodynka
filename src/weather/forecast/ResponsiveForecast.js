@@ -1,8 +1,8 @@
 import React from "react";
 import MediaQuery from "react-responsive";
 import styled from "styled-components";
-import ScrolledForecastPlaceHolder from "./ScrolledForecastPlaceHolder";
-import ForecastPlaceHolder from "./ForecastPlaceHolder";
+import ScrolledForecastPlaceholder from "./ScrolledForecastPlaceholder";
+import ForecastPlaceholder from "./ForecastPlaceholder";
 
 class ResponsiveForecast extends React.Component {
   render() {
@@ -12,14 +12,14 @@ class ResponsiveForecast extends React.Component {
           <h2>Forecast for 4 days</h2>
         </div>
         <MediaQuery query="(max-device-width: 1080px)" component={ScrolledDiv}>
-          <ScrolledForecastPlaceHolder
+          <ScrolledForecastPlaceholder
             onForecastClick={this.props.onForecastClick}
             dayForecast={this.props.dayForecast}
             nightForecast={this.props.nightForecast}
           />
         </MediaQuery>
         <MediaQuery query="(min-device-width: 1081px)" component={ScrolledDiv}>
-          <ForecastPlaceHolder
+          <ForecastPlaceholder
             onForecastClick={this.props.onForecastClick}
             dayForecast={this.props.dayForecast}
             nightForecast={this.props.nightForecast}

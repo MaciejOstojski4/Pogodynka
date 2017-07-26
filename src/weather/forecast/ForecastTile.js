@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+const ICON_URL = "http://openweathermap.org/img/w/";
+
 class ForecastTile extends React.Component {
   getForecastIcon = () => {
     return ICON_URL + this.props.forecast.weather[0].icon + ".png";
@@ -56,7 +58,5 @@ const ValueParagraph = styled.p`
   font-size: 150%;
   font-weight: bold;
 `;
-
-const ICON_URL = "http://openweathermap.org/img/w/";
 
 export default ForecastTile;

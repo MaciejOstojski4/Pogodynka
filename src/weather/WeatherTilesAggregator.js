@@ -17,6 +17,8 @@ import {
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 
+const SEARCH_URL = "forecast?units=metric&";
+
 class WeatherCardAggregator extends React.Component {
   constructor(props) {
     super(props);
@@ -192,8 +194,6 @@ const AggregatorResponsiveColumn = styled.div`
   justify-content: space-between;
   flex-direction: column;
 `;
-
-const SEARCH_URL = "forecast?units=metric&";
 
 const mapStateToProps = currentState => {
   return {

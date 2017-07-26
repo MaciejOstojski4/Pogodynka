@@ -1,14 +1,14 @@
 import React from "react";
 import OwlCarousel from "react-owl-carousel";
-import DailyForecastPlaceHolder from "./DailyForecastPlaceHolder";
+import DailyForecastPlaceholder from "./DailyForecastPlaceholder";
 
-class ScrolledForecastPlaceHolder extends React.Component {
+class ScrolledForecastPlaceholder extends React.Component {
   render() {
     return (
       <OwlCarousel className="owl-theme" items={1} loop={true}>
         {this.props.dayForecast.map((forecast, index) => {
           return (
-            <DailyForecastPlaceHolder
+            <DailyForecastPlaceholder
               noDay={index+1}
               onForecastClick={this.props.onForecastClick}
               dayForecast={forecast}
@@ -21,4 +21,4 @@ class ScrolledForecastPlaceHolder extends React.Component {
   }
 }
 
-export default ScrolledForecastPlaceHolder;
+export default ScrolledForecastPlaceholder;

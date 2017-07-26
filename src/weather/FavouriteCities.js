@@ -5,6 +5,8 @@ import WeatherTilesAggregator from "./WeatherTilesAggregator";
 import SearchWeather from "./SearchWeather";
 import LoaderWrapper from "../user-interface/Loader";
 
+const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric&";
+
 class FavouriteCities extends React.Component {
   constructor(props) {
     super(props);
@@ -103,7 +105,5 @@ const mapStateToProps = currentState => {
     favCities: currentState.session.userCities,
   };
 };
-
-const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric&";
 
 export default connect(mapStateToProps)(FavouriteCities);

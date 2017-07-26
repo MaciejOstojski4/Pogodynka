@@ -11,6 +11,8 @@ import {
   removeUserCityAction,
 } from "../actions/user-action";
 
+const NUMBER_OF_DAYS_IN_FORECAST = 5;
+
 class WeatherDetails extends Component {
   constructor(props) {
     super(props);
@@ -236,8 +238,6 @@ WeatherDetails.defaultProps = {
   noDay: 0,
 };
 
-const NUMBER_OF_DAYS_IN_FORECAST = 5;
-
 const ERROR_MESSAGE = `Error occurred while application trying to fetch details information about weather.
   Probably the problem is with the OpenWeatherMap API.
   Please, try again later.`;
@@ -246,7 +246,8 @@ const StyledTitle = styled.h3`
   width: 100%
   font-size: 27px;
   display: flex;
-  justify-content: center`;
+  justify-content: center
+`;
 
 const mapStateToProps = currentState => {
   return {
@@ -254,11 +255,13 @@ const mapStateToProps = currentState => {
     favCities: currentState.session.userCities,
   };
 };
+
 const Div = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
 `;
+
 const SubmitButton = styled.button`
   margin: 10px;
   border: none;
@@ -267,4 +270,5 @@ const SubmitButton = styled.button`
   background-color: #827717;
   color: white;
 `;
+
 export default connect(mapStateToProps)(WeatherDetails);
