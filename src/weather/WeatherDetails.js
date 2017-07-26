@@ -17,7 +17,7 @@ class WeatherDetails extends Component {
       forecastForChart: [],
       errorInfo: ERROR_MESSAGE,
       currentForecast: this.props.data.list[0],
-      chartState: "temperature"
+      chartState: "temperature",
     };
   }
 
@@ -27,7 +27,7 @@ class WeatherDetails extends Component {
 
   getDailyForecastAtHour = hour => {
     return this.props.data.list.filter(
-      weather => this.getHoursFromDate(weather.dt_txt) === hour
+      weather => this.getHoursFromDate(weather.dt_txt) === hour,
     );
   };
 
@@ -41,11 +41,11 @@ class WeatherDetails extends Component {
   prepareDataForForecast = () => {
     this.setState({
       dayForecast: this.getForecastSinceTomorrow(
-        this.getDailyForecastAtHour("12:00:00")
+        this.getDailyForecastAtHour("12:00:00"),
       ),
       nightForecast: this.getForecastSinceTomorrow(
-        this.getDailyForecastAtHour("00:00:00")
-      )
+        this.getDailyForecastAtHour("00:00:00"),
+      ),
     });
   };
 
@@ -55,7 +55,7 @@ class WeatherDetails extends Component {
         temperature: forecast.main.temp,
         pressure: forecast.main.pressure,
         humidity: forecast.main.humidity,
-        time: this.getHoursFromDate(forecast.dt_txt).slice(0, 5)
+        time: this.getHoursFromDate(forecast.dt_txt).slice(0, 5),
       };
     });
   };
@@ -68,44 +68,58 @@ class WeatherDetails extends Component {
 
   prepareDataForChart = noDay => {
     this.setState({
-      forecastForChart: this.getForecastForDay(noDay, this.parseDataForChart())
+      forecastForChart: this.getForecastForDay(noDay, this.parseDataForChart()),
     });
   };
 
   isForecastFetched = () => {
     return this.props.data !== null;
   };
+
   setWeatherDetails = noDay => {
     this.setState({
-      currentForecast: this.state.dayForecast[noDay]
+      currentForecast: this.state.dayForecast[noDay],
     });
   };
+
   prepareDataAfterForecastClick = noDay => {
     this.prepareDataForChart(noDay);
     this.setWeatherDetails(noDay);
   };
+
   componentDidMount() {
     if (this.isForecastFetched()) {
       this.prepareDataForForecast();
       this.prepareDataForChart(this.props.noDay);
     }
   }
+
   pressureClick = () => {
     this.setState({
-      chartState: "pressure"
+      chartState: "pressure",
     });
   };
+
   temperatureClick = () => {
     this.setState({
-      chartState: "temperature"
+      chartState: "temperature",
     });
   };
+
   humidityClick = () => {
     this.setState({
-      chartState: "humidity"
+      chartState: "humidity",
     });
   };
-  getComponentToRender = noDay => {
+
+  isCityInFavourite = () => {
+    const favCities = this.props.favCities.filter(favCity => favCity.external_id === this.props.data.city.id)
+    return favCities.length > 0;
+  }
+
+  getComponentToRender = () => {
+    console.log("city frtom details (data)");
+    console.log(this.props.data);
     this.props.dispatch(parseSearchedWeatherAction(this.props.data));
     if (this.isForecastFetched()) {
       return (
@@ -116,6 +130,7 @@ class WeatherDetails extends Component {
               <CurrentWeatherDetails
                 cityName={this.props.data.city.name}
                 city={this.state.currentForecast}
+                liked={this.isCityInFavourite()}
               />
             </div>
             <div className="col-md-8">
@@ -158,7 +173,7 @@ class WeatherDetails extends Component {
 }
 
 WeatherDetails.defaultProps = {
-  noDay: 0
+  noDay: 0,
 };
 
 const NUMBER_OF_DAYS_IN_FORECAST = 5;
@@ -171,7 +186,8 @@ const StyledTitle = styled.h3`font-size: 27px;`;
 
 const mapStateToProps = currentState => {
   return {
-    data: currentState.weather.cityDetails
+    data: currentState.weather.cityDetails,
+    favCities: currentState.session.userCities
   };
 };
 

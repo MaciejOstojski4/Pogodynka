@@ -2,12 +2,20 @@ import React from "react";
 import styled from "styled-components";
 
 class CurrentWeatherDetails extends React.Component {
+
+  getStarIcon = () => {
+    if(this.props.liked) {
+      return "glyphicon glyphicon-star";
+    }
+    return "glyphicon glyphicon-star-empty";
+  }
+
   render() {
     return (
       <div>
         <InfoContainer>
           <TitleRow>
-            {this.props.cityName}
+            <span className={this.getStarIcon()} /> {this.props.cityName}
           </TitleRow>
           <InfoRow>
             <div className="text-left">Temperature:</div>
