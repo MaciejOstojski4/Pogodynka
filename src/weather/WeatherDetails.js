@@ -124,7 +124,7 @@ class WeatherDetails extends Component {
     });
   };
 
-  componentDidMount() {
+  prepareDataForComponent = () => {
     this.fetchWeather();
     if (this.isCityInFavourite()) {
       this.setFavCityInStateIfExists();
@@ -134,6 +134,10 @@ class WeatherDetails extends Component {
         parseSearchedWeatherAction(this.state.favCitiesWeather),
       );
     }
+  }
+
+  componentDidMount() {
+    this.prepareDataForComponent();
   }
 
   pressureClick = () => {
@@ -262,6 +266,12 @@ class WeatherDetails extends Component {
       );
     }
   };
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.params.cityName !== this.props.params.cityName) {
+      this.prepareDataForComponent();
+    }
+  }
 
   render() {
     return this.getComponentToRender(this.props.noDay);
