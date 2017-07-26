@@ -11,7 +11,7 @@ class WeatherTile extends React.Component {
       tileColor: tileColors.goodWeather,
       textColor: "",
       showLikeButton: props.likeButton,
-      replacedIndex: -1,
+      replacedIndex: -1
     };
   }
 
@@ -25,7 +25,7 @@ class WeatherTile extends React.Component {
 
   refreshTileColorInState = tileColor => {
     this.setState({
-      tileColor: tileColor,
+      tileColor: tileColor
     });
   };
 
@@ -73,7 +73,7 @@ class WeatherTile extends React.Component {
 
   changeStarIcon = () => {
     this.setState({
-      showLikeButton: !this.state.showLikeButton,
+      showLikeButton: !this.state.showLikeButton
     });
   };
 
@@ -116,13 +116,13 @@ class WeatherTile extends React.Component {
       color: this.state.tileColor.color,
       backgroundColor: this.state.tileColor.backgroundColor,
       cursor: "move",
-      opacity: this.setOpacity(),
+      opacity: this.setOpacity()
     };
   };
 
   getDraggableComponentToRender = () => {
     return this.props.connectDragSource(
-      this.props.connectDropTarget(this.getComponentToRender()),
+      this.props.connectDropTarget(this.getComponentToRender())
     );
   };
 
@@ -175,7 +175,7 @@ class WeatherTile extends React.Component {
 const tileColors = {
   goodWeather: { color: "#6d7078", backgroundColor: "#ffd600" },
   averageWeather: { color: "#FFFFFF", backgroundColor: "#7cb342" },
-  badWeather: { color: "#FFFFFF", backgroundColor: "#0277bd" },
+  badWeather: { color: "#FFFFFF", backgroundColor: "#0277bd" }
 };
 
 const ICON_URL = "http://openweathermap.org/img/w/";
@@ -218,9 +218,9 @@ const TileSource = {
   beginDrag(props) {
     return {
       position: props.city.favCity.position,
-      index: props.index,
+      index: props.index
     };
-  },
+  }
 };
 
 const TileTarget = {
@@ -252,22 +252,22 @@ const TileTarget = {
   drop(props, monitor, component) {
     const dragIndex = monitor.getItem().index;
     props.changePositionOnServer(dragIndex);
-  },
+  }
 };
 
 const collectDrag = (connect, monitor) => {
   return {
     connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
+    isDragging: monitor.isDragging()
   };
 };
 
 WeatherTile.defaultProps = {
-  draggable: true,
+  draggable: true
 };
 
 export default DragSource("Tile", TileSource, collectDrag)(
   DropTarget("Tile", TileTarget, connect => ({
-    connectDropTarget: connect.dropTarget(),
-  }))(WeatherTile),
+    connectDropTarget: connect.dropTarget()
+  }))(WeatherTile)
 );

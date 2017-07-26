@@ -41,7 +41,8 @@ const weather = (currentState = initialState, action) => {
               id: action.data.weather.city.id
             },
             name: action.data.weather.city.name,
-            main: action.data.weather.list[0].main
+            main: action.data.weather.list[0].main,
+            weather: [{ icon: action.data.weather.list[0].weather[0].icon }]
           }
         ]
       };
