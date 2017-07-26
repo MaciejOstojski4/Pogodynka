@@ -127,9 +127,17 @@ class WeatherDetails extends Component {
                 title={this.state.chartState}
                 cityName={this.props.data.city.name}
               />
-              <button onClick={this.temperatureClick}>Temperature </button>
-              <button onClick={this.pressureClick}>Pressure </button>
-              <button onClick={this.humidityClick}>Humidity</button>
+              <Div>
+                <SubmitButton onClick={this.temperatureClick}>
+                  Temperature{" "}
+                </SubmitButton>
+                <SubmitButton onClick={this.pressureClick}>
+                  Pressure{" "}
+                </SubmitButton>
+                <SubmitButton onClick={this.humidityClick}>
+                  Humidity
+                </SubmitButton>
+              </Div>
             </div>
           </div>
           <div className="row">
@@ -174,5 +182,17 @@ const mapStateToProps = currentState => {
     data: currentState.weather.cityDetails
   };
 };
-
+const Div = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+const SubmitButton = styled.button`
+  margin: 10px;
+  border: none;
+  border-radius: 0px;
+  box-shadow: 2px 2px 4px grey;
+  background-color: #827717;
+  color: white;
+`;
 export default connect(mapStateToProps)(WeatherDetails);

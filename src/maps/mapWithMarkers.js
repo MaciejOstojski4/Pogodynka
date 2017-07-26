@@ -6,7 +6,6 @@ import {
   InfoWindow
 } from "react-google-maps";
 import MarkerClusterer from "react-google-maps/lib/addons/MarkerClusterer";
-import { connect } from "react-redux";
 
 const MarkerClustererExampleGoogleMap = withGoogleMap(props => {
   return (

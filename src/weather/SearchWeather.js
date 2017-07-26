@@ -114,7 +114,7 @@ export class SearchWeather extends Component {
             </div>
           </div>
 
-          <div>
+          <SubmitButtonContainer>
             <SubmitButton
               className="btn btn-lg"
               type="submit"
@@ -122,7 +122,7 @@ export class SearchWeather extends Component {
             >
               Search
             </SubmitButton>
-          </div>
+          </SubmitButtonContainer>
         </SearchForm>
         <div className="row">
           <ErrorMessage>
@@ -175,7 +175,7 @@ const SearchForm = styled.form`
   justify-content: space-between;
   position: relative;
 `;
-
+const SubmitButtonContainer = styled.div``;
 const SEARCH_URL = "forecast?units=metric&";
 
 const LAT_LONG_REGEX = /(-)?[0-9]+\.[0-9]+:(-)?[0-9]+\.[0-9]+/;

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import SearchWeather from "../weather/SearchWeather";
-import MarkerClustererExample from "./mapaMark";
+import MarkerClustererExample from "./mapWithMarkers";
 import { connect } from "react-redux";
 class Container extends Component {
   constructor(props) {
