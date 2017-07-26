@@ -22,6 +22,7 @@ class WeatherDetails extends Component {
       errorInfo: ERROR_MESSAGE,
       currentForecast: this.props.data.list[0],
       chartState: "temperature",
+      favCity: {}
     };
   }
 
@@ -95,6 +96,9 @@ class WeatherDetails extends Component {
     if (this.isForecastFetched()) {
       this.prepareDataForForecast();
       this.prepareDataForChart(this.props.noDay);
+      if (this.isCityInFavourite()) {
+        this.setCityInState();
+      }
     }
   }
 
@@ -117,9 +121,11 @@ class WeatherDetails extends Component {
   };
 
   isCityInFavourite = () => {
-    const favCities = this.props.favCities.filter(favCity => favCity.external_id === this.props.data.city.id)
+    const favCities = this.props.favCities.filter(
+      favCity => favCity.external_id === this.props.data.city.id,
+    );
     return favCities.length > 0;
-  }
+  };
 
   createFavouriteCityObject = () => {
     return {
@@ -129,11 +135,11 @@ class WeatherDetails extends Component {
         lat: this.props.data.city.coord.lat,
         lon: this.props.data.city.coord.lon,
         description: "",
-      }
-    }
-  }
+      },
+    };
+  };
 
-  changeFavStatusOnServer = (like) => {
+  changeFavStatusOnServer = like => {
     if (like) {
       this.addCityToFavourite();
     } else {
@@ -142,9 +148,7 @@ class WeatherDetails extends Component {
   };
 
   removeCityFromFavourite = () => {
-    const favCity = this.createFavouriteCityObject();
-    console.log(favCity);
-    this.props.dispatch(removeUserCityAction(favCity));
+    this.props.dispatch(removeUserCityAction(this.state.favCity));
   };
 
   addCityToFavourite = () => {
@@ -152,8 +156,20 @@ class WeatherDetails extends Component {
     this.props.dispatch(addUserCityAction(favCity));
   };
 
+  getFavCityFromStore = () => {
+    return this.props.favCities.filter(
+      favCity => favCity.external_id === this.props.data.city.id,
+    )[0];
+  }
+
+  setCityInState = () => {
+    this.setState({
+      favCity: this.getFavCityFromStore()
+    })
+  };
+
   getComponentToRender = () => {
-    console.log("city frtom details (data)");
+    console.log("city from details (data)");
     console.log(this.props.data);
     this.props.dispatch(parseSearchedWeatherAction(this.props.data));
     if (this.isForecastFetched()) {
@@ -223,7 +239,7 @@ const StyledTitle = styled.h3`font-size: 27px;`;
 const mapStateToProps = currentState => {
   return {
     data: currentState.weather.cityDetails,
-    favCities: currentState.session.userCities
+    favCities: currentState.session.userCities,
   };
 };
 
