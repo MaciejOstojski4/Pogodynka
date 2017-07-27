@@ -14,14 +14,25 @@ class MapContainer extends Component {
     };
   }
   markerClick = marker => {
-    this.setState({
-      mapData: { ...this.state.mapData, showInfo: true }
+    const temp = this.state.mapData;
+    temp.map(p => {
+      if (p === marker) {
+        p.showInfo = true;
+      }
+      this.setState({
+        mapData: temp
+      });
     });
   };
-
   popUpHide = marker => {
-    this.setState({
-      mapData: { ...this.state.mapData, showInfo: false }
+    const temp = this.state.mapData;
+    temp.map(p => {
+      if (p === marker) {
+        p.showInfo = false;
+      }
+      this.setState({
+        mapData: temp
+      });
     });
   };
 
@@ -33,12 +44,29 @@ class MapContainer extends Component {
     return `${SEARCH_URL}q=${this.props.params.cityName}`;
   };
   fillStateAfterFetched = response => {
+    console.log(response.data);
     this.setState({
-      mapData: { ...response.data, showInfo: true }
+      mapData: [
+        {
+          showInfo: false,
+          coord: {
+            lat: response.data.city.coord.lat,
+            lon: response.data.city.coord.lon
+          },
+          name: response.data.city.name,
+          weather: [{ icon: response.data.list[0].weather[0].icon }],
+          main: {
+            temp: response.data.list[0].main.temp,
+            pressure: response.data.list[0].main.pressure,
+            humidity: response.data.list[0].main.humidity
+          }
+        }
+      ]
     });
+    console.log(this.state.mapData);
   };
 
-  fetchWeather = () => {
+  fetchWeatherForSingleCity = () => {
     const url = this.prepareUrl();
     console.log(url);
     apiClient
@@ -53,7 +81,30 @@ class MapContainer extends Component {
         });
       });
   };
-
+  prepareUrlForCities = () => {
+    return WEATHER_FOR_SEVERAL_CITIES_URL + "id=" + initialCities.join(",");
+  };
+  fetchWeatherForCities = () => {
+    apiClient
+      .get(this.prepareUrlForCities())
+      .then(response => {
+        this.fillStateAfterFetchedMultipleCities(response);
+      })
+      .catch(error => {
+        console.log(
+          "Error occurred during fetching weather for cities: " + error
+        );
+      });
+  };
+  fillStateAfterFetchedMultipleCities = response => {
+    console.log(response.data);
+    this.setState({
+      mapData: response.data.list.map(p => {
+        return { ...p, showInfo: false };
+      })
+    });
+    console.log(this.state.mapData);
+  };
   isForecastFetched = () => {
     return this.state.mapData !== null;
   };
@@ -84,13 +135,29 @@ class MapContainer extends Component {
     }
   }
   componentDidMount() {
-    this.fetchWeather();
+    if (this.props.params.cityName !== undefined) {
+      this.fetchWeatherForSingleCity();
+    } else {
+      this.fetchWeatherForCities();
+    }
   }
   render() {
     console.log(this.state.mapData);
     return this.renderMapContainer();
   }
 }
-
+const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric&";
 const SEARCH_URL = "forecast?units=metric&";
+const initialCities = [
+  6695624, // Warszawa
+  2988507, // Paris
+  3117735, // Madrid
+  2643743, // London
+  2950159, // Berlin
+  703448, // Kiev
+  524901, // Moscow
+  2759794, // Amsterdam
+  3143244, //Oslo
+  6458923 // Lisbon
+];
 export default MapContainer;
