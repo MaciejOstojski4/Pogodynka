@@ -28,6 +28,7 @@ class WeatherDetails extends Component {
       currentForecast: {},
       chartState: "temperature",
       favCitiesWeather: null,
+      favCity: {},
       loading: false,
     };
   }
@@ -106,10 +107,12 @@ class WeatherDetails extends Component {
     apiClient
       .get(url)
       .then(response => {
+        console.log("dasdasdasd");
         this.fillStateAfterFetched(response);
         this.changeLoaderVisibility();
       })
       .catch(error => {
+        console.log(error);
         this.changeLoaderVisibility();
         this.setState({
           errorInfo: "Cannot find this city",
@@ -131,14 +134,12 @@ class WeatherDetails extends Component {
         this.props.noDay,
         this.parseDataForChart(response.data.list),
       ),
+      favCity: this.getFavCityFromStore(response.data)
     });
   };
 
   prepareDataForComponent = () => {
     this.fetchWeather();
-    if (this.isCityInFavourite()) {
-      this.setFavCityInStateIfExists();
-    }
     if (this.state.favCitiesWeather !== null) {
       this.props.dispatch(
         parseSearchedWeatherAction(this.state.favCitiesWeather),
@@ -207,16 +208,11 @@ class WeatherDetails extends Component {
     this.props.dispatch(addUserCityAction(favCity));
   };
 
-  getFavCityFromStore = () => {
-    return this.props.favCities.filter(
-      favCity => favCity.external_id === this.state.favCitiesWeather.city.id,
-    )[0];
-  };
-
-  setFavCityInStateIfExists = () => {
-    this.setState({
-      favCity: this.getFavCityFromStore(),
-    });
+  getFavCityFromStore = (responseData) => {
+    const city = this.props.favCities.filter(
+      favCity => favCity.external_id === responseData.city.id,
+    )[0]
+    return city;
   };
 
   getComponentToRender = () => {
