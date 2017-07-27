@@ -4,7 +4,6 @@ import { Marker, InfoWindow } from "react-google-maps";
 
 class MarkerClustererComponent extends Component {
   render() {
-    console.log(this.props.markers);
     return (
       <div>
         <MarkerClusterer averageCenter enableRetinaIcons gridSize={30}>

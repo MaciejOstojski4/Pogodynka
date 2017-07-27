@@ -10,7 +10,6 @@ import {
   addUserCityAction,
   removeUserCityAction
 } from "../actions/user-action";
-import { withRouter } from "react-router";
 import apiClient from "../lib/api-client";
 import LoaderWrapper from "../user-interface/Loader";
 
@@ -298,7 +297,6 @@ class WeatherDetails extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div>
         {this.renderSearchBox()}

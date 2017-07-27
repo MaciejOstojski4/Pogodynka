@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import SearchWeather from "../weather/SearchWeather";
 import MapWithMarkers from "./MapWithMarkers";
-import WeatherDetails from "../weather/WeatherDetails";
 import apiClient from "../lib/api-client";
-import { withRouter } from "react-router";
 
 class MapContainer extends Component {
   constructor(props) {
@@ -44,11 +42,10 @@ class MapContainer extends Component {
     return `${SEARCH_URL}q=${this.props.params.cityName}`;
   };
   fillStateAfterFetched = response => {
-    console.log(response.data);
     this.setState({
       mapData: [
         {
-          showInfo: false,
+          showInfo: true,
           coord: {
             lat: response.data.city.coord.lat,
             lon: response.data.city.coord.lon
@@ -64,17 +61,14 @@ class MapContainer extends Component {
         }
       ]
     });
-    console.log(this.state.mapData);
   };
 
   fetchWeatherForSingleCity = () => {
     const url = this.prepareUrl();
-    console.log(url);
     apiClient
       .get(url)
       .then(response => {
         this.fillStateAfterFetched(response);
-        console.log(response);
       })
       .catch(error => {
         console.log(error);
@@ -99,13 +93,11 @@ class MapContainer extends Component {
       });
   };
   fillStateAfterFetchedMultipleCities = response => {
-    console.log(response.data);
     this.setState({
       mapData: response.data.list.map(p => {
         return { ...p, showInfo: false };
       })
     });
-    console.log(this.state.mapData);
   };
   isForecastFetched = () => {
     return this.state.mapData !== null;
