@@ -18,7 +18,7 @@ class ForecastTile extends React.Component {
           </ValueParagraph>
         </TileField>
         <TileField>
-          <img src={this.getForecastIcon()} alt="Cannot render weather" />
+          <ForecastImage src={this.getForecastIcon()} alt="Cannot render weather" />
         </TileField>
         <TileField className="text-center">
           <DescriptionParagraph>Pressure:</DescriptionParagraph>
@@ -37,6 +37,14 @@ class ForecastTile extends React.Component {
   }
 }
 
+const ForecastImage = styled.img`
+  max-height: 50px;
+  max-width: 50px;
+  @media screen and (max-width: 1080px) {
+    margin-left: 47%; 
+  }
+`;
+
 const Tile = styled.div`
   flex: 1;
   margin: 10px;
@@ -50,7 +58,9 @@ const Tile = styled.div`
   }
 `;
 
-const TileField = styled.div`flex: 1;`;
+const TileField = styled.div`
+  flex: 1;
+`;
 
 const DescriptionParagraph = styled.p`font-style: italic;`;
 
