@@ -9,6 +9,7 @@ import MapContainer from "./maps/MapContainer";
 import RegisterForm from "./user/form/RegisterForm";
 import LoginForm from "./user/form/LoginForm";
 import FavouriteCities from "./weather/FavouriteCities";
+import weather from "./weather.png";
 
 class App extends Component {
   authenticateUser = (nextState, replace) => {
@@ -41,7 +42,7 @@ class App extends Component {
 }
 
 const AppMainContainer = styled.div`
-  background-image: url(http://img.freepik.com/free-vector/grey-linen-texture-background_1053-253.jpg?size=338&ext=jpg);
+  background: url("${weather}");
   height: 100%;
   color: #1b5e20;
   min-height: 100vh;
