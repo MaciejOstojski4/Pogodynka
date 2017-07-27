@@ -41,7 +41,9 @@ const ForecastImage = styled.img`
   max-height: 50px;
   max-width: 50px;
   @media screen and (max-width: 1080px) {
-    margin-left: 47%; 
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
 `;
 
@@ -60,6 +62,7 @@ const Tile = styled.div`
 
 const TileField = styled.div`
   flex: 1;
+  min-width: 100px;
 `;
 
 const DescriptionParagraph = styled.p`font-style: italic;`;
