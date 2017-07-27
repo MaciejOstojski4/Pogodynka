@@ -39,19 +39,22 @@ class RegisterForm extends React.Component {
     }
   };
 
+  createRegisterPayload = () => {
+    return {
+      user: {
+        email: this.state.email,
+        password: this.state.password,
+      },
+    }
+  }
+
   registerUser = () => {
     userClientApi
-      .post(REGISTER_URL, {
-        user: {
-          email: this.state.email,
-          password: this.state.password,
-        },
-      })
+      .post(REGISTER_URL, this.createRegisterPayload())
       .then(response => {
         this.props.router.push("login-form");
       })
       .then(error => {
-        console.log(error);
         this.setState({
           serverError: true,
         });

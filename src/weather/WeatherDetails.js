@@ -304,7 +304,6 @@ class WeatherDetails extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div>
         {this.renderSearchBox()}
