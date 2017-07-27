@@ -23,7 +23,7 @@ class WeatherCardAggregator extends React.Component {
     };
   }
 
-  replaceIndex = newIndex => {
+  replaceDropIndex = newIndex => {
     this.setState({
       dropIndex: newIndex,
     });
@@ -33,7 +33,7 @@ class WeatherCardAggregator extends React.Component {
     this.props.router.push("weatherdetails/" + cityName);
   };
 
-  createFavouriteCityObjectWithPositionAt = (city, position) => {
+  createFavCityObjectWithPositionAt = (city, position) => {
     const favCity = this.createFavouriteCityObject(city);
     return {
       ...favCity,
@@ -67,12 +67,12 @@ class WeatherCardAggregator extends React.Component {
         favCity => favCity.name !== city.favCity.name,
       ),
     });
-  }
+  };
 
   removeCityFromFavourite = city => {
     this.props.dispatch(removeUserCityAction(city.favCity));
-    if(this.props.locallyRemoved) {
-      this.removeCityFromState(city)
+    if (this.props.locallyRemoved) {
+      this.removeCityFromState(city);
     }
   };
 
@@ -89,32 +89,34 @@ class WeatherCardAggregator extends React.Component {
     return city.favCity === null;
   };
 
+  getTileProps = (city, index) => {
+    return {
+      key: city.name,
+      city: city,
+      index: index,
+      onClickRedirect: this.redirectToDetails,
+      onFavClick: this.changeFavStatusOnServer,
+      showButtons: this.showFavButtons(),
+      likeButton: this.showLikeButton(city),
+      dislikeButton: !this.showLikeButton(city),
+      changePositionDuringDrag: this.changePositionDuringDrag,
+      changePositionOnServer: this.changePositionOnServer,
+      replaceDropIndex: this.replaceDropIndex,
+      draggable: this.props.draggable,
+    };
+  };
+
   getComponentToRender = () => {
     return this.state.cities.map((city, index) => {
       if (city !== undefined) {
-        return (
-          <WeatherTile
-            key={city.name}
-            city={city}
-            index={index}
-            onClickRedirect={this.redirectToDetails}
-            onFavClick={this.changeFavStatusOnServer}
-            showButtons={this.showFavButtons()}
-            likeButton={this.showLikeButton(city)}
-            dislikeButton={!this.showLikeButton(city)}
-            changePositionDuringDrag={this.changePositionDuringDrag}
-            changePositionOnServer={this.changePositionOnServer}
-            replaceIndex={this.replaceIndex}
-            draggable={this.props.draggable}
-          />
-        );
+        return <WeatherTile {...this.getTileProps(city, index)} />;
       } else {
         return <div />;
       }
     });
   };
 
-  swapCitiesInState = (firstIndex, secondIndex) => {
+  swapCitiesFromState = (firstIndex, secondIndex) => {
     let cities = this.state.cities;
     const firstCity = cities[firstIndex];
     cities[firstIndex] = cities[secondIndex];
@@ -123,7 +125,7 @@ class WeatherCardAggregator extends React.Component {
   };
 
   changePositionDuringDrag = (dragIndex, hoverIndex) => {
-    const cities = this.swapCitiesInState(dragIndex, hoverIndex);
+    const cities = this.swapCitiesFromState(dragIndex, hoverIndex);
     this.setState({
       cities: cities,
     });
@@ -132,11 +134,11 @@ class WeatherCardAggregator extends React.Component {
   changePositionOnServer = dragIndex => {
     const dragCity = this.state.cities[dragIndex];
     const dropCity = this.state.cities[this.state.dropIndex];
-    const favDragCity = this.createFavouriteCityObjectWithPositionAt(
+    const favDragCity = this.createFavCityObjectWithPositionAt(
       dragCity,
       dropCity.favCity.position,
     );
-    const favDropCity = this.createFavouriteCityObjectWithPositionAt(
+    const favDropCity = this.createFavCityObjectWithPositionAt(
       dropCity,
       dragCity.favCity.position,
     );

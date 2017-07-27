@@ -23,7 +23,7 @@ class WeatherTile extends React.Component {
     return ICON_URL + this.props.city.weather[0].icon + ".png";
   };
 
-  refreshTileColorInState = tileColor => {
+  updateTileColorInState = tileColor => {
     this.setState({
       tileColor: tileColor
     });
@@ -51,11 +51,11 @@ class WeatherTile extends React.Component {
 
   resolveTileColor = weatherCode => {
     if (this.isBadWeather(weatherCode)) {
-      this.refreshTileColorInState(tileColors.badWeather);
+      this.updateTileColorInState(tileColors.badWeather);
     } else if (this.isAverageWeather(weatherCode)) {
-      this.refreshTileColorInState(tileColors.averageWeather);
+      this.updateTileColorInState(tileColors.averageWeather);
     } else if (this.isGoodWeather(weatherCode)) {
-      this.refreshTileColorInState(tileColors.goodWeather);
+      this.updateTileColorInState(tileColors.goodWeather);
     }
   };
 
@@ -245,7 +245,7 @@ const TileTarget = {
     }
 
     props.changePositionDuringDrag(dragIndex, hoverIndex);
-    props.replaceIndex(dragIndex);
+    props.replaceDropIndex(dragIndex);
 
     monitor.getItem().index = hoverIndex;
   },

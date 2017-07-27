@@ -83,11 +83,15 @@ class Home extends Component {
       });
   };
 
-  componentDidMount() {
-    this.fetchWeatherForCities();
+  fetchFavCities = () => {
     if (this.props.userId !== "") {
       this.props.dispatch(fetchUserFavCitiesAction());
     }
+  }
+
+  componentDidMount() {
+    this.fetchWeatherForCities();
+    this.fetchFavCities();
   }
 
   renderLoader = () => {

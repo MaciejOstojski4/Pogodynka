@@ -32,13 +32,17 @@ export class SearchWeather extends Component {
     });
   };
 
+  getSimilarCitiesNames = (inputText) => {
+    return this.props.cities.filter(val =>
+      val.toLowerCase().includes(inputText.toLowerCase()),
+    );
+  }
+
   searchDynamically = inputText => {
     if (inputText.length === 0) {
       return [];
     }
-    return this.props.cities.filter(val =>
-      val.toLowerCase().includes(inputText.toLowerCase()),
-    );
+    return this.getSimilarCitiesNames(inputText);
   };
 
   handleChange = e => {
@@ -60,13 +64,21 @@ export class SearchWeather extends Component {
     }
   };
 
-  onSubmit = e => {
-    e.preventDefault();
-    this.dispatchData();
+  hideSearchHint = () => {
     this.setState({
       showHint: false,
     });
+  }
+
+  redirectToDetails = () => {
     this.props.router.push("weatherdetails/" + this.state.inputText);
+  }
+
+  onSubmit = e => {
+    e.preventDefault();
+    this.dispatchData();
+    this.hideSearchHint();
+    this.redirectToDetails();
   };
 
   showSearchHint = () => {

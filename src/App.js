@@ -16,10 +16,11 @@ class App extends Component {
     const state = this.props.store.getState();
     if (state.session.user.token === "") {
       replace({
-        pathname: "login-form"
+        pathname: "login-form",
       });
     }
   };
+
   render() {
     return (
       <AppMainContainer>

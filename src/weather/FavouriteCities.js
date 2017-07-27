@@ -23,11 +23,15 @@ class FavouriteCities extends React.Component {
     });
   };
 
-  createUrl = () => {
-    const favCitiesIds = this.props.favCities.map(favCity => {
+  getOWMIdsFromFavCities = () => {
+    return this.props.favCities.map(favCity => {
       return favCity.external_id
     });
-    return `${WEATHER_FOR_SEVERAL_CITIES_URL}id=${favCitiesIds.join(",")}`
+  }
+
+  createUrl = () => {
+    const owmCityIds = this.getOWMIdsFromFavCities();
+    return `${WEATHER_FOR_SEVERAL_CITIES_URL}id=${owmCityIds.join(",")}`
   };
 
   getFromFavoriteIfExists = cityName => {

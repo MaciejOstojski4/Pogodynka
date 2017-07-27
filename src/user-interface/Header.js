@@ -34,17 +34,10 @@ class Header extends React.Component {
 
   render() {
     return (
-      <NavbarContainer className="container">
-        <Navbar className="navbar navbar-inverse">
+      <NavBarContainer className="container">
+        <NavBar className="navbar navbar-inverse">
           <div className="navbar-header">
-            <a
-              className="navbar-brand"
-              style={{
-                color: "#cddc39"
-              }}
-            >
-              Pogodynka
-            </a>
+            <Anchor className="navbar-brand">Pogodynka</Anchor>
           </div>
           <ResponsiveList className="nav navbar-nav">
             <li>
@@ -54,27 +47,30 @@ class Header extends React.Component {
               <Link to="mapcontainer">Weather Map</Link>
             </li>
             <li>
+              {this.renderFavouriteCitiesLink()}
+            </li>
+            <li>
               {this.renderRegisterLink()}
             </li>
             <li>
               {this.renderUserSessionLink()}
             </li>
-            <li>
-              {this.renderFavouriteCitiesLink()}
-            </li>
           </ResponsiveList>
-        </Navbar>
-      </NavbarContainer>
+        </NavBar>
+      </NavBarContainer>
     );
   }
 }
+
+const Anchor = styled.a`color: #cddc39;`;
+
 const ResponsiveList = styled.ul`
   @media only screen and (max-width: 767px) {
     margin-left: 20px;
   }
 `;
 
-const Navbar = styled.nav`
+const NavBar = styled.nav`
   background-color: #000000;
   border-radius: 0px;
   border-color: #9e9d24;
@@ -82,11 +78,11 @@ const Navbar = styled.nav`
   font-size: 120%;
 `;
 
-const NavbarContainer = styled.div`background-color: white;`;
+const NavBarContainer = styled.div`background-color: white;`;
 
 const mapStateToProps = currentState => {
   return {
-    userEmail: currentState.session.user.email
+    userEmail: currentState.session.user.email,
   };
 };
 

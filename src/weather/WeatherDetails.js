@@ -8,9 +8,8 @@ import SearchWeather from "./SearchWeather";
 import { parseSearchedWeatherAction } from "../actions/weather-actions";
 import {
   addUserCityAction,
-  removeUserCityAction
+  removeUserCityAction,
 } from "../actions/user-action";
-import { withRouter } from "react-router";
 import apiClient from "../lib/api-client";
 import LoaderWrapper from "../user-interface/Loader";
 
@@ -31,13 +30,13 @@ class WeatherDetails extends Component {
       chartState: "temperature",
       favCitiesWeather: null,
       favCity: {},
-      loading: false
+      loading: false,
     };
   }
 
   changeLoaderVisibility = () => {
     this.setState({
-      loading: !this.state.loading
+      loading: !this.state.loading,
     });
   };
 
@@ -47,7 +46,7 @@ class WeatherDetails extends Component {
 
   getDailyForecastAtHour = (hour, list) => {
     return list.filter(
-      weather => this.getHoursFromDate(weather.dt_txt) === hour
+      weather => this.getHoursFromDate(weather.dt_txt) === hour,
     );
   };
 
@@ -64,7 +63,7 @@ class WeatherDetails extends Component {
         temperature: forecast.main.temp,
         pressure: forecast.main.pressure,
         humidity: forecast.main.humidity,
-        time: this.getHoursFromDate(forecast.dt_txt).slice(0, 5)
+        time: this.getHoursFromDate(forecast.dt_txt).slice(0, 5),
       };
     });
   };
@@ -79,8 +78,8 @@ class WeatherDetails extends Component {
     this.setState({
       forecastForChart: this.getForecastForDay(
         noDay,
-        this.parseDataForChart(this.state.favCitiesWeather.list)
-      )
+        this.parseDataForChart(this.state.favCitiesWeather.list),
+      ),
     });
   };
 
@@ -90,7 +89,7 @@ class WeatherDetails extends Component {
 
   setWeatherDetails = noDay => {
     this.setState({
-      currentForecast: this.state.dayForecast[noDay]
+      currentForecast: this.state.dayForecast[noDay],
     });
   };
 
@@ -115,7 +114,7 @@ class WeatherDetails extends Component {
       .catch(error => {
         this.changeLoaderVisibility();
         this.setState({
-          errorInfo: "Cannot find this city"
+          errorInfo: "Cannot find this city",
         });
       });
   };
@@ -124,56 +123,63 @@ class WeatherDetails extends Component {
     this.setState({
       favCitiesWeather: response.data,
       dayForecast: this.getForecastSinceTomorrow(
-        this.getDailyForecastAtHour("12:00:00", response.data.list)
+        this.getDailyForecastAtHour("12:00:00", response.data.list),
       ),
       nightForecast: this.getForecastSinceTomorrow(
-        this.getDailyForecastAtHour("00:00:00", response.data.list)
+        this.getDailyForecastAtHour("00:00:00", response.data.list),
       ),
       currentForecast: response.data.list[0],
       forecastForChart: this.getForecastForDay(
         this.props.noDay,
-        this.parseDataForChart(response.data.list)
+        this.parseDataForChart(response.data.list),
       ),
-      favCity: this.getFavCityFromStore(response.data)
+      favCity: this.getFavCityFromStore(response.data),
     });
+  };
+
+  parseSearchedWeather = () => {
+    if (this.state.favCitiesWeather !== null) {
+      this.props.dispatch(
+        parseSearchedWeatherAction(this.state.favCitiesWeather),
+      );
+    }
   };
 
   prepareDataForComponent = () => {
     this.fetchWeather();
-    if (this.state.favCitiesWeather !== null) {
-      this.props.dispatch(
-        parseSearchedWeatherAction(this.state.favCitiesWeather)
-      );
-    }
+    this.parseSearchedWeather();
   };
 
   componentDidMount() {
     this.prepareDataForComponent();
   }
 
-  pressureClick = () => {
+  changeCharState = state => {
     this.setState({
-      chartState: "pressure"
+      chartState: state,
     });
+  };
+
+  pressureClick = () => {
+    this.changeCharState("pressure");
   };
 
   temperatureClick = () => {
-    this.setState({
-      chartState: "temperature"
-    });
+    this.changeCharState("temperature");
   };
 
   humidityClick = () => {
-    this.setState({
-      chartState: "humidity"
-    });
+    this.changeCharState("humidity");
   };
+
+  findFavCity = () => {
+    return this.props.favCities.filter(
+      favCity => favCity.external_id === this.state.favCitiesWeather.city.id);
+  }
 
   isCityInFavourite = () => {
     if (this.isForecastFetched()) {
-      const favCities = this.props.favCities.filter(
-        favCity => favCity.external_id === this.state.favCitiesWeather.city.id
-      );
+      const favCities = this.findFavCity();
       return favCities.length > 0;
     }
     return false;
@@ -186,8 +192,8 @@ class WeatherDetails extends Component {
         external_id: this.state.favCitiesWeather.city.id,
         lat: this.state.favCitiesWeather.city.coord.lat,
         lon: this.state.favCitiesWeather.city.coord.lon,
-        description: ""
-      }
+        description: "",
+      },
     };
   };
 
@@ -210,7 +216,7 @@ class WeatherDetails extends Component {
 
   getFavCityFromStore = responseData => {
     return this.props.favCities.filter(
-      favCity => favCity.external_id === responseData.city.id
+      favCity => favCity.external_id === responseData.city.id,
     )[0];
   };
   redirectToMap = () => {
@@ -310,7 +316,7 @@ class WeatherDetails extends Component {
 }
 
 WeatherDetails.defaultProps = {
-  noDay: 0
+  noDay: 0,
 };
 
 const StyledTitle = styled.h3`
@@ -338,7 +344,7 @@ const SubmitButton = styled.button`
 const mapStateToProps = currentState => {
   return {
     data: currentState.weather.cityDetails,
-    favCities: currentState.session.userCities
+    favCities: currentState.session.userCities,
   };
 };
 
