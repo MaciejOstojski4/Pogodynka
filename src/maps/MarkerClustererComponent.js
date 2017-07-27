@@ -4,41 +4,41 @@ import { Marker, InfoWindow } from "react-google-maps";
 
 class MarkerClustererComponent extends Component {
   render() {
+    console.log(this.props.markers);
     return (
       <div>
         <MarkerClusterer averageCenter enableRetinaIcons gridSize={30}>
-          {props.markers.map(marker =>
+          {this.props.markers.map(marker =>
             <Marker
               position={{
-                lat: props.marker.city.coord.lat,
-                lng: props.marker.city.coord.lon
+                lat: marker.coord.lat,
+                lng: marker.coord.lon
               }}
               icon={{
-                url: `http://openweathermap.org/img/w/${props.marker.list[0]
-                  .weather[0].icon}.png`
+                url: `http://openweathermap.org/img/w/${marker.weather[0]
+                  .icon}.png`
               }}
-              key={props.marker.city.id}
-              onClick={() => props.onMarkerClick(props.marker)}
+              key={marker.id}
+              onClick={() => this.props.onMarkerClick(marker)}
             >
-              {props.marker.showInfo &&
-                <InfoWindow onCloseClick={() => props.onClose(props.marker)}>
+              {marker.showInfo &&
+                <InfoWindow onCloseClick={() => this.props.onClose(marker)}>
                   <div
-                    onClick={() =>
-                      props.onInfoWindowClick(props.marker.city.name)}
+                    onClick={() => this.props.onInfoWindowClick(marker.name)}
                   >
                     <p>
                       <b>
-                        {props.marker.city.name}
+                        {marker.name}
                       </b>
                     </p>
                     <p>
-                      Temperature: {props.marker.list[0].main.temp} C
+                      Temperature: {marker.main.temp} C
                     </p>
                     <p>
-                      Humidity: {props.marker.list[0].main.humidity} %
+                      Humidity: {marker.main.humidity} %
                     </p>
                     <p>
-                      Pressure: {props.marker.list[0].main.pressure} hPa
+                      Pressure: {marker.main.pressure} hPa
                     </p>
                   </div>
                 </InfoWindow>}

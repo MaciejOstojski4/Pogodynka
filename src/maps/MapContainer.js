@@ -14,14 +14,25 @@ class MapContainer extends Component {
     };
   }
   markerClick = marker => {
-    this.setState({
-      mapData: { ...this.state.mapData, showInfo: true }
+    const temp = this.state.mapData;
+    temp.map(p => {
+      if (p === marker) {
+        p.showInfo = true;
+      }
+      this.setState({
+        mapData: temp
+      });
     });
   };
-
   popUpHide = marker => {
-    this.setState({
-      mapData: { ...this.state.mapData, showInfo: false }
+    const temp = this.state.mapData;
+    temp.map(p => {
+      if (p === marker) {
+        p.showInfo = false;
+      }
+      this.setState({
+        mapData: temp
+      });
     });
   };
 
@@ -33,9 +44,26 @@ class MapContainer extends Component {
     return `${SEARCH_URL}q=${this.props.params.cityName}`;
   };
   fillStateAfterFetched = response => {
+    console.log(response.data);
     this.setState({
-      mapData: [{ ...response.data, showInfo: false }]
+      mapData: [
+        {
+          showInfo: false,
+          coord: {
+            lat: response.data.city.coord.lat,
+            lon: response.data.city.coord.lon
+          },
+          name: response.data.city.name,
+          weather: [{ icon: response.data.list[0].weather[0].icon }],
+          main: {
+            temp: response.data.list[0].main.temp,
+            pressure: response.data.list[0].main.pressure,
+            humidity: response.data.list[0].main.humidity
+          }
+        }
+      ]
     });
+    console.log(this.state.mapData);
   };
 
   fetchWeatherForSingleCity = () => {
@@ -69,9 +97,13 @@ class MapContainer extends Component {
       });
   };
   fillStateAfterFetchedMultipleCities = response => {
+    console.log(response.data);
     this.setState({
-      mapData: { ...response.data.list, showInfo: false }
+      mapData: response.data.list.map(p => {
+        return { ...p, showInfo: false };
+      })
     });
+    console.log(this.state.mapData);
   };
   isForecastFetched = () => {
     return this.state.mapData !== null;
@@ -83,6 +115,12 @@ class MapContainer extends Component {
         <div>
           <div className="row">
             <SearchWeather />
+            <MapWithMarkers
+              markers={this.state.mapData}
+              markerClick={this.markerClick}
+              popUpHide={this.popUpHide}
+              onInfoWindowClick={this.infoWindowClick}
+            />
           </div>
         </div>
       );
