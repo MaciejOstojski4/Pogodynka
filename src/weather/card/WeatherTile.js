@@ -196,24 +196,6 @@ const TileField = styled.div`
   font-size: 150%;
 `;
 
-const Tile = styled.div`
-  float: left;
-  position: relative;
-  margin: 5px;
-  padding: 10px;
-  min-width: 200px;
-  flex: 1;
-  flex-direction: column;
-  display: flex;
-  box-shadow: 2px 2px 4px grey;
-  &:hover {
-    opacity: 0.7;
-  }
-  &:active {
-    box-shadow: 0px 0px 0px;
-  }
-`;
-
 const TileSource = {
   beginDrag(props) {
     return {
