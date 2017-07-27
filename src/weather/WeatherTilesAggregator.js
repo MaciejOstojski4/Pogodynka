@@ -26,7 +26,6 @@ class WeatherCardAggregator extends React.Component {
   };
 
   redirectToDetails = cityName => {
-    //this.changeCityDetailsToDisplay(cityName);
     this.props.router.push("weatherdetails/" + cityName);
   };
 
@@ -68,6 +67,14 @@ class WeatherCardAggregator extends React.Component {
     this.props.dispatch(addUserCityAction(favCity));
   };
 
+  showFavButtons = () => {
+    return this.props.userId !== "";
+  }
+
+  showLikeButton = (city) => {
+    return city.favCity === null;
+  }
+
   getComponentToRender = () => {
     return this.state.cities.map((city, index) => {
       if (city !== undefined) {
@@ -78,9 +85,9 @@ class WeatherCardAggregator extends React.Component {
             index={index}
             onClickRedirect={this.redirectToDetails}
             onFavClick={this.changeFavStatusOnServer}
-            showButtons={this.props.userId !== ""}
-            likeButton={city.favCity === null}
-            dislikeButton={city.favCity !== null}
+            showButtons={this.showFavButtons()}
+            likeButton={this.showLikeButton(city)}
+            dislikeButton={!this.showLikeButton(city)}
             changePositionDuringDrag={this.changePositionDuringDrag}
             changePositionOnServer={this.changePositionOnServer}
             replaceIndex={this.replaceIndex}
