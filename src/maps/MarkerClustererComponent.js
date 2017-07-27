@@ -7,44 +7,43 @@ class MarkerClustererComponent extends Component {
     return (
       <div>
         <MarkerClusterer averageCenter enableRetinaIcons gridSize={30}>
-          <Marker
-            position={{
-              lat: this.props.markers.city.coord.lat,
-              lng: this.props.markers.city.coord.lon
-            }}
-            icon={{
-              url: `http://openweathermap.org/img/w/${this.props.markers.list[0]
-                .weather[0].icon}.png`
-            }}
-            key={this.props.markers.city.id}
-            onClick={() => this.props.onMarkerClick(this.props.markers)}
-          >
-            {this.props.markers.showInfo &&
-              <InfoWindow
-                onCloseClick={() => this.props.onClose(this.props.markers)}
-              >
-                <div
-                  onClick={() =>
-                    this.props.onInfoWindowClick(this.props.markers.city.name)}
-                >
-                  <p>
-                    <b>
-                      {this.props.markers.city.name}
-                    </b>
-                  </p>
-                  <p>
-                    Temperature: {this.props.markers.list[0].main.temp} C
-                  </p>
-                  <p>
-                    Humidity: {this.props.markers.list[0].main.humidity} %
-                  </p>
-                  <p>
-                    Pressure: {this.props.markers.list[0].main.pressure} hPa
-                  </p>
-                </div>
-              </InfoWindow>}
-          </Marker>
-          }
+          {props.markers.map(marker =>
+            <Marker
+              position={{
+                lat: props.marker.city.coord.lat,
+                lng: props.marker.city.coord.lon
+              }}
+              icon={{
+                url: `http://openweathermap.org/img/w/${props.marker.list[0]
+                  .weather[0].icon}.png`
+              }}
+              key={props.marker.city.id}
+              onClick={() => props.onMarkerClick(props.marker)}
+            >
+              {props.marker.showInfo &&
+                <InfoWindow onCloseClick={() => props.onClose(props.marker)}>
+                  <div
+                    onClick={() =>
+                      props.onInfoWindowClick(props.marker.city.name)}
+                  >
+                    <p>
+                      <b>
+                        {props.marker.city.name}
+                      </b>
+                    </p>
+                    <p>
+                      Temperature: {props.marker.list[0].main.temp} C
+                    </p>
+                    <p>
+                      Humidity: {props.marker.list[0].main.humidity} %
+                    </p>
+                    <p>
+                      Pressure: {props.marker.list[0].main.pressure} hPa
+                    </p>
+                  </div>
+                </InfoWindow>}
+            </Marker>
+          )}
         </MarkerClusterer>
       </div>
     );

@@ -34,11 +34,11 @@ class MapContainer extends Component {
   };
   fillStateAfterFetched = response => {
     this.setState({
-      mapData: { ...response.data, showInfo: true }
+      mapData: [{ ...response.data, showInfo: false }]
     });
   };
 
-  fetchWeather = () => {
+  fetchWeatherForSingleCity = () => {
     const url = this.prepareUrl();
     console.log(url);
     apiClient
@@ -53,7 +53,26 @@ class MapContainer extends Component {
         });
       });
   };
-
+  prepareUrlForCities = () => {
+    return WEATHER_FOR_SEVERAL_CITIES_URL + "id=" + initialCities.join(",");
+  };
+  fetchWeatherForCities = () => {
+    apiClient
+      .get(this.prepareUrlForCities())
+      .then(response => {
+        this.fillStateAfterFetchedMultipleCities(response);
+      })
+      .catch(error => {
+        console.log(
+          "Error occurred during fetching weather for cities: " + error
+        );
+      });
+  };
+  fillStateAfterFetchedMultipleCities = response => {
+    this.setState({
+      mapData: { ...response.data.list, showInfo: false }
+    });
+  };
   isForecastFetched = () => {
     return this.state.mapData !== null;
   };
@@ -64,12 +83,6 @@ class MapContainer extends Component {
         <div>
           <div className="row">
             <SearchWeather />
-            <MapWithMarkers
-              markers={this.state.mapData}
-              markerClick={this.markerClick}
-              popUpHide={this.popUpHide}
-              onInfoWindowClick={this.infoWindowClick}
-            />
           </div>
         </div>
       );
@@ -84,13 +97,29 @@ class MapContainer extends Component {
     }
   }
   componentDidMount() {
-    this.fetchWeather();
+    if (this.props.params.cityName !== undefined) {
+      this.fetchWeatherForSingleCity();
+    } else {
+      this.fetchWeatherForCities();
+    }
   }
   render() {
     console.log(this.state.mapData);
     return this.renderMapContainer();
   }
 }
-
+const WEATHER_FOR_SEVERAL_CITIES_URL = "/group?units=metric&";
 const SEARCH_URL = "forecast?units=metric&";
+const initialCities = [
+  6695624, // Warszawa
+  2988507, // Paris
+  3117735, // Madrid
+  2643743, // London
+  2950159, // Berlin
+  703448, // Kiev
+  524901, // Moscow
+  2759794, // Amsterdam
+  3143244, //Oslo
+  6458923 // Lisbon
+];
 export default MapContainer;
