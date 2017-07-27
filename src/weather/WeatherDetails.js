@@ -8,7 +8,7 @@ import SearchWeather from "./SearchWeather";
 import { parseSearchedWeatherAction } from "../actions/weather-actions";
 import {
   addUserCityAction,
-  removeUserCityAction,
+  removeUserCityAction
 } from "../actions/user-action";
 import apiClient from "../lib/api-client";
 
@@ -26,7 +26,7 @@ class WeatherDetails extends Component {
       errorInfo: ERROR_MESSAGE,
       currentForecast: {},
       chartState: "temperature",
-      favCitiesWeather: null,
+      favCitiesWeather: null
     };
   }
 
@@ -36,7 +36,7 @@ class WeatherDetails extends Component {
 
   getDailyForecastAtHour = (hour, list) => {
     return list.filter(
-      weather => this.getHoursFromDate(weather.dt_txt) === hour,
+      weather => this.getHoursFromDate(weather.dt_txt) === hour
     );
   };
 
@@ -53,7 +53,7 @@ class WeatherDetails extends Component {
         temperature: forecast.main.temp,
         pressure: forecast.main.pressure,
         humidity: forecast.main.humidity,
-        time: this.getHoursFromDate(forecast.dt_txt).slice(0, 5),
+        time: this.getHoursFromDate(forecast.dt_txt).slice(0, 5)
       };
     });
   };
@@ -68,8 +68,8 @@ class WeatherDetails extends Component {
     this.setState({
       forecastForChart: this.getForecastForDay(
         noDay,
-        this.parseDataForChart(this.state.favCitiesWeather.list),
-      ),
+        this.parseDataForChart(this.state.favCitiesWeather.list)
+      )
     });
   };
 
@@ -79,7 +79,7 @@ class WeatherDetails extends Component {
 
   setWeatherDetails = noDay => {
     this.setState({
-      currentForecast: this.state.dayForecast[noDay],
+      currentForecast: this.state.dayForecast[noDay]
     });
   };
 
@@ -102,7 +102,7 @@ class WeatherDetails extends Component {
       .catch(error => {
         console.log(error);
         this.setState({
-          errorInfo: "Cannot find this city",
+          errorInfo: "Cannot find this city"
         });
       });
   };
@@ -111,16 +111,16 @@ class WeatherDetails extends Component {
     this.setState({
       favCitiesWeather: response.data,
       dayForecast: this.getForecastSinceTomorrow(
-        this.getDailyForecastAtHour("12:00:00", response.data.list),
+        this.getDailyForecastAtHour("12:00:00", response.data.list)
       ),
       nightForecast: this.getForecastSinceTomorrow(
-        this.getDailyForecastAtHour("00:00:00", response.data.list),
+        this.getDailyForecastAtHour("00:00:00", response.data.list)
       ),
       currentForecast: response.data.list[0],
       forecastForChart: this.getForecastForDay(
         this.props.noDay,
-        this.parseDataForChart(response.data.list),
-      ),
+        this.parseDataForChart(response.data.list)
+      )
     });
   };
 
@@ -131,10 +131,10 @@ class WeatherDetails extends Component {
     }
     if (this.state.favCitiesWeather !== null) {
       this.props.dispatch(
-        parseSearchedWeatherAction(this.state.favCitiesWeather),
+        parseSearchedWeatherAction(this.state.favCitiesWeather)
       );
     }
-  }
+  };
 
   componentDidMount() {
     this.prepareDataForComponent();
@@ -142,26 +142,26 @@ class WeatherDetails extends Component {
 
   pressureClick = () => {
     this.setState({
-      chartState: "pressure",
+      chartState: "pressure"
     });
   };
 
   temperatureClick = () => {
     this.setState({
-      chartState: "temperature",
+      chartState: "temperature"
     });
   };
 
   humidityClick = () => {
     this.setState({
-      chartState: "humidity",
+      chartState: "humidity"
     });
   };
 
   isCityInFavourite = () => {
     if (this.isForecastFetched()) {
       const favCities = this.props.favCities.filter(
-        favCity => favCity.external_id === this.state.favCitiesWeather.city.id,
+        favCity => favCity.external_id === this.state.favCitiesWeather.city.id
       );
       return favCities.length > 0;
     }
@@ -175,8 +175,8 @@ class WeatherDetails extends Component {
         external_id: this.state.favCitiesWeather.city.id,
         lat: this.state.favCitiesWeather.city.coord.lat,
         lon: this.state.favCitiesWeather.city.coord.lon,
-        description: "",
-      },
+        description: ""
+      }
     };
   };
 
@@ -199,18 +199,17 @@ class WeatherDetails extends Component {
 
   getFavCityFromStore = () => {
     return this.props.favCities.filter(
-      favCity => favCity.external_id === this.state.favCitiesWeather.city.id,
+      favCity => favCity.external_id === this.state.favCitiesWeather.city.id
     )[0];
   };
 
   setFavCityInStateIfExists = () => {
     this.setState({
-      favCity: this.getFavCityFromStore(),
+      favCity: this.getFavCityFromStore()
     });
   };
 
   getComponentToRender = () => {
-
     if (this.isForecastFetched()) {
       return (
         <div>
@@ -235,13 +234,22 @@ class WeatherDetails extends Component {
                 cityName={this.state.favCitiesWeather.city.name}
               />
               <Div>
-                <SubmitButton onClick={this.temperatureClick}>
+                <SubmitButton
+                  className="btn btn-lg"
+                  onClick={this.temperatureClick}
+                >
                   Temperature
                 </SubmitButton>
-                <SubmitButton onClick={this.pressureClick}>
+                <SubmitButton
+                  className="btn btn-lg"
+                  onClick={this.pressureClick}
+                >
                   Pressure
                 </SubmitButton>
-                <SubmitButton onClick={this.humidityClick}>
+                <SubmitButton
+                  className="btn btn-lg"
+                  onClick={this.humidityClick}
+                >
                   Humidity
                 </SubmitButton>
               </Div>
@@ -268,7 +276,7 @@ class WeatherDetails extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    if(prevProps.params.cityName !== this.props.params.cityName) {
+    if (prevProps.params.cityName !== this.props.params.cityName) {
       this.prepareDataForComponent();
     }
   }
@@ -279,7 +287,7 @@ class WeatherDetails extends Component {
 }
 
 WeatherDetails.defaultProps = {
-  noDay: 0,
+  noDay: 0
 };
 
 const ERROR_MESSAGE = `Error occurred while application trying to fetch details information about weather.
@@ -311,7 +319,7 @@ const SubmitButton = styled.button`
 const mapStateToProps = currentState => {
   return {
     data: currentState.weather.cityDetails,
-    favCities: currentState.session.userCities,
+    favCities: currentState.session.userCities
   };
 };
 

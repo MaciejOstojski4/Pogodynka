@@ -1,64 +1,96 @@
 import React, { Component } from "react";
 import SearchWeather from "../weather/SearchWeather";
 import MapWithMarkers from "./MapWithMarkers";
-import { connect } from "react-redux";
 import WeatherDetails from "../weather/WeatherDetails";
 import apiClient from "../lib/api-client";
-import { changeDisplayedDetailsAction } from "../actions/weather-actions";
+import { withRouter } from "react-router";
+
 class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mapData: this.props.data
+      mapData: null,
+      errorInfo: ""
     };
   }
   markerClick = marker => {
-    const temp = this.state.mapData;
-    temp.map(p => {
-      if (p === marker) {
-        p.showInfo = true;
-      }
-      this.setState({
-        mapData: temp
-      });
+    this.setState({
+      mapData: { ...this.state.mapData, showInfo: true }
     });
   };
+
   popUpHide = marker => {
-    const temp = this.state.mapData;
-    temp.map(p => {
-      if (p === marker) {
-        p.showInfo = false;
-      }
-      this.setState({
-        mapData: temp
-      });
+    this.setState({
+      mapData: { ...this.state.mapData, showInfo: false }
     });
   };
 
   infoWindowClick = cityName => {
-    this.props.router.push("weatherdetails/"+cityName);
+    this.props.router.push("weatherdetails/" + cityName);
   };
 
-  render() {
-    return (
-      <div>
-        <div className="row">
-          <SearchWeather />
-          <MapWithMarkers
-            markers={this.state.mapData}
-            markerClick={this.markerClick}
-            popUpHide={this.popUpHide}
-            onInfoWindowClick={this.infoWindowClick}
-          />
+  prepareUrl = () => {
+    return `${SEARCH_URL}q=${this.props.params.cityName}`;
+  };
+  fillStateAfterFetched = response => {
+    this.setState({
+      mapData: { ...response.data, showInfo: true }
+    });
+  };
+
+  fetchWeather = () => {
+    const url = this.prepareUrl();
+    console.log(url);
+    apiClient
+      .get(url)
+      .then(response => {
+        this.fillStateAfterFetched(response);
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({
+          errorInfo: "Cannot find this city"
+        });
+      });
+  };
+
+  isForecastFetched = () => {
+    return this.state.mapData !== null;
+  };
+
+  renderMapContainer() {
+    if (this.isForecastFetched()) {
+      return (
+        <div>
+          <div className="row">
+            <SearchWeather />
+            <MapWithMarkers
+              markers={this.state.mapData}
+              markerClick={this.markerClick}
+              popUpHide={this.popUpHide}
+              onInfoWindowClick={this.infoWindowClick}
+            />
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="col-md-12 text-center">
+          <h2>
+            {this.state.errorInfo}
+          </h2>
+        </div>
+      );
+    }
+  }
+  componentDidMount() {
+    this.fetchWeather();
+  }
+  render() {
+    console.log(this.state.mapData);
+    return this.renderMapContainer();
   }
 }
-const mapStateToProps = currentState => {
-  return {
-    data: currentState.weather.savedWeather
-  };
-};
+
 const SEARCH_URL = "forecast?units=metric&";
-export default connect(mapStateToProps)(MapContainer);
+export default MapContainer;

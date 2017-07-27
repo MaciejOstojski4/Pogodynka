@@ -26,7 +26,7 @@ class App extends Component {
           <Route path="/" component={Layout}>
             <IndexRoute component={Home} />
             <Route component={WeatherDetails} path="weatherdetails/:cityName" />
-            <Route component={MapContainer} path="mapcontainer" />
+            <Route component={MapContainer} path="mapcontainer/:cityName" />
             <Route path="register-form" component={RegisterForm} />
             <Route path="login-form" component={LoginForm} />
           </Route>

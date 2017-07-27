@@ -3,12 +3,13 @@ import { withGoogleMap, GoogleMap } from "react-google-maps";
 import MarkerClustererComponent from "./MarkerClustererComponent";
 
 const MapWithMarkerClusterer = withGoogleMap(props => {
+  console.log(props.markers);
   return (
     <GoogleMap
       defaultZoom={4}
       defaultCenter={{
-        lat: props.markers[0].coord.lat,
-        lng: props.markers[0].coord.lon
+        lat: props.markers.city.coord.lat,
+        lng: props.markers.city.coord.lon
       }}
     >
       <MarkerClustererComponent
