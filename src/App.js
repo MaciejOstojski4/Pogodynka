@@ -9,6 +9,7 @@ import MapContainer from "./maps/MapContainer";
 import RegisterForm from "./user/form/RegisterForm";
 import LoginForm from "./user/form/LoginForm";
 import FavouriteCities from "./weather/FavouriteCities";
+import StationRegisterForm from "./weather/station/form/StationRegisterForm";
 
 class App extends Component {
   authenticateUser = (nextState, replace) => {
@@ -32,6 +33,7 @@ class App extends Component {
           </Route>
           <Route path="user" onEnter={this.authenticateUser} component={Layout}>
             <Router path="favourite-cities" component={FavouriteCities} />
+            <Router path="station/register-form" component={StationRegisterForm} />
           </Route>
         </Router>
       </AppMainContainer>

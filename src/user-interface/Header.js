@@ -28,6 +28,12 @@ class Header extends React.Component {
     }
   };
 
+  renderStationRegisterFormLink = () => {
+    if(this.isUserLogged()) {
+      return <Link to="user/station/register-form">Add weather station</Link>
+    }
+  }
+
   isUserLogged = () => {
     return this.props.userEmail !== "";
   };
@@ -61,6 +67,9 @@ class Header extends React.Component {
             </li>
             <li>
               {this.renderFavouriteCitiesLink()}
+            </li>
+            <li>
+              {this.renderStationRegisterFormLink()}
             </li>
           </ResponsiveList>
         </Navbar>
