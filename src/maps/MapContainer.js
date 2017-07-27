@@ -59,7 +59,8 @@ class MapContainer extends Component {
             temp: response.data.list[0].main.temp,
             pressure: response.data.list[0].main.pressure,
             humidity: response.data.list[0].main.humidity
-          }
+          },
+          id: response.data.city.id
         }
       ]
     });
@@ -73,6 +74,7 @@ class MapContainer extends Component {
       .get(url)
       .then(response => {
         this.fillStateAfterFetched(response);
+        console.log(response);
       })
       .catch(error => {
         console.log(error);
@@ -142,7 +144,6 @@ class MapContainer extends Component {
     }
   }
   render() {
-    console.log(this.state.mapData);
     return this.renderMapContainer();
   }
 }
@@ -158,6 +159,16 @@ const initialCities = [
   524901, // Moscow
   2759794, // Amsterdam
   3143244, //Oslo
-  6458923 // Lisbon
+  6458923, // Lisbon
+  676742,
+  8223990,
+  2761333,
+  1816670,
+  1850147,
+  2172517,
+  5128581,
+  4140963,
+  5506956,
+  5391959
 ];
 export default MapContainer;
