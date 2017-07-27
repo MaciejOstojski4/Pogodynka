@@ -1,9 +1,9 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {saveSearchedCityNameAction} from "../actions/weather-actions";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { saveSearchedCityNameAction } from "../actions/weather-actions";
 import styled from "styled-components";
 import SearchCityNameHint from "./SearchCityNameHint";
-import {withRouter} from "react-router";
+import { withRouter } from "react-router";
 
 export class SearchWeather extends Component {
   constructor(props) {
@@ -13,6 +13,7 @@ export class SearchWeather extends Component {
       inputText: "",
       errorInfo: "",
       similarCities: [],
+      showHint: false,
     };
   }
 
@@ -27,6 +28,7 @@ export class SearchWeather extends Component {
     this.setState({
       inputText: inputText,
       similarCities: similarCities,
+      showHint: true,
     });
   };
 
@@ -45,14 +47,38 @@ export class SearchWeather extends Component {
     this.updateState(e.target.value, similarCities);
   };
 
-  dispatchData = () => {
-    this.props.dispatch(saveSearchedCityNameAction(this.state.inputText));
+  isAlreadySearched = () => {
+    const searchedCity = this.props.cities.filter(
+      city => city.toLowerCase() === this.state.inputText.toLowerCase(),
+    );
+    return searchedCity.length > 0;
   }
+
+  dispatchData = () => {
+    if (!this.isAlreadySearched()) {
+      this.props.dispatch(saveSearchedCityNameAction(this.state.inputText));
+    }
+  };
 
   onSubmit = e => {
     e.preventDefault();
     this.dispatchData();
-    this.props.router.push("weatherdetails/"+this.state.inputText);
+    this.setState({
+      showHint: false,
+    });
+    this.props.router.push("weatherdetails/" + this.state.inputText);
+  };
+
+  showSearchHint = () => {
+    if (this.state.similarCities.length > 0 && this.state.showHint) {
+      return (
+        <SearchCityNameHint
+          similarCities={this.state.similarCities}
+          onClick={this.onSimilarCityNameClick}
+        />
+      );
+    }
+    return <div />;
   };
 
   render() {
@@ -70,12 +96,7 @@ export class SearchWeather extends Component {
               />
             </div>
             <div className="row">
-              {this.state.similarCities.length > 0
-                ? <SearchCityNameHint
-                    similarCities={this.state.similarCities}
-                    onClick={this.onSimilarCityNameClick}
-                  />
-                : <div />}
+              {this.showSearchHint()}
             </div>
           </div>
           <SubmitButtonContainer>

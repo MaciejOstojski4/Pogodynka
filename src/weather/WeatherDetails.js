@@ -11,6 +11,7 @@ import {
   removeUserCityAction
 } from "../actions/user-action";
 import apiClient from "../lib/api-client";
+import LoaderWrapper from "../user-interface/Loader";
 
 const SEARCH_URL = "forecast?units=metric&";
 const NUMBER_OF_DAYS_IN_FORECAST = 5;
@@ -23,12 +24,19 @@ class WeatherDetails extends Component {
       dayForecast: [],
       nightForecast: [],
       forecastForChart: [],
-      errorInfo: ERROR_MESSAGE,
+      errorInfo: "",
       currentForecast: {},
       chartState: "temperature",
-      favCitiesWeather: null
+      favCitiesWeather: null,
+      loading: false
     };
   }
+
+  changeLoaderVisibility = () => {
+    this.setState({
+      loading: !this.state.loading
+    });
+  };
 
   getHoursFromDate = date => {
     return date.split(" ")[1];
@@ -93,14 +101,16 @@ class WeatherDetails extends Component {
   };
 
   fetchWeather = () => {
+    this.changeLoaderVisibility();
     const url = this.prepareUrl();
     apiClient
       .get(url)
       .then(response => {
         this.fillStateAfterFetched(response);
+        this.changeLoaderVisibility();
       })
       .catch(error => {
-        console.log(error);
+        this.changeLoaderVisibility();
         this.setState({
           errorInfo: "Cannot find this city"
         });
@@ -214,7 +224,6 @@ class WeatherDetails extends Component {
       return (
         <div>
           <div className="row">
-            <SearchWeather />
             <div className="col-md-4">
               <CurrentWeatherDetails
                 cityName={this.state.favCitiesWeather.city.name}
@@ -264,15 +273,19 @@ class WeatherDetails extends Component {
           </div>
         </div>
       );
-    } else {
-      return (
-        <div className="col-md-12 text-center">
-          <h2>
-            {this.state.errorInfo}
-          </h2>
-        </div>
-      );
     }
+  };
+
+  renderLoader = () => {
+    return <LoaderWrapper />;
+  };
+
+  renderSearchBox = () => {
+    return (
+      <div className="row">
+        <SearchWeather />
+      </div>
+    );
   };
 
   componentDidUpdate(prevProps) {
@@ -282,17 +295,19 @@ class WeatherDetails extends Component {
   }
 
   render() {
-    return this.getComponentToRender(this.props.noDay);
+    return (
+      <div>
+        {this.renderSearchBox()}
+        {this.state.loading ? this.renderLoader() : this.getComponentToRender()}
+        {this.state.errorInfo}
+      </div>
+    );
   }
 }
 
 WeatherDetails.defaultProps = {
   noDay: 0
 };
-
-const ERROR_MESSAGE = `Error occurred while application trying to fetch details information about weather.
-  Probably the problem is with the OpenWeatherMap API.
-  Please, try again later.`;
 
 const StyledTitle = styled.h3`
   width: 100%

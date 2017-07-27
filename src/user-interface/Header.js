@@ -51,9 +51,6 @@ class Header extends React.Component {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="weatherdetails">Weather Details</Link>
-            </li>
-            <li>
               <Link to="mapcontainer">Weather Map</Link>
             </li>
             <li>
