@@ -8,8 +8,8 @@ const MapWithMarkerClusterer = withGoogleMap(props => {
     <GoogleMap
       defaultZoom={4}
       defaultCenter={{
-        lat: props.markers.city.coord.lat,
-        lng: props.markers.city.coord.lon
+        lat: props.markers[0].coord.lat,
+        lng: props.markers[0].coord.lon
       }}
     >
       <MarkerClustererComponent
