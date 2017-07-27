@@ -219,9 +219,11 @@ class WeatherDetails extends Component {
       favCity => favCity.external_id === responseData.city.id,
     )[0];
   };
+
   redirectToMap = () => {
     this.props.router.push("mapcontainer/" + this.state.cityName);
   };
+
   getComponentToRender = () => {
     if (this.isForecastFetched()) {
       return (

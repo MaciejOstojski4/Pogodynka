@@ -233,7 +233,7 @@ const TileTarget = {
   },
   drop(props, monitor, component) {
     const dragIndex = monitor.getItem().index;
-    props.changePositionOnServer(dragIndex);
+    //props.changePositionOnServer(dragIndex);
   }
 };
 
