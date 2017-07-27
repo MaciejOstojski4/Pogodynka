@@ -100,6 +100,7 @@ class Home extends Component {
         <WeatherTilesAggregator
           weatherItems={this.state.cities}
           draggable={false}
+          locallyRemoved={false}
         />
       </div>
     );

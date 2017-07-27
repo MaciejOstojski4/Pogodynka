@@ -2,11 +2,15 @@ import React from "react";
 import WeatherTile from "./card/WeatherTile";
 import styled from "styled-components";
 import MediaQuery from "react-responsive";
-import {connect} from "react-redux";
-import {withRouter} from "react-router";
-import {saveGroupWeatherAction} from "../actions/weather-actions";
-import {addUserCityAction, changeFavCityPosition, removeUserCityAction} from "../actions/user-action";
-import {DragDropContext} from "react-dnd";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import { saveGroupWeatherAction } from "../actions/weather-actions";
+import {
+  addUserCityAction,
+  changeFavCityPosition,
+  removeUserCityAction,
+} from "../actions/user-action";
+import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 
 class WeatherCardAggregator extends React.Component {
@@ -15,13 +19,13 @@ class WeatherCardAggregator extends React.Component {
 
     this.state = {
       cities: props.weatherItems,
-      dropIndex: -1
+      dropIndex: -1,
     };
   }
 
   replaceIndex = newIndex => {
     this.setState({
-      dropIndex: newIndex
+      dropIndex: newIndex,
     });
   };
 
@@ -33,7 +37,7 @@ class WeatherCardAggregator extends React.Component {
     const favCity = this.createFavouriteCityObject(city);
     return {
       ...favCity,
-      position: position
+      position: position,
     };
   };
 
@@ -44,8 +48,8 @@ class WeatherCardAggregator extends React.Component {
         external_id: city.id,
         lat: city.coord.lat,
         lon: city.coord.lon,
-        description: ""
-      }
+        description: "",
+      },
     };
   };
 
@@ -57,9 +61,19 @@ class WeatherCardAggregator extends React.Component {
     }
   };
 
+  removeCityFromState = city => {
+    this.setState({
+      cities: this.state.cities.filter(
+        favCity => favCity.name !== city.favCity.name,
+      ),
+    });
+  }
+
   removeCityFromFavourite = city => {
-    console.log(city.favCity);
     this.props.dispatch(removeUserCityAction(city.favCity));
+    if(this.props.locallyRemoved) {
+      this.removeCityFromState(city)
+    }
   };
 
   addCityToFavourite = city => {
@@ -69,11 +83,11 @@ class WeatherCardAggregator extends React.Component {
 
   showFavButtons = () => {
     return this.props.userId !== "";
-  }
+  };
 
-  showLikeButton = (city) => {
+  showLikeButton = city => {
     return city.favCity === null;
-  }
+  };
 
   getComponentToRender = () => {
     return this.state.cities.map((city, index) => {
@@ -111,7 +125,7 @@ class WeatherCardAggregator extends React.Component {
   changePositionDuringDrag = (dragIndex, hoverIndex) => {
     const cities = this.swapCitiesInState(dragIndex, hoverIndex);
     this.setState({
-      cities: cities
+      cities: cities,
     });
   };
 
@@ -120,11 +134,11 @@ class WeatherCardAggregator extends React.Component {
     const dropCity = this.state.cities[this.state.dropIndex];
     const favDragCity = this.createFavouriteCityObjectWithPositionAt(
       dragCity,
-      dropCity.favCity.position
+      dropCity.favCity.position,
     );
     const favDropCity = this.createFavouriteCityObjectWithPositionAt(
       dropCity,
-      dragCity.favCity.position
+      dragCity.favCity.position,
     );
     this.props.dispatch(
       changeFavCityPosition(
@@ -132,8 +146,8 @@ class WeatherCardAggregator extends React.Component {
         favDropCity,
         dragCity,
         dropCity,
-        this.state.cities
-      )
+        this.state.cities,
+      ),
     );
   };
 
@@ -178,10 +192,10 @@ const mapStateToProps = currentState => {
   return {
     userId: currentState.session.user.userId,
     token: currentState.session.user.token,
-    data: currentState.weather
+    data: currentState.weather,
   };
 };
 
 export default connect(mapStateToProps)(
-  DragDropContext(HTML5Backend)(withRouter(WeatherCardAggregator))
+  DragDropContext(HTML5Backend)(withRouter(WeatherCardAggregator)),
 );

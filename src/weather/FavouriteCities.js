@@ -83,7 +83,7 @@ class FavouriteCities extends React.Component {
   renderComponent = () => {
     return (
     <div className="row">
-      <WeatherTilesAggregator weatherItems={this.state.favCitiesWeather}/>
+      <WeatherTilesAggregator weatherItems={this.state.favCitiesWeather} locallyRemoved={true}/>
     </div>
     )
   };
