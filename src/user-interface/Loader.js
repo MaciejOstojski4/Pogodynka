@@ -22,6 +22,7 @@ const LoaderSpin = styled.div`
   border-radius: 50%;
   border: 20px solid grey;
   border-top: 20px solid #7cb342;
+  box-shadow: 2px 2px 4px grey;
   width: 120px;
   height: 120px;
   animation: spin 1.5s linear infinite;
