@@ -133,6 +133,7 @@ class WeatherDetails extends Component {
         this.props.noDay,
         this.parseDataForChart(response.data.list)
       ),
+
       favCity: this.getFavCityFromStore(response.data.city)
     });
   };
