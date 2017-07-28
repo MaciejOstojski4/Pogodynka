@@ -73,7 +73,6 @@ class MapContainer extends Component {
     apiClient
       .get(url)
       .then(response => {
-        console.log(response);
         this.fillStateAfterFetched(response);
       })
       .catch(error => {
@@ -90,7 +89,6 @@ class MapContainer extends Component {
     apiClient
       .get(this.prepareUrlForCities())
       .then(response => {
-        console.log(response);
         this.fillStateAfterFetchedMultipleCities(response);
       })
       .catch(error => {
