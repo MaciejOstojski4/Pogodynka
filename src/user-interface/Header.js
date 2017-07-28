@@ -37,7 +37,9 @@ class Header extends React.Component {
       <NavBarContainer className="container">
         <NavBar className="navbar navbar-inverse">
           <div className="navbar-header">
-            <Anchor className="navbar-brand">Pogodynka</Anchor>
+            <a style={{ color: "#cddc39" }} className="navbar-brand">
+              Pogodynka
+            </a>
           </div>
           <ResponsiveList className="nav navbar-nav">
             <li>
@@ -62,8 +64,6 @@ class Header extends React.Component {
   }
 }
 
-const Anchor = styled.a`color: #cddc39;`;
-
 const ResponsiveList = styled.ul`
   @media only screen and (max-width: 767px) {
     margin-left: 20px;
@@ -82,7 +82,7 @@ const NavBarContainer = styled.div`background-color: white;`;
 
 const mapStateToProps = currentState => {
   return {
-    userEmail: currentState.session.user.email,
+    userEmail: currentState.session.user.email
   };
 };
 
