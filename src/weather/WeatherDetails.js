@@ -133,7 +133,7 @@ class WeatherDetails extends Component {
         this.props.noDay,
         this.parseDataForChart(response.data.list)
       ),
-      favCity: this.getFavCityFromStore(response.data)
+      favCity: this.getFavCityFromStore(response.data.city)
     });
   };
 
@@ -207,7 +207,9 @@ class WeatherDetails extends Component {
   };
 
   removeCityFromFavourite = () => {
-    this.props.dispatch(removeUserCityAction(this.state.favCity));
+    if (!(this.state.favCity === undefined)) {
+      this.props.dispatch(removeUserCityAction(this.state.favCity));
+    }
   };
 
   addCityToFavourite = () => {
@@ -215,9 +217,9 @@ class WeatherDetails extends Component {
     this.props.dispatch(addUserCityAction(favCity));
   };
 
-  getFavCityFromStore = responseData => {
+  getFavCityFromStore = city => {
     return this.props.favCities.filter(
-      favCity => favCity.external_id === responseData.city.id
+      favCity => favCity.name === city.name
     )[0];
   };
 
