@@ -36,11 +36,11 @@ class Header extends React.Component {
     return (
       <NavBarContainer className="container">
         <NavBar className="navbar navbar-inverse">
-          <div className="navbar-header">
+          <Title className="navbar-header">
             <a style={{ color: "#cddc39" }} className="navbar-brand">
               Pogodynka
             </a>
-          </div>
+          </Title>
           <ResponsiveList className="nav navbar-nav">
             <li>
               <Link to="/">Home</Link>
@@ -65,8 +65,21 @@ class Header extends React.Component {
 }
 
 const ResponsiveList = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  justify-content: center;
   @media only screen and (max-width: 767px) {
-    margin-left: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+`;
+const Title = styled.div`
+  display: flex;
+  justify-content: center;
+
+  @media only screen and (max-width: 767px) {
+    margin-top: 10px;
   }
 `;
 

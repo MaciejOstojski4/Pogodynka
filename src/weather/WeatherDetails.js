@@ -251,7 +251,7 @@ class WeatherDetails extends Component {
                 title={this.state.chartState}
                 cityName={this.state.favCitiesWeather.city.name}
               />
-              <Div>
+              <ButtonsContainer>
                 <SubmitButton
                   className="btn btn-lg"
                   onClick={this.redirectToMap}
@@ -276,7 +276,7 @@ class WeatherDetails extends Component {
                 >
                   Humidity
                 </SubmitButton>
-              </Div>
+              </ButtonsContainer>
             </div>
           </div>
           <div className="row">
@@ -331,10 +331,11 @@ const StyledTitle = styled.h3`
   justify-content: center
 `;
 
-const Div = styled.div`
-  width: 100%;
+const ButtonsContainer = styled.div`
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
 `;
 
 const SubmitButton = styled.button`
