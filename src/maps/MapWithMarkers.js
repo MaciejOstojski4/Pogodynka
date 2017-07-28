@@ -3,7 +3,6 @@ import { withGoogleMap, GoogleMap } from "react-google-maps";
 import MarkerClustererComponent from "./MarkerClustererComponent";
 
 const MapWithMarkerClusterer = withGoogleMap(props => {
-  console.log(props.markers);
   return (
     <GoogleMap
       defaultZoom={4}

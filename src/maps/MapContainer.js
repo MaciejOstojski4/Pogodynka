@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import SearchWeather from "../weather/SearchWeather";
 import MapWithMarkers from "./MapWithMarkers";
-import WeatherDetails from "../weather/WeatherDetails";
 import apiClient from "../lib/api-client";
-import { withRouter } from "react-router";
 
 class MapContainer extends Component {
   constructor(props) {
@@ -44,11 +42,10 @@ class MapContainer extends Component {
     return `${SEARCH_URL}q=${this.props.params.cityName}`;
   };
   fillStateAfterFetched = response => {
-    console.log(response.data);
     this.setState({
       mapData: [
         {
-          showInfo: false,
+          showInfo: true,
           coord: {
             lat: response.data.city.coord.lat,
             lon: response.data.city.coord.lon
@@ -59,16 +56,15 @@ class MapContainer extends Component {
             temp: response.data.list[0].main.temp,
             pressure: response.data.list[0].main.pressure,
             humidity: response.data.list[0].main.humidity
-          }
+          },
+          id: response.data.city.id
         }
       ]
     });
-    console.log(this.state.mapData);
   };
 
   fetchWeatherForSingleCity = () => {
     const url = this.prepareUrl();
-    console.log(url);
     apiClient
       .get(url)
       .then(response => {
@@ -97,13 +93,11 @@ class MapContainer extends Component {
       });
   };
   fillStateAfterFetchedMultipleCities = response => {
-    console.log(response.data);
     this.setState({
       mapData: response.data.list.map(p => {
         return { ...p, showInfo: false };
       })
     });
-    console.log(this.state.mapData);
   };
   isForecastFetched = () => {
     return this.state.mapData !== null;
@@ -142,7 +136,6 @@ class MapContainer extends Component {
     }
   }
   render() {
-    console.log(this.state.mapData);
     return this.renderMapContainer();
   }
 }
@@ -158,6 +151,16 @@ const initialCities = [
   524901, // Moscow
   2759794, // Amsterdam
   3143244, //Oslo
-  6458923 // Lisbon
+  6458923, // Lisbon
+  676742,
+  8223990,
+  2761333,
+  1816670,
+  1850147,
+  2172517,
+  5128581,
+  4140963,
+  5506956,
+  5391959
 ];
 export default MapContainer;
