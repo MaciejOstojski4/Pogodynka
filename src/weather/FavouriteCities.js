@@ -14,7 +14,8 @@ class FavouriteCities extends React.Component {
     this.state = {
       favCitiesWeather: [],
       loading: false,
-    }
+      errorInfo: "",
+    };
   }
 
   changeLoaderVisibility = () => {
@@ -25,13 +26,13 @@ class FavouriteCities extends React.Component {
 
   getOWMIdsFromFavCities = () => {
     return this.props.favCities.map(favCity => {
-      return favCity.external_id
+      return favCity.external_id;
     });
-  }
+  };
 
   createUrl = () => {
     const owmCityIds = this.getOWMIdsFromFavCities();
-    return `${WEATHER_FOR_SEVERAL_CITIES_URL}id=${owmCityIds.join(",")}`
+    return `${WEATHER_FOR_SEVERAL_CITIES_URL}id=${owmCityIds.join(",")}`;
   };
 
   getFromFavoriteIfExists = cityName => {
@@ -70,11 +71,17 @@ class FavouriteCities extends React.Component {
         this.changeLoaderVisibility();
       })
       .catch(error => {
-        console.log(
-          "Error occurred during fetching weather for cities: " + error,
-        );
+        console.log(error);
+        this.changeLoaderVisibility();
+        this.setErrorInfo();
       });
   };
+
+  setErrorInfo = () => {
+    this.setState({
+      errorInfo: "You haven't got any city",
+    });
+  }
 
   componentDidMount() {
     this.fetchWeatherForFavCities();
@@ -84,12 +91,27 @@ class FavouriteCities extends React.Component {
     return <LoaderWrapper />;
   };
 
+  renderFavCitiesAggregator = () => {
+    return (
+      <WeatherTilesAggregator
+        weatherItems={this.state.favCitiesWeather}
+        locallyRemoved={true}
+      />
+    );
+  };
+
+  renderErrorInfo = () => {
+    return <h2 className="text-center">{this.state.errorInfo}</h2>;
+  };
+
   renderComponent = () => {
     return (
-    <div className="row">
-      <WeatherTilesAggregator weatherItems={this.state.favCitiesWeather} locallyRemoved={true}/>
-    </div>
-    )
+      <div className="row">
+        {this.state.errorInfo === ""
+          ? this.renderFavCitiesAggregator()
+          : this.renderErrorInfo()}
+      </div>
+    );
   };
 
   render() {
@@ -100,7 +122,7 @@ class FavouriteCities extends React.Component {
         </div>
         {this.state.loading ? this.renderLoader() : this.renderComponent()}
       </div>
-    )
+    );
   }
 }
 
