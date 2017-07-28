@@ -31,6 +31,9 @@ class MarkerClustererComponent extends Component {
                       </b>
                     </p>
                     <p>
+                      {marker.weather[0].description}
+                    </p>
+                    <p>
                       Temperature: {marker.main.temp} C
                     </p>
                     <p>

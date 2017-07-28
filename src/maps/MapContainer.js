@@ -51,7 +51,12 @@ class MapContainer extends Component {
             lon: response.data.city.coord.lon
           },
           name: response.data.city.name,
-          weather: [{ icon: response.data.list[0].weather[0].icon }],
+          weather: [
+            {
+              icon: response.data.list[0].weather[0].icon,
+              description: response.data.list[0].weather[0].description
+            }
+          ],
           main: {
             temp: response.data.list[0].main.temp,
             pressure: response.data.list[0].main.pressure,
@@ -68,6 +73,7 @@ class MapContainer extends Component {
     apiClient
       .get(url)
       .then(response => {
+        console.log(response);
         this.fillStateAfterFetched(response);
       })
       .catch(error => {
@@ -84,6 +90,7 @@ class MapContainer extends Component {
     apiClient
       .get(this.prepareUrlForCities())
       .then(response => {
+        console.log(response);
         this.fillStateAfterFetchedMultipleCities(response);
       })
       .catch(error => {
